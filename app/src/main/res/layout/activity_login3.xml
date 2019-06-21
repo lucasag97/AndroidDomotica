@@ -14,6 +14,7 @@
         android:inputType="textWebEmailAddress"
         android:isScrollContainer="true"
         android:text="Email"
+        android:visibility="visible"
         tools:layout_editor_absoluteX="82dp"
         tools:layout_editor_absoluteY="141dp"
         tools:style="@style/editTestStyle" />
@@ -25,6 +26,7 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:text="Password"
+        android:visibility="visible"
         tools:layout_editor_absoluteX="82dp"
         tools:layout_editor_absoluteY="276dp" />
 
