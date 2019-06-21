@@ -1,16 +1,21 @@
 package com.example.tpdomotica;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private SharedPreferences prefs;
 
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -19,9 +24,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login3);
+
+        prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 
         bindUI();
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -32,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(login(email,password)){
                     goToMain();
+                    saveOnPreferences(email,password);
                 }
             }
         });
@@ -55,7 +63,15 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
     }
-
+    private void saveOnPreferences(String email,String password){
+        if(switchRecordar.isChecked()){
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("email",email);
+            editor.putString("pass",password);
+            editor.commit();
+            editor.apply();
+        }
+    }
     private  boolean isValidEmail(String email){
         return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
@@ -67,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-
     }
+
+
 }
