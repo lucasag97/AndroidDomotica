@@ -6,4 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <TextView
+        android:id="@+id/editTextEmail"
+        android:layout_width="247dp"
+        android:layout_height="57dp"
+        android:hint="Email"
+        android:inputType="textWebEmailAddress"
+        android:isScrollContainer="true"
+        android:text="Email"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="141dp"
+        tools:style="@style/editTestStyle" />
+
+    <TextView
+        android:id="@+id/editTextPassword"
+        android:layout_width="244dp"
+        android:layout_height="58dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:text="Password"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="276dp" />
+
+    <Switch
+        android:id="@+id/switchRecordar"
+        android:layout_width="116dp"
+        android:layout_height="28dp"
+        android:text="Recordar"
+        tools:layout_editor_absoluteX="213dp"
+        tools:layout_editor_absoluteY="390dp" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LOG IN"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="488dp" />
 </android.support.constraint.ConstraintLayout>
