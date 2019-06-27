@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TP Domotica</string>
+    <string name="title_activity_edificio">EdificioActivity</string>
 </resources>
