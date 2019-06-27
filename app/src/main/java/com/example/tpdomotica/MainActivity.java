@@ -1,51 +1,42 @@
 package com.example.tpdomotica;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SharedPreferences prefs;
+    Button registro;
+    Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        prefs = getSharedPreferences("preferences", Context.MODE_PRIVATE);
-    }
+        ConexionSQLite conn = new ConexionSQLite(this, "db_domotica", null, 1);
 
-    @Override
-    public boolean onCreateOptionMnu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    @Override
-    public boolean onOptionItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.menu_logout:
-                logOut();
-                return true;
-            case R.id.menu_forget_logout:
-                removeSharedPreferences();
-                logOut();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-    private void logOut(){
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-    }
-    private void removeSharedPreferences(){
-        prefs.edit().clear().apply();
+        registro = (Button) findViewById(R.id.btn_registro);
 
+        registro.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent registro = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(registro);
+            }
+        });
+
+        login = (Button) findViewById(R.id.btn_login1);
+        login.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent login = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(login);
+            }
+        });
     }
 }

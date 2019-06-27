@@ -1,111 +1,84 @@
 package com.example.tpdomotica;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
+import com.example.tpdomotica.Usuario;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private SharedPreferences prefs;
+    private EditText username, password;
+    private Button login,registrar;
 
-    private EditText editTextEmail; //estos dos atributos tienen  que ser EditText para que el usuario pueda ingresar los datos
-    private EditText editTextPassword;
-    private Switch switchRecordar;
-    private Button btnLogin;
+    private ConexionSQLite db;
 
+    View.OnClickListener RegistroListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+            startActivity(intent);
+        }
+    };
+    View.OnClickListener LoginListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v){
+            Verificar();
+        }
+    };
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login3);
-        bindUI();
-        prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        setContentView(R.layout.activity_login);
 
-        setCredentialsIfExist();
+        db = new ConexionSQLite(this, "db_domotica", null, 1);
 
+        username = (EditText)findViewById(R.id.login_username);
+        password = (EditText)findViewById(R.id.login_pwd);
+        login = (Button)findViewById(R.id.btn_login);
+        registrar = (Button) findViewById(R.id.btn_toregistro);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = editTextEmail.getText().toString();
-                String password = editTextPassword.getText().toString();
+        registrar.setOnClickListener(RegistroListener);
+        login.setOnClickListener(LoginListener);
 
-                if(login(email,password)){
-                    goToMain();
-                    saveOnPreferences(email,password);
-                }
+    }
+    public void Verificar(){
+        SQLiteDatabase db_consulta = db.getReadableDatabase();
+        String [] parametros = {username.getText().toString()};
+        String [] campos = {"_id,nombre,apellido,dni,username,password,rol"};
+
+        //SELECT * FROM usuarios WHERE Email = 'example@';
+
+        try {
+            //consulta para sacar un usuario
+            Cursor cursor = db_consulta.query("usuarios",campos,"username=?",parametros,null,null,null);
+            cursor.moveToFirst();
+            //creo un usuario con los datos de la bd
+            Usuario usuario = new Usuario(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4), cursor.getString(5));
+            usuario.setId(cursor.getInt(0));
+            usuario.setRol(cursor.getString(6));
+
+            String contraseña_usuario = usuario.getPassword();
+            String contraseña_ingresada = password.getText().toString();
+            if(contraseña_usuario.equals(contraseña_ingresada)){
+                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
             }
-        });
-    }
-
-    private void bindUI(){
-        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        switchRecordar = (Switch) findViewById(R.id.switchRecordar);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-    }
-
-    public void setCredentialsIfExist(){
-        String email = getUserMailPrefs();
-        String password = getUserPasswordPrefs();
-        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty((password))){
-            editTextEmail.setText(email);
-            editTextPassword.setText(password);
+            else{
+                Toast.makeText(getApplicationContext(),"Contraseña incorrecta",Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(),"Usuario no registrado",Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private boolean login(String email, String password){
-        if (!isValidEmail(email)){
-            Toast.makeText(this, "email no valido, intenta de nuevo", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        else if(!isValidPassword(password)){
-            Toast.makeText(this,"El password no es valido, ingresa mas caracteres", Toast.LENGTH_LONG).show();
-            return false;
-        }else{
-            return true;
-        }
-    }
-    private void saveOnPreferences(String email,String password){
-        if(switchRecordar.isChecked()){
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("email",email);
-            editor.putString("pass",password);
-            editor.commit();
-            editor.apply();
-        }
-    }
-    private  boolean isValidEmail(String email){
-        return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
-    }
-    private boolean isValidPassword(String password){
-        return password.length() > 4;
-    }
-
-    private void goToMain(){
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-    }
-
-    private String getUserMailPrefs(){
-        return prefs.getString("email","");
-    }
-    private String getUserPasswordPrefs(){
-        return prefs.getString("pass","");
-    }
 
 
+
+
+    }
 }
