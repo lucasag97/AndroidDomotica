@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
@@ -13,41 +13,56 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
+        android:background="@android:color/black"
         android:gravity="center"
+        android:scrollbars="none"
         android:text="Bienvenido"
-        android:textSize="50dp" />
+        android:textColor="@android:color/darker_gray"
+        android:textSize="50dp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/login_username"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:drawable/editbox_dropdown_light_frame"
         android:ems="10"
+        android:fontFamily="sans-serif"
         android:hint="Nombre de usuario"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/login_pwd"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginBottom="50dp"
+        android:background="@android:drawable/editbox_dropdown_light_frame"
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="textPassword" />
 
 
-
     <Button
         android:id="@+id/btn_login"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_default_small"
+        android:backgroundTint="@android:color/darker_gray"
+        android:elevation="0dp"
         android:text="Iniciar sesión"
         tools:layout_editor_absoluteX="78dp"
         tools:layout_editor_absoluteY="5dp" />
 
     <Button
         android:id="@+id/btn_toregistro"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_default_small"
+        android:backgroundTint="@android:color/darker_gray"
+        android:elevation="0dp"
         android:text="Registrarse"
         tools:layout_editor_absoluteX="210dp"
         tools:layout_editor_absoluteY="7dp" />
