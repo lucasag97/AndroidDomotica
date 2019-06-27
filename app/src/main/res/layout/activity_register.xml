@@ -6,14 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
     android:orientation="vertical">
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="REGISTRO"
+        android:layout_gravity="center"
+        android:textSize="40dp"
+        android:layout_marginBottom="30dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Nombre"
         android:hint="@string/app_name"
-        android:textSize="30dp"
-        android:gravity="center_horizontal"/>
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/form_nombre"
@@ -23,8 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Apellido"
-        android:textSize="30dp"
-        android:gravity="center_horizontal"/>
+        android:textSize="20dp"/>
 
     <EditText
         android:id="@+id/form_apellido"
@@ -34,8 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Nombre de usuario"
-        android:textSize="30dp"
-        android:gravity="center_horizontal"/>
+        android:textSize="20dp"/>
 
     <EditText
         android:id="@+id/form_username"
@@ -46,8 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="DNI"
-        android:textSize="30dp"
-        android:gravity="center_horizontal"/>
+        android:textSize="20dp"/>
 
     <EditText
         android:id="@+id/form_dni"
@@ -58,27 +60,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Contraseña"
-        android:textSize="30dp"
-        android:gravity="center_horizontal"/>
+        android:textSize="20dp"/>
 
     <EditText
         android:id="@+id/form_pwd"
         android:inputType="textPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Repita contraseña"
-        android:textSize="30dp"
-        android:gravity="center_horizontal"/>
+        android:textSize="20dp"/>
 
     <EditText
         android:id="@+id/pwd_repeat"
         android:inputType="textPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"/>
 
     <Button
         android:layout_width="wrap_content"
