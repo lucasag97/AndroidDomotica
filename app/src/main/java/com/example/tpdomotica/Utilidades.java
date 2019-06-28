@@ -15,17 +15,23 @@ public class Utilidades {
 
     //Tabla edificio
     public static final String TABLA_EDIFICIO="edificio";
-    public static final String ID_EDIFICIO="id_edificio";
-    public static final String DIRECCION_LAT="direccion_lat";
-    public static final String DIRECCION_LONG="direccion_long";
-    public static final String ID_PERSONA="id_persona";
-    public static final String CREAR_TABLA_EDIFICIO= "CREATE TABLE"+ TABLA_EDIFICIO+" ("+ID_EDIFICIO+" INTEGER PRIMARY KEY  AUTOINCREMENT, "+DIRECCION_LAT+" TEXT, "+DIRECCION_LONG+" TEXT, "+ID_PERSONA+" INTEGER NOT NULL, FOREIGN KEY("+ID_PERSONA+") REFERENCES "+TABLA_USUARIO+"("+USER_ID+")";
+    public static final String EDI_ID="_id";
+    public static final String EDI_DIRECCION_LAT="direccion_lat";
+    public static final String EDI_DIRECCION_LONG="direccion_long";
+    public static final String EDI_ID_USUARIO="id_usuario";
+    public static final String CREAR_TABLA_EDIFICIO= "CREATE TABLE"+ TABLA_EDIFICIO+" ("+EDI_ID+" INTEGER PRIMARY KEY  AUTOINCREMENT, "+EDI_DIRECCION_LAT+" TEXT, "+EDI_DIRECCION_LONG+" TEXT, "+EDI_ID_USUARIO+" INTEGER NOT NULL, FOREIGN KEY("+EDI_ID_USUARIO+") REFERENCES "+TABLA_USUARIO+"("+USER_ID+"))";
 
     //tabla sensor
     public static final String TABLA_SENSOR="sensor";
-    public static final String ID_SENSOR="id_sensor";
-    public static final String TIPO="tipo";
-    public static final String CREAR_TABLA_SENSOR = "CREATE TABLE "+TABLA_SENSOR+" ("+ID_SENSOR+" INTEGER PRIMARY KEY AUTOINCREMENT, "+TIPO+ " VARCHAR)";
+    public static final String SENSOR_ID="_id";
+    public static final String SENSOR_TIPO="tipo";
+    public static final String SENSOR_UMBRAL =  "umbral";
+    public static final String CREAR_TABLA_SENSOR = "CREATE TABLE "+TABLA_SENSOR+" ("+SENSOR_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+SENSOR_TIPO+ " VARCHAR, "+SENSOR_UMBRAL+" VARCHAR)";
 
-
+    //tabla edficiio-sensor
+    public static final String TABLA_EDIFICIO_SENSOR = "edificio-sensor";
+    public static final String ID_SENSOR = "id_sensor";
+    public static final String ID_EDIFICIO = "id_edificio";
+    public static final String EDI_SENS_VALOR = "valor";
+    public static final String CREAR_TABLA_EDIFICIO_SENSOR = "CREATE TABLE "+TABLA_EDIFICIO_SENSOR+" ("+ID_SENSOR+" INTEGER, "+ID_EDIFICIO+" INTEGER, "+EDI_SENS_VALOR+" VARCHAR, PRIMARY KEY ("+ID_EDIFICIO+", "+ID_SENSOR+"), FOREIGN KEY ("+ID_EDIFICIO+") REFERENCES "+TABLA_EDIFICIO+"("+EDI_ID+"), FOREIGN KEY ("+ID_SENSOR+") REFERENCES "+TABLA_SENSOR+"("+SENSOR_ID+"))";
 }
