@@ -19,7 +19,7 @@ public class Utilidades {
     public static final String EDI_DIRECCION_LAT="direccion_lat";
     public static final String EDI_DIRECCION_LONG="direccion_long";
     public static final String EDI_ID_USUARIO="id_usuario";
-    public static final String CREAR_TABLA_EDIFICIO= "CREATE TABLE"+ TABLA_EDIFICIO+" ("+EDI_ID+" INTEGER PRIMARY KEY  AUTOINCREMENT, "+EDI_DIRECCION_LAT+" TEXT, "+EDI_DIRECCION_LONG+" TEXT, "+EDI_ID_USUARIO+" INTEGER NOT NULL, FOREIGN KEY("+EDI_ID_USUARIO+") REFERENCES "+TABLA_USUARIO+"("+USER_ID+"))";
+    public static final String CREAR_TABLA_EDIFICIO= "CREATE TABLE "+ TABLA_EDIFICIO+" ("+EDI_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+EDI_DIRECCION_LAT+" TEXT, "+EDI_DIRECCION_LONG+" TEXT, "+EDI_ID_USUARIO+" INTEGER NOT NULL, FOREIGN KEY("+EDI_ID_USUARIO+") REFERENCES "+TABLA_USUARIO+"("+USER_ID+"))";
 
     //tabla sensor
     public static final String TABLA_SENSOR="sensor";
@@ -29,7 +29,7 @@ public class Utilidades {
     public static final String CREAR_TABLA_SENSOR = "CREATE TABLE "+TABLA_SENSOR+" ("+SENSOR_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+SENSOR_TIPO+ " VARCHAR, "+SENSOR_UMBRAL+" VARCHAR)";
 
     //tabla edificio-sensor
-    public static final String TABLA_EDIFICIO_SENSOR = "edificio-sensor";
+    public static final String TABLA_EDIFICIO_SENSOR = "edificio_sensor";
     public static final String ID_SENSOR = "id_sensor";
     public static final String ID_EDIFICIO = "id_edificio";
     public static final String EDI_SENS_VALOR = "valor";
