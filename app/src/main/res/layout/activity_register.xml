@@ -53,22 +53,6 @@
 
     <TextView
         android:layout_width="380dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="10dp"
-        android:text="Nombre de usuario"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="20dp" />
-
-    <EditText
-        android:id="@+id/form_username"
-        android:layout_width="380dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="10dp"
-        android:background="@android:drawable/editbox_dropdown_light_frame"
-        android:textColor="@android:color/black" />
-
-    <TextView
-        android:layout_width="380dp"
         android:layout_height="35dp"
         android:layout_marginLeft="10dp"
         android:text="DNI"
@@ -82,6 +66,22 @@
         android:layout_marginLeft="10dp"
         android:background="@android:drawable/editbox_dropdown_light_frame"
         android:inputType="number"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:layout_width="380dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:text="Nombre de usuario"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/form_username"
+        android:layout_width="380dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:background="@android:drawable/editbox_dropdown_light_frame"
         android:textColor="@android:color/black" />
 
     <TextView
