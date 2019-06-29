@@ -16,6 +16,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         db.execSQL(Utilidades.CREAR_TABLA_USER);
         db.execSQL(Utilidades.CREAR_TABLA_EDIFICIO);
         db.execSQL(Utilidades.CREAR_TABLA_SENSOR);
+        db.execSQL(Utilidades.CREAR_TABLA_EDIFICIO_SENSOR);
     }
 
     @Override

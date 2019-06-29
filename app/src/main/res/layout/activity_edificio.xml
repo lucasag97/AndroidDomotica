@@ -27,31 +27,31 @@
 
 
     <CheckBox
+        android:id="@+id/edificio_iluminacion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:checked="true"
         android:text="Iluminacion"/>
 
     <CheckBox
+        android:id="@+id/edificio_gases"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:checked="true"
         android:text="Gases Toxicos"/>
 
     <CheckBox
+        android:id="@+id/edificio_movimiento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:checked="true"
         android:text="Movimiento"/>
     
     <CheckBox
+        android:id="@+id/edificio_temperatura"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:checked="true"
         android:text="Temperatura"
         android:layout_marginBottom="10dp"/>
 
@@ -64,7 +64,7 @@
         android:textStyle="bold" />
 
     <RadioButton
-        android:id="@+id/radioButton"
+        android:id="@+id/edificio_localizame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -72,6 +72,7 @@
         android:text="Localizame" />
 
     <Button
+        android:id="@+id/btn_edificio_guardar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

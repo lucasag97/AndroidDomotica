@@ -23,8 +23,9 @@
 
     <EditText
         android:id="@+id/login_username"
-        android:layout_width="match_parent"
+        android:layout_width="380dp"
         android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp"
         android:background="@android:drawable/editbox_dropdown_light_frame"
         android:ems="10"
@@ -34,20 +35,31 @@
 
     <EditText
         android:id="@+id/login_pwd"
-        android:layout_width="match_parent"
+        android:layout_width="380dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
         android:background="@android:drawable/editbox_dropdown_light_frame"
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="textPassword" />
 
-
+    <Switch
+        android:id="@+id/recuerdame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginBottom="30dp"
+        android:background="@android:color/background_dark"
+        android:layout_marginRight="10dp"
+        android:textColor="@android:color/darker_gray"
+        android:text="Recuerdame " />
     <Button
         android:id="@+id/btn_login"
         style="@style/Widget.AppCompat.Button"
-        android:layout_width="match_parent"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:background="@android:drawable/btn_default_small"
         android:backgroundTint="@android:color/darker_gray"
         android:elevation="0dp"
@@ -58,8 +70,9 @@
     <Button
         android:id="@+id/btn_toregistro"
         style="@style/Widget.AppCompat.Button"
-        android:layout_width="match_parent"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:background="@android:drawable/btn_default_small"
         android:backgroundTint="@android:color/darker_gray"
         android:elevation="0dp"

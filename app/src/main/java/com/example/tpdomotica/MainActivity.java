@@ -1,6 +1,7 @@
 package com.example.tpdomotica;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,14 +14,14 @@ public class MainActivity extends AppCompatActivity {
 
     Button registro;
     Button login;
-
+    SharedPreferences pref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         ConexionSQLite conn = new ConexionSQLite(this, "db_domotica", null, 1);
-
+        pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
         registro = (Button) findViewById(R.id.btn_registro);
 
         registro.setOnClickListener(new View.OnClickListener(){
@@ -57,10 +58,13 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_logout:
                 Intent cerrar_sesion = new Intent(getApplicationContext(),LoginActivity.class);
+                cerrar_sesion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(cerrar_sesion);
                 return true;
             case R.id.menu_forget_logout:
+                pref.edit().clear().apply();
                 Intent cerrar_sesion_olvidar = new Intent(getApplicationContext(),LoginActivity.class);
+                cerrar_sesion_olvidar.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(cerrar_sesion_olvidar);
                 return true;
             default:
