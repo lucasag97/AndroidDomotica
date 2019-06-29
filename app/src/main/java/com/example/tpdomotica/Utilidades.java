@@ -28,7 +28,7 @@ public class Utilidades {
     public static final String SENSOR_UMBRAL =  "umbral";
     public static final String CREAR_TABLA_SENSOR = "CREATE TABLE "+TABLA_SENSOR+" ("+SENSOR_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+SENSOR_TIPO+ " VARCHAR, "+SENSOR_UMBRAL+" VARCHAR)";
 
-    //tabla edficiio-sensor
+    //tabla edificio-sensor
     public static final String TABLA_EDIFICIO_SENSOR = "edificio-sensor";
     public static final String ID_SENSOR = "id_sensor";
     public static final String ID_EDIFICIO = "id_edificio";

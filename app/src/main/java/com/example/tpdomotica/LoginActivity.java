@@ -19,6 +19,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button login,registrar;
     private Switch remember;
     private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
+    private Boolean isRemembered;
     private ConexionSQLite db;
 
     View.OnClickListener RegistroListener = new View.OnClickListener() {
@@ -31,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     View.OnClickListener LoginListener = new View.OnClickListener(){
         @Override
         public void onClick(View v){
-            Verificar();
+            verificar();
         }
     };
 
@@ -42,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
         db = new ConexionSQLite(this, "db_domotica", null, 1);
         pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
+        editor = pref.edit();
         username = (EditText)findViewById(R.id.login_username);
         password = (EditText)findViewById(R.id.login_pwd);
         //rellenarCampos(username,password);
@@ -51,10 +54,15 @@ public class LoginActivity extends AppCompatActivity {
         registrar.setOnClickListener(RegistroListener);
         login.setOnClickListener(LoginListener);
 
-
+        isRemembered = pref.getBoolean("remember", false);
+        if (isRemembered){
+            username.setText(pref.getString("username", ""));
+            password.setText(pref.getString("password", ""));
+            remember.setChecked(true);
+        }
 
     }
-    public void Verificar(){
+    public void verificar(){
         SQLiteDatabase db_consulta = db.getReadableDatabase();
         String [] parametros = {username.getText().toString()};
         String [] campos = {"_id,nombre,apellido,dni,username,password,rol"};
@@ -76,8 +84,8 @@ public class LoginActivity extends AppCompatActivity {
             String contraseña_ingresada = password.getText().toString();
 
             if(contraseña_usuario.equals(contraseña_ingresada)){
-                RecuerdaUsuario(cursor.getString(4),cursor.getString(5));
-                IniciarSesion(cursor.getString(0),cursor.getString(6));
+                recuerdaUsuario(cursor.getString(4),cursor.getString(5));
+                iniciarSesion(cursor.getString(0),cursor.getString(6));
                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
@@ -89,26 +97,22 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Usuario no registrado",Toast.LENGTH_SHORT).show();
         }
     }
-    private void RecuerdaUsuario(String username,String contraseña){
+    private void recuerdaUsuario(String username,String password){
         if(remember.isChecked()){
-            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean("remember", true);
             editor.putString("username",username);
-            editor.putString("contraseña",contraseña);
+            editor.putString("password",password);
+            editor.commit();
+        }
+        else{
+            editor.clear();
             editor.commit();
         }
     }
-    private void IniciarSesion(String id,String rol){
-        SharedPreferences.Editor editor = pref.edit();
+    private void iniciarSesion(String id,String rol){
+        //SharedPreferences.Editor editor = pref.edit();
         editor.putString("id",id);
         editor.putString("rol",rol);
         editor.commit();
-    }
-    private void rellenarCampos(EditText a,EditText b){
-        if(pref.getBoolean("username",false)){
-            a.setText(pref.getString("username",""));
-        }
-        if(pref.getBoolean("contraseña",false)){
-            b.setText(pref.getString("contraseña",""));
-        }
     }
 }
