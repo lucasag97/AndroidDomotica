@@ -43,17 +43,46 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 SQLiteDatabase db = conn.getWritableDatabase();
                 ContentValues values= new ContentValues();
 
-                values.put(Utilidades.EDI_DIRECCION_LAT, latitud);
-                values.put(Utilidades.EDI_DIRECCION_LONG, longitud);
-                values.put(Utilidades.EDI_ID_USUARIO, pref.getString("id", "1"));
-                db.insert(Utilidades.CREAR_TABLA_EDIFICIO, null, values);
+                values.put(Utilidades.EDI_DIRECCION_LAT, "37.4220");
+                values.put(Utilidades.EDI_DIRECCION_LONG, "-122.0840");
+                values.put(Utilidades.EDI_ID_USUARIO, pref.getString("id",""));
+                db.insert(Utilidades.TABLA_EDIFICIO, null, values);
                 db.close();
                 values.clear();
 
                 SQLiteDatabase read = conn.getReadableDatabase();
-                 Cursor cursor = read.rawQuery("SELECT * FROM "+Utilidades.TABLA_EDIFICIO+" LIMIT 1", null);
+                Cursor cursor = read.rawQuery("SELECT * FROM "+Utilidades.TABLA_EDIFICIO+" ORDER BY "+Utilidades.EDI_ID+" DESC LIMIT 1", null);
                 cursor.moveToFirst();
-                String idEdi = "1";
+                int idEdi = cursor.getInt(0);
+
+                /*if(ilu == true){
+                    values.put(Utilidades.ID_SENSOR, "1");
+                    values.put(Utilidades.ID_EDIFICIO, idEdi);
+                    values.put(Utilidades.EDI_SENS_VALOR, "0");
+                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
+                    values.clear();
+                }
+                if (gas == true){
+                    values.put(Utilidades.ID_SENSOR, "2");
+                    values.put(Utilidades.ID_EDIFICIO, idEdi);
+                    values.put(Utilidades.EDI_SENS_VALOR, "0");
+                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
+                    values.clear();
+                }
+                if (movi == true){
+                    values.put(Utilidades.ID_SENSOR, "3");
+                    values.put(Utilidades.ID_EDIFICIO, idEdi);
+                    values.put(Utilidades.EDI_SENS_VALOR, "0");
+                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
+                    values.clear();
+                }
+                if (temp == true){
+                    values.put(Utilidades.ID_SENSOR, "4");
+                    values.put(Utilidades.ID_EDIFICIO, idEdi);
+                    values.put(Utilidades.EDI_SENS_VALOR, "0");
+                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
+                    values.clear();
+                }*/
 
                 Toast.makeText(getApplicationContext(),"Se habilito el edificio con exito",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
