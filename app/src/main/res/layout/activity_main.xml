@@ -10,15 +10,15 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Haga click para ir a formulario de registro"
+        tools:text="Haga click para crear sensores"
         android:textSize="30dp"
         android:gravity="center_horizontal"/>
 
     <Button
-        android:id="@+id/btn_registro"
+        android:id="@+id/btn_sensores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrarme"
+        android:text="Crear Sensores"
         android:padding="16dp"
         android:textSize="20dp"
         android:layout_gravity="center_horizontal"/>

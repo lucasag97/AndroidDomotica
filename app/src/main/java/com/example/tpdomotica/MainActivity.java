@@ -11,10 +11,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button registro;
+    Button crear_sensores;
     Button login;
     SharedPreferences pref;
     @Override
@@ -24,14 +25,39 @@ public class MainActivity extends AppCompatActivity {
 
         ConexionSQLite conn = new ConexionSQLite(this, "db_domotica", null, 1);
         pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
-        registro = (Button) findViewById(R.id.btn_registro);
+        crear_sensores = (Button) findViewById(R.id.btn_sensores);
 
-        registro.setOnClickListener(new View.OnClickListener(){
+        crear_sensores.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                Intent registro = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(registro);
+                /* Creamos sensores para uso en form de edificio */
+                ConexionSQLite conn = new ConexionSQLite(getApplicationContext(), "db_domotica", null, 1);
+                SQLiteDatabase db = conn.getWritableDatabase();
+                ContentValues values_sensor = new ContentValues();
+                //Iluminacion
+                values_sensor.put(Utilidades.SENSOR_TIPO,"iluminacion");
+                values_sensor.put(Utilidades.SENSOR_UMBRAL,"100");
+                db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
+                values_sensor.clear();
+                //Gas
+                values_sensor.put(Utilidades.SENSOR_TIPO,"gas");
+                values_sensor.put(Utilidades.SENSOR_UMBRAL,"1");
+                db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
+                values_sensor.clear();
+                //Movimiento
+                values_sensor.put(Utilidades.SENSOR_TIPO,"movimiento");
+                values_sensor.put(Utilidades.SENSOR_UMBRAL,"1");
+                db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
+                values_sensor.clear();
+                //Temperatura
+                values_sensor.put(Utilidades.SENSOR_TIPO,"temperatura");
+                values_sensor.put(Utilidades.SENSOR_UMBRAL,"50");
+                db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
+                values_sensor.clear();
+
+                db.close();
+                Toast.makeText(getApplicationContext(), "Se insertaron los valores en la tabla", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -44,32 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(login);
             }
         });
-
-        /* Creamos sensores para uso en form de edificio */
-        SQLiteDatabase db = conn.getWritableDatabase();
-        ContentValues values_sensor = new ContentValues();
-        //Iluminacion
-        values_sensor.put(Utilidades.SENSOR_TIPO,"iluminacion");
-        values_sensor.put(Utilidades.SENSOR_UMBRAL,"100");
-        db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
-        values_sensor.clear();
-        //Gas
-        values_sensor.put(Utilidades.SENSOR_TIPO,"gas");
-        values_sensor.put(Utilidades.SENSOR_UMBRAL,"1");
-        db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
-        values_sensor.clear();
-        //Movimiento
-        values_sensor.put(Utilidades.SENSOR_TIPO,"movimiento");
-        values_sensor.put(Utilidades.SENSOR_UMBRAL,"1");
-        db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
-        values_sensor.clear();
-        //Temperatura
-        values_sensor.put(Utilidades.SENSOR_TIPO,"temperatura");
-        values_sensor.put(Utilidades.SENSOR_UMBRAL,"50");
-        db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
-        values_sensor.clear();
-
-        db.close();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
