@@ -59,13 +59,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
         android:text="Ubicacion"
         android:textSize="20dp"
         android:textStyle="bold" />
 
-    <RadioButton
+    <Button
         android:id="@+id/edificio_localizame"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="30dp"

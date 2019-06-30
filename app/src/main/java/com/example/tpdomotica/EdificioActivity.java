@@ -10,8 +10,10 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,11 +25,8 @@ import android.widget.Toast;
 public class EdificioActivity extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
     CheckBox iluminacion,gases,movimiento,temperatura;
     boolean ilu,gas,movi,temp;
-    String longitud,latitud;
-    RadioButton localizame;
-    LocationManager locManager;
-    Button btn_edificio_guardar;
-    Location loc;
+    Double longitud,latitud;
+    Button btn_edificio_guardar,localizame;
     SharedPreferences pref;
 
     View.OnClickListener guardar = new View.OnClickListener() {
@@ -39,64 +38,26 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 Intent intent = new Intent(getApplicationContext(),EdificioActivity.class);
                 startActivity(intent);
             }else{
-                /*locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                loc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                longitud = String.valueOf(loc.getLongitude());
-                latitud = String.valueOf(loc.getLatitude());*/
 
                 ConexionSQLite conn = new ConexionSQLite(getApplicationContext(), "db_domotica", null, 1);
                 SQLiteDatabase db = conn.getWritableDatabase();
                 ContentValues values= new ContentValues();
 
-                values.put(Utilidades.EDI_DIRECCION_LAT, "37.4220");
-                values.put(Utilidades.EDI_DIRECCION_LONG, "-122.0840");
+                values.put(Utilidades.EDI_DIRECCION_LAT, latitud);
+                values.put(Utilidades.EDI_DIRECCION_LONG, longitud);
                 values.put(Utilidades.EDI_ID_USUARIO, pref.getString("id", "1"));
                 db.insert(Utilidades.CREAR_TABLA_EDIFICIO, null, values);
                 db.close();
                 values.clear();
 
-              SQLiteDatabase read = conn.getReadableDatabase();
-              Cursor cursor = read.rawQuery("SELECT * FROM "+Utilidades.TABLA_EDIFICIO+" LIMIT 1", null);
-              cursor.moveToFirst();
-              String idEdi = "1";
+                SQLiteDatabase read = conn.getReadableDatabase();
+                 Cursor cursor = read.rawQuery("SELECT * FROM "+Utilidades.TABLA_EDIFICIO+" LIMIT 1", null);
+                cursor.moveToFirst();
+                String idEdi = "1";
 
-                /*if(ilu == true){
-                    //revisar por que no mete los datos del sensor en la bd
-                    values.put(Utilidades.ID_SENSOR, "1");
-                    values.put(Utilidades.ID_EDIFICIO, idEdi);
-                    values.put(Utilidades.EDI_SENS_VALOR, "0");
-                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
-                    values.clear();
-                }
-                if (gas == true){
-                    values.put(Utilidades.ID_SENSOR, "2");
-                    values.put(Utilidades.ID_EDIFICIO, idEdi);
-                    values.put(Utilidades.EDI_SENS_VALOR, "0");
-                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
-                    values.clear();
-                }
-                if (movi == true){
-                    values.put(Utilidades.ID_SENSOR, "3");
-                    values.put(Utilidades.ID_EDIFICIO, idEdi);
-                    values.put(Utilidades.EDI_SENS_VALOR, "0");
-                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
-                    values.clear();
-                }
-                if (temp == true){
-                    values.put(Utilidades.ID_SENSOR, "4");
-                    values.put(Utilidades.ID_EDIFICIO, idEdi);
-                    values.put(Utilidades.EDI_SENS_VALOR, "0");
-                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
-                    values.clear();
-                }
-                values_edi.put(Utilidades.EDI_DIRECCION_LAT,latitud);
-                values_edi.put(Utilidades.EDI_DIRECCION_LONG,longitud);
-                values_edi.put(Utilidades.EDI_ID_USUARIO,pref.getString("id",""));
-                db.insert(Utilidades.TABLA_EDIFICIO,null,values_edi);*/
                 Toast.makeText(getApplicationContext(),"Se habilito el edificio con exito",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
-
             }
         }
     };
@@ -160,8 +121,45 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
             }
         });
 
-        localizame = (RadioButton) findViewById(R.id.edificio_localizame);
+        localizame = (Button) findViewById(R.id.edificio_localizame);
+        localizame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            LocationListener locationListener = new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
 
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+
+                }
+            };
+            int permissionCheck = ContextCompat.checkSelfPermission(EdificioActivity.this,Manifest.permission.ACCESS_FINE_LOCATION);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,locationListener);
+            }
+        });
+        int permissionCheck = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION);
+
+        if(permissionCheck == PackageManager.PERMISSION_DENIED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_CONTACTS)){
+
+            }else {
+                ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.ACCESS_FINE_LOCATION},1);
+            }
+        }
 
         btn_edificio_guardar = (Button) findViewById(R.id.btn_edificio_guardar);
         btn_edificio_guardar.setOnClickListener(guardar);
