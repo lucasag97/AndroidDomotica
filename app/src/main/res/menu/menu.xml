@@ -10,8 +10,4 @@
         android:id="@+id/menu_logout"
         android:title="Cerrar sesión"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/menu_forget_logout"
-        android:title="Cerrar sesión y olvidar"
-        app:showAsAction="never"/>
 </menu>

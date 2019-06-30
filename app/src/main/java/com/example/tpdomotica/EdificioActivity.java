@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationManager;
@@ -45,40 +46,49 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
 
                 ConexionSQLite conn = new ConexionSQLite(getApplicationContext(), "db_domotica", null, 1);
                 SQLiteDatabase db = conn.getWritableDatabase();
-                ContentValues values_edi = new ContentValues();
-                ContentValues values_sensor = new ContentValues();
+                ContentValues values= new ContentValues();
 
-                if(ilu == true){
+                values.put(Utilidades.EDI_DIRECCION_LAT, "37.4220");
+                values.put(Utilidades.EDI_DIRECCION_LONG, "-122.0840");
+                values.put(Utilidades.EDI_ID_USUARIO, pref.getString("id", "1"));
+                db.insert(Utilidades.CREAR_TABLA_EDIFICIO, null, values);
+                db.close();
+                values.clear();
+
+              SQLiteDatabase read = conn.getReadableDatabase();
+              Cursor cursor = read.rawQuery("SELECT * FROM "+Utilidades.TABLA_EDIFICIO+" LIMIT 1", null);
+              cursor.moveToFirst();
+              String idEdi = "1";
+
+                /*if(ilu == true){
                     //revisar por que no mete los datos del sensor en la bd
-                    Toast.makeText(getApplicationContext(),"ilumicnacion",Toast.LENGTH_SHORT).show();
-                    values_sensor.put(Utilidades.SENSOR_TIPO,"iluminacion");
-                    values_sensor.put(Utilidades.SENSOR_UMBRAL,"100");
-                    db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
-                    values_sensor.clear();
+                    values.put(Utilidades.ID_SENSOR, "1");
+                    values.put(Utilidades.ID_EDIFICIO, idEdi);
+                    values.put(Utilidades.EDI_SENS_VALOR, "0");
+                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
+                    values.clear();
                 }
                 if (gas == true){
-                    Toast.makeText(getApplicationContext(),"gases",Toast.LENGTH_SHORT).show();
-                    values_sensor.put(Utilidades.SENSOR_TIPO,"Gases toxicos");
-                    values_sensor.put(Utilidades.SENSOR_UMBRAL,"10");
-                    db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
-                    values_sensor.clear();
+                    values.put(Utilidades.ID_SENSOR, "2");
+                    values.put(Utilidades.ID_EDIFICIO, idEdi);
+                    values.put(Utilidades.EDI_SENS_VALOR, "0");
+                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
+                    values.clear();
                 }
                 if (movi == true){
-                    Toast.makeText(getApplicationContext(),"movimiento",Toast.LENGTH_SHORT).show();
-                    values_edi.put(Utilidades.SENSOR_TIPO,"movimiento");
-                    values_sensor.put(Utilidades.SENSOR_TIPO,"movimiento");
-                    values_sensor.put(Utilidades.SENSOR_UMBRAL,"0");
-                    db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
-                    values_sensor.clear();
+                    values.put(Utilidades.ID_SENSOR, "3");
+                    values.put(Utilidades.ID_EDIFICIO, idEdi);
+                    values.put(Utilidades.EDI_SENS_VALOR, "0");
+                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
+                    values.clear();
                 }
                 if (temp == true){
-                    Toast.makeText(getApplicationContext(),"temperatura",Toast.LENGTH_SHORT).show();
-                    values_edi.put(Utilidades.SENSOR_TIPO,"temperatura");
-                    values_sensor.put(Utilidades.SENSOR_TIPO,"temperatura");
-                    values_sensor.put(Utilidades.SENSOR_UMBRAL,"50");
-                    db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
-                    values_sensor.clear();
-                }/*
+                    values.put(Utilidades.ID_SENSOR, "4");
+                    values.put(Utilidades.ID_EDIFICIO, idEdi);
+                    values.put(Utilidades.EDI_SENS_VALOR, "0");
+                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
+                    values.clear();
+                }
                 values_edi.put(Utilidades.EDI_DIRECCION_LAT,latitud);
                 values_edi.put(Utilidades.EDI_DIRECCION_LONG,longitud);
                 values_edi.put(Utilidades.EDI_ID_USUARIO,pref.getString("id",""));

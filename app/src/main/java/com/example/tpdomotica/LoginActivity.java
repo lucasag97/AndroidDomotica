@@ -1,5 +1,6 @@
 package com.example.tpdomotica;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -43,6 +44,20 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         db = new ConexionSQLite(this, "db_domotica", null, 1);
+
+        //Creo user por defecto
+        SQLiteDatabase db1 = db.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Utilidades.USER_NOMBRE,"test_nombre");
+        values.put(Utilidades.USER_APELLIDO,"test_apellido");
+        values.put(Utilidades.USER_DNI,123);
+        values.put(Utilidades.USER_USERNAME,"test");
+        values.put(Utilidades.USER_PASSWORD,"1234");
+        values.put(Utilidades.USER_ROL,"user");
+        db1.insert(Utilidades.TABLA_USUARIO,null, values);
+        values.clear();
+        db1.close();
+
         pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
         editor = pref.edit();
         username = (EditText)findViewById(R.id.login_username);

@@ -1,7 +1,9 @@
 package com.example.tpdomotica;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -42,6 +44,32 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(login);
             }
         });
+
+        /* Creamos sensores para uso en form de edificio */
+        SQLiteDatabase db = conn.getWritableDatabase();
+        ContentValues values_sensor = new ContentValues();
+        //Iluminacion
+        values_sensor.put(Utilidades.SENSOR_TIPO,"iluminacion");
+        values_sensor.put(Utilidades.SENSOR_UMBRAL,"100");
+        db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
+        values_sensor.clear();
+        //Gas
+        values_sensor.put(Utilidades.SENSOR_TIPO,"gas");
+        values_sensor.put(Utilidades.SENSOR_UMBRAL,"1");
+        db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
+        values_sensor.clear();
+        //Movimiento
+        values_sensor.put(Utilidades.SENSOR_TIPO,"movimiento");
+        values_sensor.put(Utilidades.SENSOR_UMBRAL,"1");
+        db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
+        values_sensor.clear();
+        //Temperatura
+        values_sensor.put(Utilidades.SENSOR_TIPO,"temperatura");
+        values_sensor.put(Utilidades.SENSOR_UMBRAL,"50");
+        db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
+        values_sensor.clear();
+
+        db.close();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -60,12 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent cerrar_sesion = new Intent(getApplicationContext(),LoginActivity.class);
                 cerrar_sesion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(cerrar_sesion);
-                return true;
-            case R.id.menu_forget_logout:
-                pref.edit().clear().apply();
-                Intent cerrar_sesion_olvidar = new Intent(getApplicationContext(),LoginActivity.class);
-                cerrar_sesion_olvidar.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(cerrar_sesion_olvidar);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
