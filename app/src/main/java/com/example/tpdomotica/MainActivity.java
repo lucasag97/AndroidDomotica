@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity{
 
-    Button crear_sensores, service, VerEdificios;
+    Button service, VerEdificios;
     SharedPreferences pref;
 
     @Override
@@ -29,41 +29,12 @@ public class MainActivity extends AppCompatActivity{
 
         ConexionSQLite conn = new ConexionSQLite(this, "db_domotica", null, 1);
         pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
-        crear_sensores = (Button) findViewById(R.id.btn_sensores);
 
-        crear_sensores.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                /* Creamos sensores para uso en form de edificio */
-                ConexionSQLite conn = new ConexionSQLite(getApplicationContext(), "db_domotica", null, 1);
-                SQLiteDatabase db = conn.getWritableDatabase();
-                ContentValues values_sensor = new ContentValues();
-                //Iluminacion
-                values_sensor.put(Utilidades.SENSOR_TIPO,"iluminacion");
-                values_sensor.put(Utilidades.SENSOR_UMBRAL,"100");
-                db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
-                values_sensor.clear();
-                //Gas
-                values_sensor.put(Utilidades.SENSOR_TIPO,"gas");
-                values_sensor.put(Utilidades.SENSOR_UMBRAL,"1");
-                db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
-                values_sensor.clear();
-                //Movimiento
-                values_sensor.put(Utilidades.SENSOR_TIPO,"movimiento");
-                values_sensor.put(Utilidades.SENSOR_UMBRAL,"1");
-                db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
-                values_sensor.clear();
-                //Temperatura
-                values_sensor.put(Utilidades.SENSOR_TIPO,"temperatura");
-                values_sensor.put(Utilidades.SENSOR_UMBRAL,"50");
-                db.insert(Utilidades.TABLA_SENSOR,null,values_sensor);
-                values_sensor.clear();
-
-                db.close();
-                Toast.makeText(getApplicationContext(), "Se insertaron los valores en la tabla", Toast.LENGTH_SHORT).show();
-            }
-        });
+        //Si no esta logueado va a login
+        if (!pref.contains("username") && !pref.contains("password") && !LoginActivity.logged){
+            Intent login = new Intent(this, LoginActivity.class);
+            startActivity(login);
+        }
 
         service = (Button) findViewById(R.id.btn_service);
         service.setOnClickListener(new View.OnClickListener(){
@@ -106,6 +77,7 @@ public class MainActivity extends AppCompatActivity{
             case R.id.menu_logout:
                 Intent cerrar_sesion = new Intent(getApplicationContext(),LoginActivity.class);
                 cerrar_sesion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                LoginActivity.logged = false;
                 startActivity(cerrar_sesion);
                 return true;
             default:

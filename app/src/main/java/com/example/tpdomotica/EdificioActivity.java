@@ -31,6 +31,7 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
     Double longitud,latitud;
     Button btn_edificio_guardar,localizame;
     SharedPreferences pref;
+    private SharedPreferences.Editor editor;
 
 
     View.OnClickListener guardar = new View.OnClickListener() {
@@ -95,6 +96,14 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 }
 
                 db.close();
+
+                editor = pref.edit();
+                editor.putInt("idEdi",idEdi);
+                editor.commit();
+
+                /*Toast.makeText(getApplicationContext(),"Se habilito el edificio con exito",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);*/
                 if(dir == true) {
                     Toast.makeText(getApplicationContext(), "Se habilito el edificio con exito", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);

@@ -10,22 +10,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Haga click para crear sensores"
-        android:textSize="30dp"
-        android:gravity="center_horizontal"/>
-
-    <Button
-        android:id="@+id/btn_sensores"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Crear Sensores"
-        android:padding="16dp"
-        android:textSize="20dp"
-        android:layout_gravity="center_horizontal"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="30dp"
         android:text="Haga click para iniciar servicio" />
@@ -49,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ver"
+        android:textSize="20dp"
         android:layout_gravity="center_horizontal"
         android:padding="16dp"
         android:textStyle="bold"/>

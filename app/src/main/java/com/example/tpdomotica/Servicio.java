@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
@@ -22,6 +23,8 @@ public class Servicio extends Service {
     final int ID_TEMP = 100;
     final int ID_GAS = 200;
     final int ID_MOV = 300;
+    private SharedPreferences pref;
+    private int idEdi;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -30,6 +33,8 @@ public class Servicio extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
+        idEdi = pref.getInt("idEdi", 999);
         final Handler handler = new Handler();
         Timer timer1 = new Timer();
         Timer timer2 = new Timer();
@@ -38,11 +43,11 @@ public class Servicio extends Service {
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
-                        //SELECT E._id, S.tipo, valor FROM edificio_sensor ES INNER JOIN edificio E ON ES.id_edificio = E._id INNER JOIN sensor S ON ES.id_sensor = S._id WHERE ES.valor > S.umbral
-                        //Toast.makeText(getApplicationContext(), "Se muestra esto cada 15 segundos", Toast.LENGTH_LONG).show();
+                        //SELECT E._id, S.tipo, valor FROM edificio_sensor ES INNER JOIN edificio E ON ES.id_edificio = E._id INNER JOIN sensor S ON ES.id_sensor = S._id WHERE ES.valor > S.umbral AND E._id = 1
+                        // Toast.makeText(getApplicationContext(), "Se muestra esto cada 15 segundos", Toast.LENGTH_LONG).show();
                         ConexionSQLite conn = new ConexionSQLite(getApplicationContext(), "db_domotica", null, 1);
                         SQLiteDatabase db = conn.getReadableDatabase();
-                        Cursor cursor = db.rawQuery("SELECT E."+Utilidades.EDI_ID+", S."+Utilidades.SENSOR_TIPO+", "+Utilidades.EDI_SENS_VALOR+" FROM "+Utilidades.TABLA_EDIFICIO_SENSOR+" ES INNER JOIN "+Utilidades.TABLA_EDIFICIO+" E ON ES."+Utilidades.ID_EDIFICIO+" = E."+Utilidades.EDI_ID+" INNER JOIN "+Utilidades.TABLA_SENSOR+" S ON ES."+Utilidades.ID_SENSOR+" = S."+Utilidades.SENSOR_ID+" WHERE ES."+Utilidades.EDI_SENS_VALOR+" >= S."+Utilidades.SENSOR_UMBRAL, null);
+                        Cursor cursor = db.rawQuery("SELECT E."+Utilidades.EDI_ID+", S."+Utilidades.SENSOR_TIPO+", "+Utilidades.EDI_SENS_VALOR+" FROM "+Utilidades.TABLA_EDIFICIO_SENSOR+" ES INNER JOIN "+Utilidades.TABLA_EDIFICIO+" E ON ES."+Utilidades.ID_EDIFICIO+" = E."+Utilidades.EDI_ID+" INNER JOIN "+Utilidades.TABLA_SENSOR+" S ON ES."+Utilidades.ID_SENSOR+" = S."+Utilidades.SENSOR_ID+" WHERE ES."+Utilidades.EDI_SENS_VALOR+" >= S."+Utilidades.SENSOR_UMBRAL+" AND E."+Utilidades.EDI_ID+" = "+idEdi, null);
                         boolean c = cursor.moveToFirst();
                         int cont = cursor.getCount();
                         if (c) {
