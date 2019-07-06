@@ -16,10 +16,12 @@ public class Utilidades {
     //Tabla edificio
     public static final String TABLA_EDIFICIO="edificio";
     public static final String EDI_ID="_id";
+    public static final String EDI_DIRECCION = "direccion";
     public static final String EDI_DIRECCION_LAT="direccion_lat";
     public static final String EDI_DIRECCION_LONG="direccion_long";
+    public static final String EDI_ESTADO = "estado";
     public static final String EDI_ID_USUARIO="id_usuario";
-    public static final String CREAR_TABLA_EDIFICIO= "CREATE TABLE "+ TABLA_EDIFICIO+" ("+EDI_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+EDI_DIRECCION_LAT+" TEXT, "+EDI_DIRECCION_LONG+" TEXT, "+EDI_ID_USUARIO+" INTEGER NOT NULL, FOREIGN KEY("+EDI_ID_USUARIO+") REFERENCES "+TABLA_USUARIO+"("+USER_ID+"))";
+    public static final String CREAR_TABLA_EDIFICIO= "CREATE TABLE "+ TABLA_EDIFICIO+" ("+EDI_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+EDI_DIRECCION+" VARCHAR, "+EDI_DIRECCION_LAT+" TEXT, "+EDI_DIRECCION_LONG+" TEXT, "+EDI_ESTADO+" VACRCHAR, "+EDI_ID_USUARIO+" INTEGER NOT NULL, FOREIGN KEY("+EDI_ID_USUARIO+") REFERENCES "+TABLA_USUARIO+"("+USER_ID+"))";
 
     //tabla sensor
     public static final String TABLA_SENSOR="sensor";
@@ -33,5 +35,6 @@ public class Utilidades {
     public static final String ID_SENSOR = "id_sensor";
     public static final String ID_EDIFICIO = "id_edificio";
     public static final String EDI_SENS_VALOR = "valor";
-    public static final String CREAR_TABLA_EDIFICIO_SENSOR = "CREATE TABLE "+TABLA_EDIFICIO_SENSOR+" ("+ID_SENSOR+" INTEGER, "+ID_EDIFICIO+" INTEGER, "+EDI_SENS_VALOR+" VARCHAR, PRIMARY KEY ("+ID_EDIFICIO+", "+ID_SENSOR+"), FOREIGN KEY ("+ID_EDIFICIO+") REFERENCES "+TABLA_EDIFICIO+"("+EDI_ID+"), FOREIGN KEY ("+ID_SENSOR+") REFERENCES "+TABLA_SENSOR+"("+SENSOR_ID+"))";
+    public static final String EDI_SENS_TIMESTAMP = "momento";
+    public static final String CREAR_TABLA_EDIFICIO_SENSOR = "CREATE TABLE "+TABLA_EDIFICIO_SENSOR+" ("+ID_SENSOR+" INTEGER, "+ID_EDIFICIO+" INTEGER, "+EDI_SENS_VALOR+" VARCHAR, "+EDI_SENS_TIMESTAMP+" TIMESTAMP, PRIMARY KEY ("+ID_EDIFICIO+", "+ID_SENSOR+"), FOREIGN KEY ("+ID_EDIFICIO+") REFERENCES "+TABLA_EDIFICIO+"("+EDI_ID+"), FOREIGN KEY ("+ID_SENSOR+") REFERENCES "+TABLA_SENSOR+"("+SENSOR_ID+"))";
 }
