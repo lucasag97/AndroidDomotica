@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Haga click para crear sensores"
+        android:text="Haga click para crear sensores"
         android:textSize="30dp"
         android:gravity="center_horizontal"/>
 
@@ -28,15 +28,15 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="30dp"
-        tools:text="Haga click para iniciar sesion" />
+        android:text="Haga click para iniciar servicio" />
 
     <Button
-        android:id="@+id/btn_login1"
+        android:id="@+id/btn_service"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:padding="16dp"
-        android:text="Iniciar sesion"
+        android:text="Iniciar servicio"
         android:textSize="20dp" />
 
 </LinearLayout>

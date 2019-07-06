@@ -1,9 +1,11 @@
 package com.example.tpdomotica;
 
+import android.app.Notification;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,9 +17,9 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button crear_sensores;
-    Button login;
+    Button crear_sensores, service;
     SharedPreferences pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,15 +63,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        login = (Button) findViewById(R.id.btn_login1);
-        login.setOnClickListener(new View.OnClickListener(){
+        service = (Button) findViewById(R.id.btn_service);
+        service.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                Intent login = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(login);
+                if (service.getText().toString().equals("Iniciar servicio")) {
+                    service.setText("Detener servicio");
+                    startService(new Intent(MainActivity.this, Servicio.class));
+                }
+                else {
+                    service.setText("Iniciar servicio");
+                    stopService(new Intent(MainActivity.this,Servicio.class));
+                }
             }
         });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

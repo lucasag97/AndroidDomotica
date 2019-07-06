@@ -70,7 +70,7 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                     values.clear();
                 }
                 if (movi == true){
-                    values.put(Utilidades.ID_SENSOR, 4);
+                    values.put(Utilidades.ID_SENSOR, 3);
                     values.put(Utilidades.ID_EDIFICIO, idEdi);
                     values.put(Utilidades.EDI_SENS_VALOR, "0");
                     db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
