@@ -38,5 +38,19 @@
         android:padding="16dp"
         android:text="Iniciar servicio"
         android:textSize="20dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ver Edificios"
+        android:gravity="center_horizontal"
+        android:textSize="30dp"/>
+    <Button
+        android:id="@+id/idVerEdificios"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ver"
+        android:layout_gravity="center_horizontal"
+        android:padding="16dp"
+        android:textStyle="bold"/>
 
 </LinearLayout>

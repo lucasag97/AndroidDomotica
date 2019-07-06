@@ -5,9 +5,11 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ButtonBarLayout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,9 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
-    Button crear_sensores, service;
+    Button crear_sensores, service, VerEdificios;
     SharedPreferences pref;
 
     @Override
@@ -76,6 +78,14 @@ public class MainActivity extends AppCompatActivity {
                     service.setText("Iniciar servicio");
                     stopService(new Intent(MainActivity.this,Servicio.class));
                 }
+            }
+        });
+        VerEdificios = (Button) findViewById(R.id.idVerEdificios);
+        VerEdificios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ver = new Intent(getApplicationContext(),ContenedorActivity.class);
+                startActivity(ver);
             }
         });
 

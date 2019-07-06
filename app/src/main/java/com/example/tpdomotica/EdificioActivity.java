@@ -19,15 +19,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
 public class EdificioActivity extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
     CheckBox iluminacion,gases,movimiento,temperatura;
-    boolean ilu,gas,movi,temp;
+    EditText direccion;
+    String Dirreccion_user;
+    boolean ilu,gas,movi,temp,dir;
     Double longitud,latitud;
     Button btn_edificio_guardar,localizame;
     SharedPreferences pref;
+
 
     View.OnClickListener guardar = new View.OnClickListener() {
         @Override
@@ -42,7 +46,13 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 ConexionSQLite conn = new ConexionSQLite(getApplicationContext(), "db_domotica", null, 1);
                 SQLiteDatabase db = conn.getWritableDatabase();
                 ContentValues values= new ContentValues();
-
+                Dirreccion_user =  direccion.getText().toString();
+                if(!Dirreccion_user.equals(null) && !Dirreccion_user.equals("")){
+                    values.put(Utilidades.EDI_DIRECCION,direccion.getText().toString());
+                    dir = true;
+                }else {
+                    dir =false;
+                }
                 values.put(Utilidades.EDI_DIRECCION_LAT, latitud);
                 values.put(Utilidades.EDI_DIRECCION_LONG, longitud);
                 values.put(Utilidades.EDI_ID_USUARIO, pref.getString("id",""));
@@ -85,10 +95,15 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 }
 
                 db.close();
-
-                Toast.makeText(getApplicationContext(),"Se habilito el edificio con exito",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
+                if(dir == true) {
+                    Toast.makeText(getApplicationContext(), "Se habilito el edificio con exito", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(),"Error en la direccion",Toast.LENGTH_SHORT).show();
+                    Intent error = new Intent(getApplicationContext(),EdificioActivity.class);
+                    startActivity(error);
+                }
             }
         }
     };
@@ -99,6 +114,8 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
         setContentView(R.layout.activity_edificio);
 
         pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
+
+        direccion = (EditText) findViewById(R.id.direccion);
 
         iluminacion = (CheckBox) findViewById(R.id.edificio_iluminacion);
         iluminacion.setOnClickListener(new View.OnClickListener() {
