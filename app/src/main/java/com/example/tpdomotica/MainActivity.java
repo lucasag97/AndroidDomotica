@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity{
         pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
 
         //Si no esta logueado va a login
-        if (!pref.contains("username") && !pref.contains("password") && !LoginActivity.logged){
+        boolean isLogged = pref.getBoolean("logged", false);
+        if (!isLogged){
             Intent login = new Intent(this, LoginActivity.class);
             startActivity(login);
         }
@@ -77,7 +78,9 @@ public class MainActivity extends AppCompatActivity{
             case R.id.menu_logout:
                 Intent cerrar_sesion = new Intent(getApplicationContext(),LoginActivity.class);
                 cerrar_sesion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                LoginActivity.logged = false;
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putBoolean("logged", false);
+                editor.commit();
                 startActivity(cerrar_sesion);
                 return true;
             default:

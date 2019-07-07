@@ -16,8 +16,6 @@ import com.example.tpdomotica.Usuario;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public static boolean logged = false;
-
     private EditText username, password;
     private Button login,registrar;
     private Switch remember;
@@ -92,7 +90,8 @@ public class LoginActivity extends AppCompatActivity {
                 iniciarSesion(cursor.getString(0),cursor.getString(6));
                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                this.logged = true;
+                editor.putBoolean("logged", true);
+                editor.commit();
                 startActivity(intent);
             }
             else{
