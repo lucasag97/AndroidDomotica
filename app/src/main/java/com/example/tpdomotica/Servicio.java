@@ -1,6 +1,7 @@
 package com.example.tpdomotica;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -9,11 +10,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,6 +30,7 @@ public class Servicio extends Service {
     final int ID_MOV = 300;
     private SharedPreferences pref;
     private int idEdi;
+    private String CHANNEL_ID;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -71,13 +77,38 @@ public class Servicio extends Service {
                                         idM = ID_MOV;
                                         break;
                                 }
-                                NotificationManager nm = (NotificationManager) getSystemService(Service.NOTIFICATION_SERVICE);
+
+                                /*NotificationManager nm = (NotificationManager) getSystemService(Service.NOTIFICATION_SERVICE);
                                 Notification.Builder noti = new Notification.Builder(getApplicationContext());
                                 noti.setContentTitle("ALERTA");
                                 noti.setContentText(mensaje);
                                 noti.setWhen(System.currentTimeMillis());
                                 noti.setSmallIcon(R.mipmap.ic_launcher);
-                                nm.notify(idM, noti.build());
+                                nm.notify(idM, noti.build());*/
+
+                                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+                                CHANNEL_ID = "channel1";
+
+                                Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                                        .setSmallIcon(R.mipmap.ic_launcher)
+                                        .setContentTitle("ALERTA")
+                                        .setContentText(mensaje)
+                                        //.setLargeIcon(largeIcon)
+                                        .setStyle(new NotificationCompat.BigTextStyle()
+                                                .bigText(mensaje)
+                                                .setBigContentTitle("ALERTA")
+                                                .setSummaryText("Servicio en background"))
+                                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                        .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                                        .setColor(Color.BLUE)
+                                        //.setContentIntent(contentIntent)
+                                        .setAutoCancel(true)
+                                        .setOnlyAlertOnce(true)
+                                        //.addAction(R.mipmap.ic_launcher, "Toast", actionIntent)
+                                        .build();
+
+                                notificationManager.notify(idM, notification);
+
                                 cursor.moveToNext();
                             }
                         }
@@ -102,16 +133,71 @@ public class Servicio extends Service {
                         db.update(Utilidades.TABLA_EDIFICIO_SENSOR, cont, "id_sensor=4", null);
                         cont.clear();
 
+                        Cursor temp = db.rawQuery("SELECT * FROM "+Utilidades.TABLA_HISTORICO+" WHERE "+Utilidades.ID_EDIFICIO_H+" = "+idEdi+" AND "+Utilidades.ID_SENSOR_H+" = 4 ORDER BY "+Utilidades.HISTORICO_TIMESTAMP+" DESC", null);
+
+                        if (temp.getCount()<5) {
+                            cont.put(Utilidades.ID_SENSOR_H, 4);
+                            cont.put(Utilidades.ID_EDIFICIO_H, idEdi);
+                            cont.put(Utilidades.HISTORICO_VALOR, temp_v);
+                            db.insert(Utilidades.TABLA_HISTORICO, null, cont);
+                            cont.clear();
+                        }
+                        else{
+                            temp.moveToLast();
+                            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                            cont.put(Utilidades.HISTORICO_VALOR, temp_v);
+                            cont.put(Utilidades.HISTORICO_TIMESTAMP, timeStamp);
+                            db.update(Utilidades.TABLA_HISTORICO, cont, "_id="+temp.getString(0), null);
+                            cont.clear();
+                        }
+
+
                         //Para movimiento y gases
                         int val_mov = (int)Math.round(Math.random());
                         cont.put(Utilidades.EDI_SENS_VALOR, val_mov);
                         db.update(Utilidades.TABLA_EDIFICIO_SENSOR, cont, "id_sensor=3", null);
                         cont.clear();
 
+                        Cursor mov = db.rawQuery("SELECT * FROM "+Utilidades.TABLA_HISTORICO+" WHERE "+Utilidades.ID_EDIFICIO_H+" = "+idEdi+" AND "+Utilidades.ID_SENSOR_H+" = 3 ORDER BY "+Utilidades.HISTORICO_TIMESTAMP+" DESC", null);
+
+                        if (mov.getCount()<5) {
+                            cont.put(Utilidades.ID_SENSOR_H, 3);
+                            cont.put(Utilidades.ID_EDIFICIO_H, idEdi);
+                            cont.put(Utilidades.HISTORICO_VALOR, val_mov);
+                            db.insert(Utilidades.TABLA_HISTORICO, null, cont);
+                            cont.clear();
+                        }
+                        else{
+                            mov.moveToLast();
+                            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                            cont.put(Utilidades.HISTORICO_VALOR, val_mov);
+                            cont.put(Utilidades.HISTORICO_TIMESTAMP, timeStamp);
+                            db.update(Utilidades.TABLA_HISTORICO, cont, "_id="+mov.getString(0), null);
+                            cont.clear();
+                        }
+
                         int val_gas = (int)Math.round(Math.random());
                         cont.put(Utilidades.EDI_SENS_VALOR, val_gas);
                         db.update(Utilidades.TABLA_EDIFICIO_SENSOR, cont, "id_sensor=2", null);
                         cont.clear();
+
+                        Cursor gas = db.rawQuery("SELECT * FROM "+Utilidades.TABLA_HISTORICO+" WHERE "+Utilidades.ID_EDIFICIO_H+" = "+idEdi+" AND "+Utilidades.ID_SENSOR_H+" = 2 ORDER BY "+Utilidades.HISTORICO_TIMESTAMP+" DESC", null);
+
+                        if (gas.getCount()<5) {
+                            cont.put(Utilidades.ID_SENSOR_H, 2);
+                            cont.put(Utilidades.ID_EDIFICIO_H, idEdi);
+                            cont.put(Utilidades.HISTORICO_VALOR, val_gas);
+                            db.insert(Utilidades.TABLA_HISTORICO, null, cont);
+                            cont.clear();
+                        }
+                        else{
+                            gas.moveToLast();
+                            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                            cont.put(Utilidades.HISTORICO_VALOR, val_gas);
+                            cont.put(Utilidades.HISTORICO_TIMESTAMP, timeStamp);
+                            db.update(Utilidades.TABLA_HISTORICO, cont, "_id="+temp.getString(0), null);
+                            cont.clear();
+                        }
 
                         db.close();
                     }
