@@ -1,6 +1,8 @@
 package com.example.tpdomotica;
 
-public class Edificio {
+import java.io.Serializable;
+
+public class Edificio implements Serializable {
 
     private int ID;
     private String DIRECCION;

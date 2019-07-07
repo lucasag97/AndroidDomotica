@@ -5,12 +5,9 @@ public class Sensor {
     private String TIPO;
     private int UMBRAL;
 
-    public Sensor(int ID, String TIPO, int UMBRAL) {
-        this.ID = ID;
-        this.TIPO = TIPO;
-        this.UMBRAL = UMBRAL;
-    }
+    public Sensor() {
 
+    }
     public int getID() {
         return ID;
     }

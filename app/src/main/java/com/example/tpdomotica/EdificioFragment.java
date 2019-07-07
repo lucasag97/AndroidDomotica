@@ -1,5 +1,6 @@
 package com.example.tpdomotica;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -36,8 +37,11 @@ public class EdificioFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
     ArrayList<Edificio> listaEdificio;
     RecyclerView recyclerEdificio;
+    Activity activity;
+    IComunicaFragment interfaceComunicaFragment;
     SharedPreferences pref;
     ConexionSQLite db;
 
@@ -94,6 +98,8 @@ public class EdificioFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(),"Selecciona: "
                 +listaEdificio.get(recyclerEdificio.getChildAdapterPosition(v)).getDIRECCION(),Toast.LENGTH_SHORT).show();
+
+                interfaceComunicaFragment.enviarEdificio(listaEdificio.get(recyclerEdificio.getChildAdapterPosition(v)));
             }
         });
 
@@ -132,6 +138,10 @@ public class EdificioFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if(context instanceof  Activity){
+            this.activity = (Activity) context;
+            interfaceComunicaFragment = (IComunicaFragment) this.activity;
+        }
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
