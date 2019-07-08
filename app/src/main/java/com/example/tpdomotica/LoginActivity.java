@@ -11,13 +11,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.tpdomotica.Usuario;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText username, password;
-    private Button login,registrar;
+    private Button login;
+    private TextView registrar;
     private Switch remember;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -51,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText)findViewById(R.id.login_pwd);
         //rellenarCampos(username,password);
         login = (Button)findViewById(R.id.btn_login);
-        registrar = (Button) findViewById(R.id.btn_toregistro);
+        registrar = (TextView) findViewById(R.id.btn_toregistro);
         remember = (Switch) findViewById(R.id.recuerdame);
         registrar.setOnClickListener(RegistroListener);
         login.setOnClickListener(LoginListener);
@@ -95,10 +97,18 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
             else{
-                Toast.makeText(getApplicationContext(),"Contraseña incorrecta",Toast.LENGTH_SHORT).show();
+                password.setError("Contraseña incorrecta");
             }
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(),"Usuario no registrado",Toast.LENGTH_SHORT).show();
+            if (username.getText().toString().isEmpty()){
+                username.setError("Este campo no puede estar vacio");
+            }
+            if (password.getText().toString().isEmpty()){
+                password.setError("Este campo no puede estar vacio");
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "Usuario no registrado", Toast.LENGTH_SHORT).show();
+            }
         }
     }
     private void recuerdaUsuario(String username,String password){

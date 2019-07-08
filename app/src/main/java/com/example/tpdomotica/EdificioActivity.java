@@ -19,8 +19,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 public class EdificioActivity extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
@@ -29,7 +31,8 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
     String Dirreccion_user;
     boolean ilu,gas,movi,temp,dir;
     Double longitud,latitud;
-    Button btn_edificio_guardar,localizame;
+    Button btn_edificio_guardar;
+    Switch localizame;
     SharedPreferences pref;
     private SharedPreferences.Editor editor;
 
@@ -109,9 +112,7 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 }else{
-                    Toast.makeText(getApplicationContext(),"Error en la direccion",Toast.LENGTH_SHORT).show();
-                    Intent error = new Intent(getApplicationContext(),EdificioActivity.class);
-                    startActivity(error);
+                    direccion.setError("La direccion no puede estar vacía");
                 }
             }
         }
@@ -178,11 +179,44 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
             }
         });
 
-        localizame = (Button) findViewById(R.id.edificio_localizame);
-        localizame.setOnClickListener(new View.OnClickListener() {
+        localizame = (Switch) findViewById(R.id.edificio_localizame);
+        /*localizame.setOnClickListener(new View.OnClickListener() {
             int permissionCheck = ContextCompat.checkSelfPermission(EdificioActivity.this,Manifest.permission.ACCESS_FINE_LOCATION);
             @Override
             public void onClick(View v) {
+                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+                    ActivityCompat.requestPermissions(EdificioActivity.this,new String[] {Manifest.permission.ACCESS_FINE_LOCATION},1);
+                    LocationListener locationListener = new LocationListener() {
+                        @Override
+                        public void onLocationChanged(Location location) {
+                            longitud = location.getLongitude();
+                            latitud = location.getLatitude();
+                        }
+
+                        @Override
+                        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                        }
+
+                        @Override
+                        public void onProviderEnabled(String provider) {
+
+                        }
+
+                        @Override
+                        public void onProviderDisabled(String provider) {
+
+                        }
+                    };
+                }
+            }
+        });*/
+
+        localizame.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                int permissionCheck = ContextCompat.checkSelfPermission(EdificioActivity.this,Manifest.permission.ACCESS_FINE_LOCATION);
+
                 LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 if (permissionCheck == PackageManager.PERMISSION_DENIED) {
                     ActivityCompat.requestPermissions(EdificioActivity.this,new String[] {Manifest.permission.ACCESS_FINE_LOCATION},1);

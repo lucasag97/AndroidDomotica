@@ -1,84 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/black"
-    android:orientation="vertical"
-    tools:context=".LoginActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
 
-    <TextView
-        android:id="@+id/textView2"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:background="@android:color/black"
-        android:gravity="center"
-        android:scrollbars="none"
-        android:text="Bienvenido"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="50dp"
-        android:textStyle="bold" />
+        android:paddingTop="56dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp" >
 
-    <EditText
-        android:id="@+id/login_username"
-        android:layout_width="380dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@android:drawable/editbox_dropdown_light_frame"
-        android:ems="10"
-        android:fontFamily="sans-serif"
-        android:hint="Nombre de usuario"
-        android:inputType="textPersonName" />
+        <TextView android:id="@+id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_marginBottom="24dp"
+            android:text="Bienvenido"
+            android:textSize="24dp"
+            android:layout_gravity="center_horizontal" />
 
-    <EditText
-        android:id="@+id/login_pwd"
-        android:layout_width="380dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="20dp"
-        android:background="@android:drawable/editbox_dropdown_light_frame"
-        android:ems="10"
-        android:hint="Contraseña"
-        android:inputType="textPassword" />
+        <!-- Email Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
 
-    <Switch
-        android:id="@+id/recuerdame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginBottom="30dp"
-        android:background="@android:color/background_dark"
-        android:layout_marginRight="10dp"
-        android:textColor="@android:color/darker_gray"
-        android:text="Recuerdame " />
-    <Button
-        android:id="@+id/btn_login"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:background="@android:drawable/btn_default_small"
-        android:backgroundTint="@android:color/darker_gray"
-        android:elevation="0dp"
-        android:text="Iniciar sesión"
-        tools:layout_editor_absoluteX="78dp"
-        tools:layout_editor_absoluteY="5dp" />
+            <EditText android:id="@+id/login_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Nombre de usuario" />
+        </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/btn_toregistro"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:background="@android:drawable/btn_default_small"
-        android:backgroundTint="@android:color/darker_gray"
-        android:elevation="0dp"
-        android:text="Registrarse"
-        tools:layout_editor_absoluteX="210dp"
-        tools:layout_editor_absoluteY="7dp" />
+        <!-- Password Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/login_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Password"/>
+        </android.support.design.widget.TextInputLayout>
 
+        <Switch
+            android:id="@+id/recuerdame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/cardview_dark_background"
+            android:text="Recuerdame" />
 
-</LinearLayout>
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:background="@color/lila_claro"
+            android:text="Ingresar"/>
+
+        <TextView android:id="@+id/btn_toregistro"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="No tenés cuenta? Crea una"
+            android:gravity="center"
+            android:textSize="16dip"/>
+
+    </LinearLayout>
+</ScrollView>
