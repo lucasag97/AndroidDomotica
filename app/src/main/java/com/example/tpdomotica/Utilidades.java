@@ -1,6 +1,10 @@
 package com.example.tpdomotica;
 
+import java.util.ArrayList;
+
 public class Utilidades {
+
+    public static ArrayList<Integer> edis = new ArrayList();
 
     //Tabla Usuario
     public static final String TABLA_USUARIO="usuarios";
@@ -36,7 +40,7 @@ public class Utilidades {
     public static final String ID_EDIFICIO = "id_edificio";
     public static final String EDI_SENS_VALOR = "valor";
     public static final String EDI_SENS_TIMESTAMP = "momento";
-    public static final String CREAR_TABLA_EDIFICIO_SENSOR = "CREATE TABLE "+TABLA_EDIFICIO_SENSOR+" ("+ID_SENSOR+" INTEGER, "+ID_EDIFICIO+" INTEGER, "+EDI_SENS_VALOR+" VARCHAR, "+EDI_SENS_TIMESTAMP+" DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY ("+ID_EDIFICIO+", "+ID_SENSOR+"), FOREIGN KEY ("+ID_EDIFICIO+") REFERENCES "+TABLA_EDIFICIO+"("+EDI_ID+"), FOREIGN KEY ("+ID_SENSOR+") REFERENCES "+TABLA_SENSOR+"("+SENSOR_ID+"))";
+    public static final String CREAR_TABLA_EDIFICIO_SENSOR = "CREATE TABLE "+TABLA_EDIFICIO_SENSOR+" ("+ID_SENSOR+" INTEGER, "+ID_EDIFICIO+" INTEGER, "+EDI_SENS_VALOR+" INTEGER, "+EDI_SENS_TIMESTAMP+" DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY ("+ID_EDIFICIO+", "+ID_SENSOR+"), FOREIGN KEY ("+ID_EDIFICIO+") REFERENCES "+TABLA_EDIFICIO+"("+EDI_ID+"), FOREIGN KEY ("+ID_SENSOR+") REFERENCES "+TABLA_SENSOR+"("+SENSOR_ID+"))";
 
     //Tabla historico_sensor
     public static final String TABLA_HISTORICO = "historico_sensor";
@@ -45,6 +49,6 @@ public class Utilidades {
     public final static String ID_EDIFICIO_H = "id_edificio";
     public static final String HISTORICO_VALOR = "valor";
     public static final String HISTORICO_TIMESTAMP = "momento";
-    public static final String CREAR_TABLA_HISTORICO = "CREATE TABLE "+TABLA_HISTORICO+" ("+HISTORICO_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+ID_SENSOR_H+" INTEGER, "+ID_EDIFICIO_H+" INTEGER, "+HISTORICO_VALOR+" VARCHAR, "+HISTORICO_TIMESTAMP+" DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY ("+ID_EDIFICIO_H+") REFERENCES "+TABLA_EDIFICIO+"("+EDI_ID+"), FOREIGN KEY ("+ID_SENSOR_H+") REFERENCES "+TABLA_SENSOR+"("+SENSOR_ID+"))";
+    public static final String CREAR_TABLA_HISTORICO = "CREATE TABLE "+TABLA_HISTORICO+" ("+HISTORICO_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+ID_SENSOR_H+" INTEGER, "+ID_EDIFICIO_H+" INTEGER, "+HISTORICO_VALOR+" INTEGER, "+HISTORICO_TIMESTAMP+" DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY ("+ID_EDIFICIO_H+") REFERENCES "+TABLA_EDIFICIO+"("+EDI_ID+"), FOREIGN KEY ("+ID_SENSOR_H+") REFERENCES "+TABLA_SENSOR+"("+SENSOR_ID+"))";
 
 }

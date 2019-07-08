@@ -25,10 +25,13 @@ import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class EdificioActivity extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
     CheckBox iluminacion,gases,movimiento,temperatura;
     EditText direccion;
-    String Dirreccion_user;
+    String Direccion_user;
     boolean ilu,gas,movi,temp,dir;
     Double longitud,latitud;
     Button btn_edificio_guardar;
@@ -50,8 +53,8 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 ConexionSQLite conn = new ConexionSQLite(getApplicationContext(), "db_domotica", null, 1);
                 SQLiteDatabase db = conn.getWritableDatabase();
                 ContentValues values= new ContentValues();
-                Dirreccion_user =  direccion.getText().toString();
-                if(!Dirreccion_user.equals(null) && !Dirreccion_user.equals("")){
+                Direccion_user =  direccion.getText().toString();
+                if(!Direccion_user.equals(null) && !Direccion_user.equals("")){
                     values.put(Utilidades.EDI_DIRECCION,direccion.getText().toString());
                     dir = true;
                 }else {
@@ -59,6 +62,7 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 }
                 values.put(Utilidades.EDI_DIRECCION_LAT, latitud);
                 values.put(Utilidades.EDI_DIRECCION_LONG, longitud);
+                values.put(Utilidades.EDI_ESTADO, 0); //Estado edificio pendiente = 0, aprobado = 1, rechazado = 2
                 values.put(Utilidades.EDI_ID_USUARIO, pref.getString("id",""));
                 db.insert(Utilidades.TABLA_EDIFICIO, null, values);
                 //db.close();
@@ -99,6 +103,8 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 }
 
                 db.close();
+
+                Utilidades.edis.add(idEdi);
 
                 editor = pref.edit();
                 editor.putInt("idEdi",idEdi);
@@ -217,31 +223,33 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 int permissionCheck = ContextCompat.checkSelfPermission(EdificioActivity.this,Manifest.permission.ACCESS_FINE_LOCATION);
 
-                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                if (permissionCheck == PackageManager.PERMISSION_DENIED) {
-                    ActivityCompat.requestPermissions(EdificioActivity.this,new String[] {Manifest.permission.ACCESS_FINE_LOCATION},1);
-                    LocationListener locationListener = new LocationListener() {
-                        @Override
-                        public void onLocationChanged(Location location) {
-                            longitud = location.getLongitude();
-                            latitud = location.getLatitude();
-                        }
+                if (isChecked) {
+                    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                    if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+                        ActivityCompat.requestPermissions(EdificioActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                        LocationListener locationListener = new LocationListener() {
+                            @Override
+                            public void onLocationChanged(Location location) {
+                                longitud = location.getLongitude();
+                                latitud = location.getLatitude();
+                            }
 
-                        @Override
-                        public void onStatusChanged(String provider, int status, Bundle extras) {
+                            @Override
+                            public void onStatusChanged(String provider, int status, Bundle extras) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onProviderEnabled(String provider) {
+                            @Override
+                            public void onProviderEnabled(String provider) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onProviderDisabled(String provider) {
+                            @Override
+                            public void onProviderDisabled(String provider) {
 
-                        }
-                    };
+                            }
+                        };
+                    }
                 }
             }
         });
