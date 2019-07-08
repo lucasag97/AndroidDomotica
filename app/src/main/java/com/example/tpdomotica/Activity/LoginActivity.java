@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
 import com.example.tpdomotica.R;
 import com.example.tpdomotica.Entidades.Usuario;
+import com.example.tpdomotica.Utilidades.Utilidades;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -128,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
     private void iniciarSesion(String id,String rol){
         //SharedPreferences.Editor editor = pref.edit();
         SQLiteDatabase db1 = db.getReadableDatabase();
-        Cursor c = db1.rawQuery("SELECT DISTINCT "+Utilidades.EDI_ID+" FROM "+Utilidades.TABLA_EDIFICIO+" WHERE "+Utilidades.EDI_ID_USUARIO+" = "+id, null);
+        Cursor c = db1.rawQuery("SELECT DISTINCT "+ Utilidades.EDI_ID+" FROM "+Utilidades.TABLA_EDIFICIO+" WHERE "+Utilidades.EDI_ID_USUARIO+" = "+id, null);
         if (c.moveToFirst()){
             Utilidades.edis.add(c.getInt(0));
         }
