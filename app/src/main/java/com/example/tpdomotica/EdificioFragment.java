@@ -77,7 +77,6 @@ public class EdificioFragment extends Fragment {
         db = new ConexionSQLite(getActivity(), "db_domotica", null, 1);
         pref =  this.getActivity().getSharedPreferences("MisPreferencias",Context.MODE_PRIVATE);
         ArrayList<Edificio> listaEdificio;
-        //consultarListaEdificio();
     }
 
     @Override
@@ -96,9 +95,6 @@ public class EdificioFragment extends Fragment {
         adapter.setOnclickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"Selecciona: "
-                +listaEdificio.get(recyclerEdificio.getChildAdapterPosition(v)).getDIRECCION(),Toast.LENGTH_SHORT).show();
-
                 interfaceComunicaFragment.enviarEdificio(listaEdificio.get(recyclerEdificio.getChildAdapterPosition(v)));
             }
         });

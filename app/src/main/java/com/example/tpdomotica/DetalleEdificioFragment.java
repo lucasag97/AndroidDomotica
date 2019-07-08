@@ -1,6 +1,8 @@
 package com.example.tpdomotica;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,9 +42,14 @@ public class DetalleEdificioFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     ConexionSQLite db;
+    IComunicaFragment interfaceComunicaFragment;
+    IComunicaFragmentSensores interfaceComunicaFragmentSensores;
+    Activity activity;
+
     ArrayList<Sensor> sensores = null;
     TextView textDescripcion;
     TextView iluminacion,movimiento,humo,temperatura;
+    Button Sensores;
 
     public DetalleEdificioFragment() {
         // Required empty public constructor
@@ -86,6 +94,21 @@ public class DetalleEdificioFragment extends Fragment {
         iluminacion = (TextView) vista.findViewById(R.id.estado_iluminacion);
 
 
+        Sensores = (Button) vista.findViewById(R.id.verSensores);
+        Sensores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle objecto = getArguments();
+                Edificio edificio = (Edificio) objecto.getSerializable("objeto");
+                interfaceComunicaFragment.enviarEdificioAsensor(edificio);
+                /*Intent intent = new Intent(getActivity(),ContenedorSensoresActivity.class);
+                startActivity(intent);*/
+            }
+        });
+
+
+
+
         Bundle objetoEdificio = getArguments();
         Edificio edificio = null;
         if (objetoEdificio != null){
@@ -109,6 +132,7 @@ public class DetalleEdificioFragment extends Fragment {
                     iluminacion.setText("ON");
                     iluminacion.setTextColor(Color.parseColor("#00FF00"));
                 }
+
             }
         }
         return vista;
@@ -124,6 +148,10 @@ public class DetalleEdificioFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if(context instanceof Activity){
+            this.activity = (Activity) context;
+            interfaceComunicaFragment = (IComunicaFragment) this.activity;
+        }
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {

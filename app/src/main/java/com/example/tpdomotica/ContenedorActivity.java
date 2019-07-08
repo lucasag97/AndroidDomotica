@@ -34,4 +34,13 @@ public class ContenedorActivity extends AppCompatActivity implements
         //cargamos el fragment en el activity
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,detalleEdificio).addToBackStack(null).commit();
     }
+    @Override
+    public void enviarEdificioAsensor(Edificio edificio){
+        listaSensor = new SensorFragment();
+        Bundle bundleEnvio = new Bundle();
+        bundleEnvio.putSerializable("objeto",edificio);
+        listaSensor.setArguments(bundleEnvio);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,listaSensor).addToBackStack(null).commit();
+    }
 }

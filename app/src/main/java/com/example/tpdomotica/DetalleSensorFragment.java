@@ -1,32 +1,23 @@
 package com.example.tpdomotica;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SensorFragment.OnFragmentInteractionListener} interface
+ * {@link DetalleSensorFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link SensorFragment#newInstance} factory method to
+ * Use the {@link DetalleSensorFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SensorFragment extends Fragment {
+public class DetalleSensorFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,14 +29,7 @@ public class SensorFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    ArrayList<Sensor> listaSensores;
-    RecyclerView recyclerSensores;
-    Activity activity;
-    IComunicaFragmentSensores interfaceComunicaFragment;
-    SharedPreferences pref;
-    ConexionSQLite db;
-
-    public SensorFragment() {
+    public DetalleSensorFragment() {
         // Required empty public constructor
     }
 
@@ -55,11 +39,11 @@ public class SensorFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SensorFragment.
+     * @return A new instance of fragment DetalleSensorFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SensorFragment newInstance(String param1, String param2) {
-        SensorFragment fragment = new SensorFragment();
+    public static DetalleSensorFragment newInstance(String param1, String param2) {
+        DetalleSensorFragment fragment = new DetalleSensorFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -74,47 +58,13 @@ public class SensorFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        db = new ConexionSQLite(getActivity(), "db_domotica", null, 1);
-        pref =  this.getActivity().getSharedPreferences("MisPreferencias",Context.MODE_PRIVATE);
-        ArrayList<Sensor> listaSensores;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View vista = inflater.inflate(R.layout.fragment_sensor, container, false);
-
-        listaSensores = new ArrayList<Sensor>();
-        recyclerSensores = vista.findViewById(R.id.recyclerIDsensor);
-        recyclerSensores.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        consultarListaSensores(listaSensores);
-        AdaptadorSensor adapter = new AdaptadorSensor(listaSensores);
-        recyclerSensores.setAdapter(adapter);
-        return vista;
-    }
-    private void consultarListaSensores(ArrayList<Sensor> listaSensores) {
-        SQLiteDatabase db_actual = db.getReadableDatabase();
-        Bundle objetoEdificio = getArguments();
-        Edificio edificio = (Edificio) objetoEdificio.getSerializable("objeto");
-        //select * from edificio where id_usuario = ....
-        Cursor cursor = db_actual.rawQuery("SELECT S._id, S.tipo, S.umbral, ES.valor FROM sensor S INNER JOIN edificio_sensor ES ON S._id = ES.id_sensor WHERE ES.id_edificio = "+edificio.getID(), null);
-
-        int cont = cursor.getCount();
-        if (cursor.moveToFirst()) {
-            for (int i = 0; i<=cont-1;i++){
-                Sensor sensor = new Sensor();
-                sensor.setID(cursor.getInt(0));
-                sensor.setTIPO(cursor.getString(1));
-                sensor.setUMBRAL(cursor.getInt(2));
-                sensor.setVALOR_ACTUAL(cursor.getInt(3));
-
-                listaSensores.add(sensor);
-                cursor.moveToNext();
-            }
-        }else{
-            Toast.makeText(getActivity(),"error",Toast.LENGTH_SHORT).show();
-        }
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_detalle_sensor, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

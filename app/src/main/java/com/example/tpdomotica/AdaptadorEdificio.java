@@ -27,7 +27,7 @@ public class AdaptadorEdificio extends
     @Override
     public void onBindViewHolder(EdificioViewHolder edificioViewHolder, int i) {
         int cont = i+1;
-        edificioViewHolder.Nombre.setText("Edificio "+cont);
+        edificioViewHolder.Nombre.setText("Sensor "+cont);
         edificioViewHolder.Informacion.setText(ListaEdificio.get(i).getDIRECCION());
         cont++;
     }

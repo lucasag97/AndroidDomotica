@@ -1,9 +1,20 @@
 package com.example.tpdomotica;
 
-public class Sensor {
+import java.io.Serializable;
+
+public class Sensor implements Serializable {
     private int ID;
     private String TIPO;
     private int UMBRAL;
+    private int VALOR_ACTUAL;
+
+    public int getVALOR_ACTUAL() {
+        return VALOR_ACTUAL;
+    }
+
+    public void setVALOR_ACTUAL(int VALOR_ACTUAL) {
+        this.VALOR_ACTUAL = VALOR_ACTUAL;
+    }
 
     public Sensor() {
 
