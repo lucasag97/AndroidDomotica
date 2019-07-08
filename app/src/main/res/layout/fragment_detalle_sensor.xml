@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetalleSensorFragment">
+    android:orientation="vertical"
+    tools:context=".Fragment.DetalleSensorFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/tituloSensor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sensor"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/datosActualesSensor"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:text="Datos Actuales: "
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="Historico"
+        android:textSize="30dp"
+        android:gravity="center" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerIDSensorDetalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+
+</LinearLayout>
