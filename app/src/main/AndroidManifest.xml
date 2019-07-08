@@ -11,18 +11,18 @@
         android:roundIcon="@mipmap/ic_edificio_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ContenedorSensoresActivity"></activity>
-        <activity android:name=".ContenedorActivity" />
+        <activity android:name=".Activity.ContenedorSensoresActivity"></activity>
+        <activity android:name=".Activity.ContenedorActivity" />
 
         <service
-            android:name=".Servicio"
+            android:name=".Entidades.Servicio"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".EdificioActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activity.EdificioActivity" />
+        <activity android:name=".Activity.RegisterActivity" />
+        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
