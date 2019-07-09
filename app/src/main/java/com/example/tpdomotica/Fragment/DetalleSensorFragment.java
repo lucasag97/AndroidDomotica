@@ -98,14 +98,32 @@ public class DetalleSensorFragment extends Fragment {
         Bundle objetoSensor = getArguments();
         sensor = (Sensor) objetoSensor.getSerializable("sensor");
         Titulo.setText(sensor.getTIPO());
-        if(sensor.getTIPO().equals("temperatura")) {
-            DatosActuales.setText("Datos Actuales: " + sensor.getVALOR_ACTUAL()+"°C");
-        }else {
-            DatosActuales.setText("Datos Actuales: " + sensor.getVALOR_ACTUAL());
+
+        int valor = sensor.getVALOR_ACTUAL();
+        int umbral = sensor.getUMBRAL();
+        switch (sensor.getTIPO()){
+            case "temperatura":
+                DatosActuales.setText("Temperatura actual: " + sensor.getVALOR_ACTUAL() + "°C");
+                break;
+            case "gas":
+                if(valor < umbral) {
+                    DatosActuales.setText("Ambiente libre de gas");
+                }else {
+                    DatosActuales.setText("Se detecto gas en el ambiente");
+                }
+                break;
+            case "movimiento":
+                if(valor < umbral){
+                    DatosActuales.setText("No se detecto movimiento");
+                }else{
+                    DatosActuales.setText("Se detecto movimiento");
+                }
+                break;
+            case "iluminacion":
+                DatosActuales.setText("Ambiente bien iluminado");
         }
-        //SELECT S._id, S.tipo, S.umbral, ES.valor, ES.id_edificio FROM sensor S INNER JOIN edificio_sensor ES ON S._id = ES.id_sensor WHERE ES.id_edificio =
-        Cursor cursor = db_actual.rawQuery("SELECT HS._id,HS.id_sensor,HS.id_edificio,HS.valor,HS.momento,S.umbral from historico_sensor HS INNER JOIN sensor S ON HS.id_sensor = S._id " +
-                "WHERE (HS.id_edificio = "+sensor.getID_EDI()+") AND (HS.id_sensor = "+sensor.getID()+") ORDER BY HS.momento DESC LIMIT 5",null);
+        //select ES.id_sensor,ES.valor,ES.momento from historico_sensor ES  INNER JOIN sensor S ON S._id = ES.id_sensor WHERE (ES.id_edificio = 1) AND (ES.id_sensor =  4) ORDER BY ES.momento DESC LIMIT 5
+        Cursor cursor = db_actual.rawQuery("SELECT * FROM historico_sensor HS INNER JOIN sensor S ON S._id = HS.id_sensor WHERE (HS.id_sensor = "+sensor.getID()+" ) AND (HS.id_edificio = "+sensor.getID_EDI()+" ) ORDER BY HS.momento DESC LIMIT 5",null);
         int cont = cursor.getCount();
         if (cursor.moveToFirst()) {
             for (int i = 0; i<=cont-1;i++){
@@ -115,14 +133,14 @@ public class DetalleSensorFragment extends Fragment {
                 historico.setID_EDIFICIO_H(cursor.getString(2));
                 historico.setHISTORICO_VALOR(cursor.getString(3));
                 historico.setHISTORICO_TIMESTAMP(cursor.getString(4));
-                historico.setHISTORICO_UMBRAL(cursor.getString(5));
+                historico.setHISTORICO_UMBRAL(sensor.getUMBRAL());
                 historico.setHISTORICO_TIPO(sensor.getTIPO());
 
                 historial.add(historico);
                 cursor.moveToNext();
             }
         }else{
-            Toast.makeText(getActivity(),"error",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),Integer.toString(sensor.getID()),Toast.LENGTH_SHORT).show();
         }
 
         recyclerSensores.setLayoutManager(new LinearLayoutManager(getContext()));

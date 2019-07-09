@@ -23,7 +23,7 @@
 
     <!-- Alta edificio -->
     <string name="crear_edi">Registrar edificio</string>
-    <string name="sens_dis">Sensores disponibles</string>
+    <string name="sens_dis">Sensores Activos</string>
     <string name="direccion">Dirección</string>
     <string name="ubicacion">Ubicación</string>
     <string name="use_gps">Usar GPS</string>

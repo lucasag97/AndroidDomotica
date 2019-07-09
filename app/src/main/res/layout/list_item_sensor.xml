@@ -44,7 +44,7 @@
     <TextView
         android:layout_width="380dp"
         android:layout_height="1dp"
-        android:background="@color/design_default_color_primary"
+        android:background="@color/lila_claro"
         android:layout_below="@+id/idImagen"
         android:layout_marginTop="11dp"
         android:layout_marginLeft="10dp"/>

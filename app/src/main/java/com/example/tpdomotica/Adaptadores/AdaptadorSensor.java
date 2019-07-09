@@ -31,18 +31,29 @@ public class AdaptadorSensor extends
     @Override
     public void onBindViewHolder(SensorViewHolder sensorViewHolder, int i) {
         sensorViewHolder.Nombre.setText("Sensor "+ListaSensores.get(i).getTIPO());
+        String tipo = ListaSensores.get(i).getTIPO();
+        int valor = ListaSensores.get(i).getVALOR_ACTUAL();
+        int umbral = ListaSensores.get(i).getUMBRAL();
 
-        switch (ListaSensores.get(i).getTIPO()){
+        switch (tipo){
             case "iluminacion":
-                sensorViewHolder.Informacion.setText("Valor Actual: "+ListaSensores.get(i).getVALOR_ACTUAL());
+                sensorViewHolder.Informacion.setText("Ambiente bien iluminado");
                 sensorViewHolder.icono.setImageResource(R.mipmap.ic_iluminacion_round);
                 break;
             case "gas":
-                sensorViewHolder.Informacion.setText("Valor Actual: "+ListaSensores.get(i).getVALOR_ACTUAL());
+                if(valor < umbral) {
+                    sensorViewHolder.Informacion.setText("Ambiente libre de gas");
+                }else{
+                    sensorViewHolder.Informacion.setText("Se detecto gas en el ambiente");
+                }
                 sensorViewHolder.icono.setImageResource(R.mipmap.ic_humo_round);
                 break;
             case "movimiento":
-                sensorViewHolder.Informacion.setText("Valor Actual: "+ListaSensores.get(i).getVALOR_ACTUAL());
+                if(valor < umbral) {
+                    sensorViewHolder.Informacion.setText("No se detecto movimiento");
+                }else{
+                    sensorViewHolder.Informacion.setText("Se detecto movimiento");
+                }
                 sensorViewHolder.icono.setImageResource(R.mipmap.ic_movimiento_round);
                 break;
             case "temperatura":

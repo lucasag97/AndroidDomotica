@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.tpdomotica.Entidades.Historico;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 
 public class AdaptadorHistorial extends RecyclerView.Adapter<AdaptadorHistorial.HistorialViewHolder> implements View.OnClickListener {
 
-    ArrayList<Historico> historial = null;
+    ArrayList<Historico> historial;
     private View.OnClickListener listener;
 
     public AdaptadorHistorial(ArrayList<Historico> historial){
@@ -23,7 +24,7 @@ public class AdaptadorHistorial extends RecyclerView.Adapter<AdaptadorHistorial.
     }
 
     @Override
-    public AdaptadorHistorial.HistorialViewHolder onCreateViewHolder( ViewGroup viewGroup, int i) {
+    public HistorialViewHolder onCreateViewHolder( ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item_historico,null,false);
         view.setOnClickListener(this);
         return new AdaptadorHistorial.HistorialViewHolder(view);
@@ -32,17 +33,38 @@ public class AdaptadorHistorial extends RecyclerView.Adapter<AdaptadorHistorial.
     @Override
     public void onBindViewHolder( AdaptadorHistorial.HistorialViewHolder historialViewHolder, int i) {
         int valor = Integer.parseInt(historial.get(i).getHISTORICO_VALOR());
-        int umbral = Integer.parseInt(historial.get(i).getHISTORICO_UMBRAL());
+        int umbral = historial.get(i).getHISTORICO_UMBRAL();
         String tipo = historial.get(i).getHISTORICO_TIPO();
 
         if(valor < umbral){
             historialViewHolder.img.setImageResource(R.mipmap.ic_afirmativo_round);
         }
         historialViewHolder.fecha.setText("Fecha del suceso: "+historial.get(i).getHISTORICO_TIMESTAMP());
-        if(tipo.equals("temperatura")){
-            historialViewHolder.valor.setText("Valor: "+historial.get(i).getHISTORICO_VALOR()+" °C");
-        }else {
-            historialViewHolder.valor.setText("Valor: " + historial.get(i).getHISTORICO_VALOR());
+        switch(tipo){
+            case "iluminacion":
+                historialViewHolder.valor.setText("Ambiente bien iluminado");
+                break;
+            case "gas":
+                if (valor< umbral) {
+                    historialViewHolder.valor.setText("No se detecto gas");
+                }else {
+                    historialViewHolder.valor.setText("Se detecto gas en el ambiente");
+                }
+                break;
+            case "movimiento":
+                if (valor< umbral) {
+                    historialViewHolder.valor.setText("No se detecto movimiento");
+                }else {
+                    historialViewHolder.valor.setText("Se detecto movimiento");
+                }
+                break;
+            case "temperatura":
+                if (valor< umbral) {
+                    historialViewHolder.valor.setText("Temperatura agradable "+valor+"°C");
+                }else {
+                    historialViewHolder.valor.setText("Temperatura alarmante "+valor+"°C");
+                }
+                break;
         }
     }
 
@@ -50,7 +72,6 @@ public class AdaptadorHistorial extends RecyclerView.Adapter<AdaptadorHistorial.
     public int getItemCount() {
         return historial.size();
     }
-
     public void setOnclickListener(View.OnClickListener listener){
         this.listener = listener;
     }

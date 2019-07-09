@@ -4,22 +4,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tpdomotica.Adaptadores.AdaptadorSensor;
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
 import com.example.tpdomotica.Entidades.Edificio;
 import com.example.tpdomotica.Entidades.Sensor;
 import com.example.tpdomotica.Interface.IComunicaFragment;
-import com.example.tpdomotica.Interface.IComunicaFragmentSensores;
 import com.example.tpdomotica.R;
 
 import java.util.ArrayList;
@@ -51,8 +51,7 @@ public class DetalleEdificioFragment extends Fragment {
 
     ArrayList<Sensor> sensores = null;
     TextView textDescripcion;
-    TextView iluminacion,movimiento,humo,temperatura;
-    Button Sensores;
+    RecyclerView recyclerSensores;
 
     public DetalleEdificioFragment() {
         // Required empty public constructor
@@ -91,48 +90,24 @@ public class DetalleEdificioFragment extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_detalle_edificio, container, false);
 
         textDescripcion = (TextView) vista.findViewById(R.id.EdificioDirreccion);
-        temperatura = (TextView) vista.findViewById(R.id.estado_temperatura);
-        movimiento = (TextView) vista.findViewById(R.id.estado_movimiento);
-        humo = (TextView) vista.findViewById(R.id.estado_humo);
-        iluminacion = (TextView) vista.findViewById(R.id.estado_iluminacion);
-
-
-        Sensores = (Button) vista.findViewById(R.id.verSensores);
-        Sensores.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle objecto = getArguments();
-                Edificio edificio = (Edificio) objecto.getSerializable("objeto");
-                interfaceComunicaFragment.enviarEdificioAsensor(edificio);
-            }
-        });
+        recyclerSensores = (RecyclerView) vista.findViewById(R.id.recyclerIDsensoresActuales);
 
         Bundle objetoEdificio = getArguments();
         Edificio edificio = null;
-        if (objetoEdificio != null){
-            edificio = (Edificio) objetoEdificio.getSerializable("objeto");
-            textDescripcion.setText(edificio.getDIRECCION());
-            ArrayList<Sensor> sen = consultarSensores(edificio);
-            for (Sensor x : sen){
-                if(x.getTIPO().equals("temperatura")){
-                    temperatura.setText("ON");
-                    temperatura.setTextColor(Color.parseColor("#00FF00"));
-                }
-                if(x.getTIPO().equals("gas")){
-                    humo.setText("ON");
-                    humo.setTextColor(Color.parseColor("#00FF00"));
-                }
-                if(x.getTIPO().equals("movimiento")){
-                    movimiento.setText("ON");
-                    movimiento.setTextColor(Color.parseColor("#00FF00"));
-                }
-                if(x.getTIPO().equals("iluminacion")){
-                    iluminacion.setText("ON");
-                    iluminacion.setTextColor(Color.parseColor("#00FF00"));
-                }
+        edificio = (Edificio) objetoEdificio.getSerializable("objeto");
+        textDescripcion.setText(edificio.getDIRECCION());
+        final ArrayList<Sensor>sensores = consultarSensores(edificio);
 
+        recyclerSensores.setLayoutManager(new LinearLayoutManager(getContext()));
+        AdaptadorSensor adapter = new AdaptadorSensor(sensores);
+
+        recyclerSensores.setAdapter(adapter);
+        adapter.setOnclickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                interfaceComunicaFragment.enviarSensor(sensores.get(recyclerSensores.getChildAdapterPosition(v)));
             }
-        }
+        });
         return vista;
     }
 
@@ -167,7 +142,7 @@ public class DetalleEdificioFragment extends Fragment {
         SQLiteDatabase db_actual = db.getReadableDatabase();
         ArrayList<Sensor> sensores = new ArrayList<>();
         //SELECT E._id, S.tipo, valor FROM edificio_sensor ES INNER JOIN edificio E ON ES.id_edificio = E._id INNER JOIN sensor S ON ES.id_sensor = S._id WHERE ES.valor > S.umbral AND E._id = 1
-        Cursor cursor = db_actual.rawQuery("SELECT S._id, S.tipo, S.umbral FROM sensor S INNER JOIN edificio_sensor ES ON S._id = ES.id_sensor WHERE ES.id_edificio = "+edificio.getID(), null);
+        Cursor cursor = db_actual.rawQuery("SELECT S._id, S.tipo, S.umbral,ES.valor FROM sensor S INNER JOIN edificio_sensor ES ON S._id = ES.id_sensor WHERE ES.id_edificio = "+edificio.getID(), null);
         int cont = cursor.getCount();
         if (cursor.moveToFirst()) {
             for (int i = 0; i<=cont-1;i++){
@@ -175,6 +150,8 @@ public class DetalleEdificioFragment extends Fragment {
                 sensor.setID(cursor.getInt(0));
                 sensor.setTIPO(cursor.getString(1));
                 sensor.setUMBRAL(cursor.getInt(2));
+                sensor.setVALOR_ACTUAL(cursor.getInt(3));
+                sensor.setID_EDI(edificio.getID());
 
                 sensores.add(sensor);
                 cursor.moveToNext();

@@ -6,7 +6,7 @@ public class Historico  {
     private String ID_EDIFICIO_H;
     private String HISTORICO_VALOR;
     private String HISTORICO_TIMESTAMP;
-    private String HISTORICO_UMBRAL;
+    private int HISTORICO_UMBRAL;
     private String HISTORICO_TIPO;
 
 
@@ -22,11 +22,11 @@ public class Historico  {
         this.HISTORICO_TIPO = HISTORICO_TIPO;
     }
 
-    public String getHISTORICO_UMBRAL() {
+    public int getHISTORICO_UMBRAL() {
         return HISTORICO_UMBRAL;
     }
 
-    public void setHISTORICO_UMBRAL(String HISTORICO_UMBRAL) {
+    public void setHISTORICO_UMBRAL(int HISTORICO_UMBRAL) {
         this.HISTORICO_UMBRAL = HISTORICO_UMBRAL;
     }
 

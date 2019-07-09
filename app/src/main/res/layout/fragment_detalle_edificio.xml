@@ -35,103 +35,11 @@
             android:textSize="30dp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="380dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="100dp"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_iluminacion_round" />
-
-                <TextView
-                    android:id="@+id/estado_iluminacion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="OFF"
-                    android:textColor="#FF0000" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_humo_round" />
-
-                <TextView
-                    android:id="@+id/estado_humo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="OFF"
-                    android:textColor="#FF0000" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_movimiento_round" />
-
-                <TextView
-                    android:id="@+id/estado_movimiento"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="OFF"
-                    android:textColor="#FF0000" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_temperatura_round" />
-
-                <TextView
-                    android:id="@+id/estado_temperatura"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="OFF"
-                    android:textColor="#FF0000" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/verSensores"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerIDsensoresActuales"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="10dp"
-            android:background="@color/lila_claro"
-            android:text="@string/ver_sens" />
+            android:layout_marginBottom="20dp">
 
-
+        </android.support.v7.widget.RecyclerView>
 </LinearLayout>

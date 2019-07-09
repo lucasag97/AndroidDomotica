@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="100dp"
         android:orientation="horizontal">
-
         <ImageView
             android:id="@+id/idImagen"
             android:layout_width="100dp"
-            android:layout_height="90dp"
-            android:scaleType="fitXY"
-            android:src="@mipmap/ic_alert_round" />
-
+            android:layout_height="100dp"
+            android:src="@mipmap/ic_edificio"/>
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/fecha"
+                android:id="@+id/sensor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fecha_suc"/>
+                android:text="Sensor"
+                android:layout_marginLeft="10dp" />
+
             <TextView
-                android:id="@+id/valor"
+                android:id="@+id/valorSensor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/valor"/>
+                android:text="Valor Actual"
+                android:layout_marginLeft="10dp"/>
         </LinearLayout>
     </LinearLayout>
     <TextView
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/lila_claro"
         android:layout_below="@+id/idImagen"
         android:layout_marginTop="11dp"
         android:layout_marginLeft="10dp"/>
-
 </LinearLayout>

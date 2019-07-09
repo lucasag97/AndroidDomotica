@@ -1,6 +1,5 @@
 package com.example.tpdomotica.Activity;
 
-import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,13 +12,11 @@ import com.example.tpdomotica.Fragment.EdificioFragment;
 import com.example.tpdomotica.Fragment.ModificarEdificioFragment;
 import com.example.tpdomotica.Interface.IComunicaFragment;
 import com.example.tpdomotica.R;
-import com.example.tpdomotica.Fragment.SensorFragment;
 
 public class ContenedorActivity extends AppCompatActivity implements
-        EdificioFragment.OnFragmentInteractionListener, SensorFragment.OnFragmentInteractionListener,
+        EdificioFragment.OnFragmentInteractionListener,
         DetalleSensorFragment.OnFragmentInteractionListener,DetalleEdificioFragment.OnFragmentInteractionListener, ModificarEdificioFragment.OnFragmentInteractionListener, IComunicaFragment {
     EdificioFragment listaEdificios;
-    SensorFragment listaSensor;
     DetalleEdificioFragment detalleEdificio;
     DetalleSensorFragment detalleSensor;
     ModificarEdificioFragment modificarEdificio;
@@ -29,7 +26,7 @@ public class ContenedorActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_contenedor);
 
         listaEdificios = new EdificioFragment();
-        listaSensor = new SensorFragment();
+
 
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,listaEdificios).commit();
     }
@@ -48,15 +45,7 @@ public class ContenedorActivity extends AppCompatActivity implements
         //cargamos el fragment en el activity
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,detalleEdificio).addToBackStack(null).commit();
     }
-    @Override
-    public void enviarEdificioAsensor(Edificio edificio){
-        listaSensor = new SensorFragment();
-        Bundle bundleEnvio = new Bundle();
-        bundleEnvio.putSerializable("objeto",edificio);
-        listaSensor.setArguments(bundleEnvio);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,listaSensor).addToBackStack(null).commit();
-    }
     @Override
     public void enviarSensor(Sensor sensor){
         detalleSensor = new DetalleSensorFragment();
