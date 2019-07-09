@@ -2,6 +2,7 @@ package com.example.tpdomotica.Fragment;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.example.tpdomotica.Activity.ContenedorActivity;
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
 import com.example.tpdomotica.Entidades.Edificio;
 import com.example.tpdomotica.Entidades.Sensor;
@@ -240,6 +242,8 @@ public class ModificarEdificioFragment extends Fragment {
                         db_actual.execSQL(Query);
                     }
                 }
+                Intent intent = new Intent(getActivity(), ContenedorActivity.class);
+                startActivity(intent);
             }
         });
 

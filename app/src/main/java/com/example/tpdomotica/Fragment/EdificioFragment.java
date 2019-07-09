@@ -1,22 +1,29 @@
 package com.example.tpdomotica.Fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.tpdomotica.Activity.ContenedorActivity;
 import com.example.tpdomotica.Adaptadores.AdaptadorEdificio;
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
 import com.example.tpdomotica.Entidades.Edificio;
@@ -90,10 +97,11 @@ public class EdificioFragment extends Fragment {
         ArrayList<Edificio> listaEdificio;
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View vista = inflater.inflate(R.layout.fragment_edificio, container, false);
+        final View vista = inflater.inflate(R.layout.fragment_edificio, container, false);
 
         listaEdificio = new ArrayList<Edificio>();
 
@@ -106,10 +114,15 @@ public class EdificioFragment extends Fragment {
         recyclerEdificio.setLayoutManager(new LinearLayoutManager(getContext()));
 
         consultarListaEdificio(listaEdificio);
-        AdaptadorEdificio adapter = new AdaptadorEdificio(listaEdificio);
+        final AdaptadorEdificio adapter = new AdaptadorEdificio(listaEdificio);
         recyclerEdificio.setAdapter(adapter);
 
-
+        adapter.addOnImgListener(new AdaptadorEdificio.IMyViewHolderClicksImg() {
+            @Override
+            public void onImgClick(View v, int position) {
+                interfaceComunicaFragment.enviarEdificio(listaEdificio.get(position));
+            }
+        });
 
         adapter.addOnViewsListener(new AdaptadorEdificio.IMyViewHolderClicks() {
             @Override
@@ -117,10 +130,33 @@ public class EdificioFragment extends Fragment {
                 interfaceComunicaFragment.modificarEdificio(listaEdificio.get(position));
             }
         });
-        adapter.addOnImgListener(new AdaptadorEdificio.IMyViewHolderClicksImg() {
+
+        adapter.addOnDeleteListener(new AdaptadorEdificio.IMyViewHolderClickEliminar() {
             @Override
-            public void onImgClick(View v, int position) {
-                interfaceComunicaFragment.enviarEdificio(listaEdificio.get(position));
+            public void onEliminarClick(View v, final int position) {
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                alert.setTitle("Eliminar");
+                alert.setMessage("¿Esta seguro que quiere borrar este edificio?");
+                alert.setPositiveButton("si", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SQLiteDatabase db_actual = db.getWritableDatabase();
+                        String Query = "DELETE FROM edificio WHERE _id = "+listaEdificio.get(position).getID();
+                        db_actual.execSQL(Query);
+                        db_actual.close();
+                        dialog.dismiss();
+                        //Intent intent = new Intent(getActivity(), ContenedorActivity.class);
+                        //startActivity(intent);
+                    }
+                });
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
             }
         });
         return vista;
@@ -189,5 +225,9 @@ public class EdificioFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void onCreateOptionMenu(Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.menu,menu);
     }
 }

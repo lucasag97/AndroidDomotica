@@ -8,4 +8,5 @@ public interface IComunicaFragment {
     public void enviarEdificio(Edificio edificio);
     public void enviarSensor(Sensor sensor);
     public void modificarEdificio(Edificio edificio);
+    public void recargarEdificio();
 }

@@ -24,6 +24,7 @@ public class AdaptadorEdificio extends
     private View.OnClickListener listener;
     IMyViewHolderClicks mListener;
     IMyViewHolderClicksImg Ilistener;
+    IMyViewHolderClickEliminar Elistener;
 
     public AdaptadorEdificio(ArrayList<Edificio> listaEdificio){
         this.ListaEdificio = listaEdificio;
@@ -57,6 +58,9 @@ public class AdaptadorEdificio extends
     }
     public void addOnImgListener(IMyViewHolderClicksImg ilistener){
         Ilistener = ilistener;
+    }
+    public void addOnDeleteListener(IMyViewHolderClickEliminar Elistener){
+        this.Elistener =  Elistener;
     }
 
     @Override
@@ -92,6 +96,9 @@ public class AdaptadorEdificio extends
             if(v.getId() == R.id.idImagen){
                 Ilistener.onImgClick(v,getPosition());
             }
+            if(v.getId() == R.id.eliminarEdificio){
+                Elistener.onEliminarClick(v,getPosition());
+            }
         }
     }
     public interface IMyViewHolderClicks{
@@ -99,5 +106,8 @@ public class AdaptadorEdificio extends
     }
     public interface IMyViewHolderClicksImg{
         void onImgClick(View v, int position);
+    }
+    public interface IMyViewHolderClickEliminar{
+        void onEliminarClick(View v, int position);
     }
 }

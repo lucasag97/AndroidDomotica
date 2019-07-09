@@ -1,5 +1,6 @@
 package com.example.tpdomotica.Activity;
 
+import android.app.ActionBar;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,12 +21,16 @@ public class ContenedorActivity extends AppCompatActivity implements
     DetalleEdificioFragment detalleEdificio;
     DetalleSensorFragment detalleSensor;
     ModificarEdificioFragment modificarEdificio;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contenedor);
 
         listaEdificios = new EdificioFragment();
+
 
 
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,listaEdificios).commit();
@@ -63,5 +68,9 @@ public class ContenedorActivity extends AppCompatActivity implements
         modificarEdificio.setArguments(bundleEnvio);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,modificarEdificio).addToBackStack(null).commit();
+    }
+    @Override
+    public void recargarEdificio(){
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,listaEdificios).commit();
     }
 }
