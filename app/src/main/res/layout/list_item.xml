@@ -38,14 +38,30 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:text="Descripcion"/>
-
-            <Button
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ubicacion"
-                android:layout_gravity="end"
-                android:gravity="end"/>
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/modificarEdificio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Modificar"/>
 
+                <Button
+                    android:id="@+id/eliminarEdificio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Elimiar"/>
+
+                <Button
+                    android:id="@+id/ubicacionEdificio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ubicacion"
+                    android:layout_gravity="end"
+                    android:gravity="end"/>
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_edificio_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.ContenedorSensoresActivity"></activity>
+        <activity android:name=".Activity.ModificarEdificioActivity"></activity>
         <activity android:name=".Activity.ContenedorActivity" />
 
         <service

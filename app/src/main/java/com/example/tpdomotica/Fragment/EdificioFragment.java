@@ -13,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.tpdomotica.Adaptadores.AdaptadorEdificio;
@@ -46,6 +48,8 @@ public class EdificioFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     ArrayList<Edificio> listaEdificio;
+    Button modificarEdificio,eliminarEdificio,ubicacionEdificio;
+    ImageView img;
     RecyclerView recyclerEdificio;
     Activity activity;
     IComunicaFragment interfaceComunicaFragment;
@@ -92,6 +96,12 @@ public class EdificioFragment extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_edificio, container, false);
 
         listaEdificio = new ArrayList<Edificio>();
+
+        modificarEdificio = (Button) vista.findViewById(R.id.modificarEdificio);
+        eliminarEdificio = (Button) vista.findViewById(R.id.eliminarEdificio);
+        ubicacionEdificio = (Button) vista.findViewById(R.id.ubicacionEdificio);
+        img = (ImageView) vista.findViewById(R.id.idImagen);
+
         recyclerEdificio = vista.findViewById(R.id.recyclerID);
         recyclerEdificio.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -102,11 +112,22 @@ public class EdificioFragment extends Fragment {
         adapter.setOnclickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"Seleccionado: "+listaEdificio.get(recyclerEdificio.getChildAdapterPosition(v)),Toast.LENGTH_LONG).show();
                 interfaceComunicaFragment.enviarEdificio(listaEdificio.get(recyclerEdificio.getChildAdapterPosition(v)));
             }
         });
 
+        adapter.addOnViewsListener(new AdaptadorEdificio.IMyViewHolderClicks() {
+            @Override
+            public void onButtonClick(View v, int position) {
+                interfaceComunicaFragment.modificarEdificio(listaEdificio.get(position));
+            }
+        });
+        adapter.addOnImgListener(new AdaptadorEdificio.IMyViewHolderClicksImg() {
+            @Override
+            public void onImgClick(View v, int position) {
+                interfaceComunicaFragment.enviarEdificio(listaEdificio.get(position));
+            }
+        });
         return vista;
     }
     private void consultarListaEdificio(ArrayList<Edificio> listaEdificio) {

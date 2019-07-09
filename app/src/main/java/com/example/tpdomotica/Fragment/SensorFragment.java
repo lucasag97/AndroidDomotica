@@ -101,7 +101,6 @@ public class SensorFragment extends Fragment {
         adapter.setOnclickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"Seleccionaste: " + listaSensores.get(recyclerSensores.getChildAdapterPosition(v)),Toast.LENGTH_LONG).show();
                 interfaceComunicaFragment.enviarSensor(listaSensores.get(recyclerSensores.getChildAdapterPosition(v)));
             }
         });
