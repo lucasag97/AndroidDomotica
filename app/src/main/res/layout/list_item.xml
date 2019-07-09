@@ -46,21 +46,24 @@
                     android:id="@+id/modificarEdificio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Modificar"/>
+                    android:text="Modificar"
+                    android:background="@color/lila_claro"/>
 
                 <Button
                     android:id="@+id/eliminarEdificio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Elimiar"/>
+                    android:text="Elimiar"
+                    android:layout_marginLeft="5dp"
+                    android:background="@color/lila_claro"/>
 
                 <Button
                     android:id="@+id/ubicacionEdificio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ubicacion"
-                    android:layout_gravity="end"
-                    android:gravity="end"/>
+                    android:layout_marginLeft="5dp"
+                    android:background="@color/lila_claro" />
             </LinearLayout>
 
         </LinearLayout>
