@@ -1,12 +1,18 @@
 package com.example.tpdomotica.Adaptadores;
 
+import android.content.Intent;
+import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.tpdomotica.Activity.ModificarEdificioActivity;
 import com.example.tpdomotica.Entidades.Edificio;
+import com.example.tpdomotica.Interface.IComunicaFragment;
 import com.example.tpdomotica.R;
 
 import java.util.ArrayList;
@@ -16,6 +22,8 @@ public class AdaptadorEdificio extends
 
     ArrayList<Edificio> ListaEdificio;
     private View.OnClickListener listener;
+    IMyViewHolderClicks mListener;
+    IMyViewHolderClicksImg Ilistener;
 
     public AdaptadorEdificio(ArrayList<Edificio> listaEdificio){
         this.ListaEdificio = listaEdificio;
@@ -23,16 +31,17 @@ public class AdaptadorEdificio extends
     @Override
     public EdificioViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item,null,false);
-        view.setOnClickListener(this);
         return new EdificioViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(EdificioViewHolder edificioViewHolder, int i) {
         int cont = i+1;
+        final Edificio edificio = ListaEdificio.get(i);
         edificioViewHolder.Nombre.setText("Edificio "+cont);
         edificioViewHolder.Informacion.setText(ListaEdificio.get(i).getDIRECCION());
         cont++;
+
     }
 
     @Override
@@ -43,6 +52,12 @@ public class AdaptadorEdificio extends
     public void setOnclickListener(View.OnClickListener listener){
         this.listener = listener;
     }
+    public void addOnViewsListener(IMyViewHolderClicks listener){
+        mListener = listener;
+    }
+    public void addOnImgListener(IMyViewHolderClicksImg ilistener){
+        Ilistener = ilistener;
+    }
 
     @Override
     public void onClick(View view) {
@@ -51,12 +66,38 @@ public class AdaptadorEdificio extends
         }
     }
 
-    public class EdificioViewHolder extends RecyclerView.ViewHolder {
+    public class EdificioViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView Nombre,Informacion;
+        Button modificar,eliminar,ubicar;
+        ImageView img;
         public EdificioViewHolder(View itemView){
             super(itemView);
             Nombre = (TextView) itemView.findViewById(R.id.idNombre);
             Informacion = (TextView) itemView.findViewById(R.id.idInfo);
+            img = (ImageView) itemView.findViewById(R.id.idImagen);
+            img.setOnClickListener(this);
+            modificar = (Button) itemView.findViewById(R.id.modificarEdificio);
+            modificar.setOnClickListener(this);
+            eliminar = (Button) itemView.findViewById(R.id.eliminarEdificio);
+            eliminar.setOnClickListener(this);
+            ubicar = (Button) itemView.findViewById(R.id.ubicacionEdificio);
+            ubicar.setOnClickListener(this);
+
         }
+        @Override
+        public void onClick(View v){
+            if(v.getId() == R.id.modificarEdificio){
+                mListener.onButtonClick(v,getPosition());
+            }
+            if(v.getId() == R.id.idImagen){
+                Ilistener.onImgClick(v,getPosition());
+            }
+        }
+    }
+    public interface IMyViewHolderClicks{
+        void onButtonClick(View v,int position);
+    }
+    public interface IMyViewHolderClicksImg{
+        void onImgClick(View v, int position);
     }
 }

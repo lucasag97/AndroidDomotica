@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.tpdomotica.Entidades.Edificio;
 import com.example.tpdomotica.Utilidades.Utilidades;
 
 public class ConexionSQLite extends SQLiteOpenHelper {
@@ -65,5 +66,8 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void editarEdificio(Edificio edificio){
+
+    }
 
 }
