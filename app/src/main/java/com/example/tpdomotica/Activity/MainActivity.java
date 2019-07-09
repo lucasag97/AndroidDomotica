@@ -47,7 +47,14 @@ public class MainActivity extends AppCompatActivity{
             }
         }
 
-        service = (Button) findViewById(R.id.btn_service);
+        /*String lang = pref.getString("lang", "none");
+
+        if(lang.equals("none")){
+            Intent first = new Intent(this, FirstTimeActivity.class);
+            startActivity(first);
+        }*/
+
+        /*service = (Button) findViewById(R.id.btn_service);
         service.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -69,7 +76,8 @@ public class MainActivity extends AppCompatActivity{
                 Intent ver = new Intent(getApplicationContext(),ContenedorActivity.class);
                 startActivity(ver);
             }
-        });
+        });*/
+        startService(new Intent(MainActivity.this, Servicio.class));
 
     }
     @Override

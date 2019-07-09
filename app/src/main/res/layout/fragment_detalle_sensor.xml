@@ -10,7 +10,7 @@
         android:id="@+id/tituloSensor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sensor"
+        android:text="@string/sensor"
         android:textSize="40dp"
         android:textStyle="bold"
         android:layout_gravity="center"
@@ -20,7 +20,7 @@
         android:id="@+id/datosActualesSensor"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:text="Datos Actuales: "
+        android:text="@string/datos_act"
         android:textSize="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="20dp"/>
@@ -29,7 +29,7 @@
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:text="Historico"
+        android:text="@string/historico"
         android:textSize="30dp"
         android:gravity="center" />
 

@@ -1,10 +1,61 @@
 <resources>
     <string name="app_name">TP Domotica</string>
-    <string name="title_activity_edificio">EdificioActivity</string>
+
+    <string name="logout">Cerrar sesión</string>
+    <string name="continuar">Continuar</string>
+
+    <!-- Login -->
+    <string name="welcome">Bienvenido</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="remember">Recuérdame</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="noacc">No tenés cuenta? Crea una</string>
+
+    <!-- Registro -->
+    <string name="registro">Registro</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="dni">DNI</string>
+    <string name="pwd_repeat">Repetir contraseña</string>
+    <string name="registrar">Registrarse</string>
+    <string name="already">Ya eres miembro? Iniciar sesión</string>
+
+    <!-- Alta edificio -->
+    <string name="crear_edi">Registrar edificio</string>
+    <string name="sens_dis">Sensores disponibles</string>
+    <string name="direccion">Dirección</string>
+    <string name="ubicacion">Ubicación</string>
+    <string name="use_gps">Usar GPS</string>
+    <string name="guardar">Guardar</string>
+
+    <string name="ver_edi">Ver edificios</string>
+    <string name="ver_edi_pen">Ver edificios pendientes</string>
+    <string name="dire_edi">Dirección del edificio</string>
+    <string name="sens_act">Sensores disponibles</string>
+    <string name="ver_sens">Ver sensores</string>
+    <string name="sensor">Sensor</string>
+    <string name="datos_act">Datos actuales</string>
+    <string name="valor_actual">Valor actual</string>
+    <string name="historico">Histórico</string>
+    <string name="alerta">Alerta</string>
+
+
+    <string name="confirm">Confirmar</string>
+    <string name="settings">Configuración</string>
+    <string name="idioma">Seleccione el idioma</string>
+
+    <string name="español">Español</string>
+    <string name="ingles">Inglés</string>
+    <string name="frances">Francés</string>
+    <string name="italiano">Italiano</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <color name="green">#0DB013</color>
     <color name="lila">#916eff</color>
     <color name="lila_claro">#b39afd</color>
+    <string name="fecha_suc">Fecha del suceso</string>
+    <string name="valor">Valor</string>
+    <string name="descripcion">Descripción</string>
 </resources>

@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="42dp"
             android:layout_marginBottom="24dp"
-            android:text="Registro"
+            android:text="@string/registro"
             android:textSize="24dp"
             android:layout_gravity="center_horizontal" />
 
@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
-                android:hint="Nombre" />
+                android:hint="@string/nombre" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
-                android:hint="Apellido" />
+                android:hint="@string/apellido" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
-                android:hint="DNI" />
+                android:hint="@string/dni" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Email Label -->
@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="Nombre de usuario" />
+                android:hint="@string/username" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Contraseña"/>
+                android:hint="@string/password"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -93,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Repetir contraseña"/>
+                android:hint="@string/pwd_repeat"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Signup Button -->
@@ -106,13 +106,13 @@
             android:padding="12dp"
             android:onClick="onClick"
             android:background="@color/lila_claro"
-            android:text="Registrarse"/>
+            android:text="@string/registrar"/>
 
         <TextView android:id="@+id/link_login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="Ya eres miembro? Iniciar sesion"
+            android:text="@string/already"
             android:gravity="center"
             android:textSize="16dip"/>
 

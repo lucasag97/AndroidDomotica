@@ -4,10 +4,14 @@
 
     <item
         android:id="@+id/menu_edificio"
-        android:title="Edificio"
+        android:title="@string/crear_edi"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/menu_settings"
+        android:title="@string/settings"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/menu_logout"
-        android:title="Cerrar sesión"
+        android:title="@string/logout"
         app:showAsAction="never" />
 </menu>

@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="42dp"
             android:layout_marginBottom="24dp"
-            android:text="Bienvenido"
+            android:text="@string/welcome"
             android:textSize="24dp"
             android:layout_gravity="center_horizontal" />
 
@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="Nombre de usuario" />
+                android:hint="@string/username" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password"/>
+                android:hint="@string/password"/>
         </android.support.design.widget.TextInputLayout>
 
         <Switch
@@ -55,7 +55,7 @@
             android:layout_marginBottom="30dp"
             android:layout_marginRight="10dp"
             android:textColor="@color/cardview_dark_background"
-            android:text="Recuerdame" />
+            android:text="@string/remember" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_login"
@@ -65,13 +65,13 @@
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:background="@color/lila_claro"
-            android:text="Ingresar"/>
+            android:text="@string/ingresar"/>
 
         <TextView android:id="@+id/btn_toregistro"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="No tenés cuenta? Crea una"
+            android:text="@string/noacc"
             android:gravity="center"
             android:textSize="16dip"/>
 

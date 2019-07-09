@@ -136,7 +136,7 @@ public class Servicio extends Service {
                         for(int i = 0; i < cant; i++) {
                             Random r = new Random();
                             //Para temperatura
-                            int temp_v = r.nextInt(61);
+                            int temp_v = r.nextInt((60 - 5) + 1) + 5;
 
                             ContentValues cont = new ContentValues();
                             cont.put(Utilidades.EDI_SENS_VALOR, temp_v);
@@ -219,7 +219,7 @@ public class Servicio extends Service {
             }
         };
         timer1.schedule(doAsynchronousTask1, 0, 15000);
-        timer2.schedule(doAsynchronousTask2,0, 20000);
+        timer2.schedule(doAsynchronousTask2,0, 35000);
 
         return START_STICKY;
     }

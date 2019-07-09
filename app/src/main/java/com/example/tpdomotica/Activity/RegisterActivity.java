@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
@@ -17,6 +18,7 @@ import com.example.tpdomotica.Utilidades.Utilidades;
 public class RegisterActivity extends AppCompatActivity {
 
     EditText nombre, apellido, username, dni, password, password2;
+    TextView toLogin;
     boolean condicion = true;
 
     @Override
@@ -30,12 +32,22 @@ public class RegisterActivity extends AppCompatActivity {
         dni = (EditText) findViewById(R.id.form_dni);
         password = (EditText) findViewById(R.id.form_pwd);
         password2 = (EditText)findViewById(R.id.pwd_repeat);
+        toLogin = (TextView) findViewById(R.id.link_login);
+
+        toLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void onClick(View view){
 
         registrarUsuario();
     }
+
     public void error(){
         Toast.makeText(getApplicationContext(),"Hubo un error al ingresar los datos", Toast.LENGTH_LONG).show();
         nombre.setText("");

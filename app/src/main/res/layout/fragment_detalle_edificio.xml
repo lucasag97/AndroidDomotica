@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Dirreccion del edificio"
+            android:text="@string/dire_edi"
             android:textSize="30dp"
             android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Sensores activos"
+            android:text="@string/sens_dis"
             android:textSize="30dp"
             android:textStyle="bold" />
 
@@ -128,7 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Sensores" />
+            android:text="@string/ver_sens" />
 
 
 </LinearLayout>
