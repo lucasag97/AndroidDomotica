@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity{
                     stopService(new Intent(MainActivity.this,Servicio.class));
                 }
             }
-        });
+        });*/
         VerEdificios = (Button) findViewById(R.id.idVerEdificios);
         VerEdificios.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity{
                 Intent ver = new Intent(getApplicationContext(),ContenedorActivity.class);
                 startActivity(ver);
             }
-        });*/
+        });
         startService(new Intent(MainActivity.this, Servicio.class));
 
     }
