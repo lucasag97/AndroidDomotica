@@ -109,12 +109,7 @@ public class EdificioFragment extends Fragment {
         AdaptadorEdificio adapter = new AdaptadorEdificio(listaEdificio);
         recyclerEdificio.setAdapter(adapter);
 
-        adapter.setOnclickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                interfaceComunicaFragment.enviarEdificio(listaEdificio.get(recyclerEdificio.getChildAdapterPosition(v)));
-            }
-        });
+
 
         adapter.addOnViewsListener(new AdaptadorEdificio.IMyViewHolderClicks() {
             @Override

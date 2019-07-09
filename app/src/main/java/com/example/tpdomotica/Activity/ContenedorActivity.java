@@ -75,15 +75,4 @@ public class ContenedorActivity extends AppCompatActivity implements
 
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,modificarEdificio).addToBackStack(null).commit();
     }
-    @Override
-    public void onBackPressed(){
-        if(getFragmentManager().getBackStackEntryCount() == 0){
-            finish();
-        }else{
-            getFragmentManager().popBackStack();
-        }
-    }
-    public void volver(){
-        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,listaEdificios).addToBackStack(null).commit();
-    }
 }
