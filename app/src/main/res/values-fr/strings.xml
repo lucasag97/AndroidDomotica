@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TP Domotica</string>
+    <string name="logout">Fermer la session</string>
+
+    <string name="welcome">Bienvenue</string>
+    <string name="username">"Nom d'utilisateur "</string>
+    <string name="password">"Mot de passe "</string>
+    <string name="remember">"Souviens toi de moi "</string>
+    <string name="ingresar">Entrer</string>
+    <string name="noacc">"Vous n'avez pas de compte? Créer un "</string>
+
+    <string name="registro">Inscription</string>
+    <string name="nombre">nom</string>
+    <string name="apellido">Le nom</string>
+    <string name="dni">DNI</string>
+    <string name="pwd_repeat">"Répéter le mot de passe "</string>
+    <string name="registrar">S\'inscrire</string>
+    <string name="already">"Déjà membre? Commencer la session "</string>
+
+    <string name="crear_edi">"Enregistrement du bâtiment "</string>
+    <string name="sens_dis">"Capteurs disponibles "</string>
+    <string name="direccion">adresse</string>
+    <string name="ubicacion">Emplacement</string>
+    <string name="use_gps">"Utiliser le GPS "</string>
+    <string name="guardar">sauvegarder</string>
+
+    <string name="ver_edi">"Voir les bâtiments "</string>
+    <string name="ver_edi_pen">Voir les bâtiments en attente</string>
+    <string name="dire_edi">Adresse du bâtiment</string>
+    <string name="sens_act">"Capteurs disponibles "</string>
+    <string name="ver_sens">Voir les capteurs</string>
+    <string name="sensor">Capteur</string>
+    <string name="datos_act">Données actuelles</string>
+    <string name="valor_actual">Valeur actuelle</string>
+    <string name="historico">Historique</string>
+    <string name="alerta">Alerte</string>
+
+
+    <string name="confirm">Confirmer</string>
+    <string name="settings">La configuration</string>
+    <string name="idioma">Sélectionnez la langue</string>
+    <string name="español">Espagnol</string>
+    <string name="ingles">Anglais</string>
+    <string name="frances">Le français</string>
+    <string name="italiano">Italien</string>
+    <string name="continuar">Continuer</string>
+    <string name="fecha_suc">Date de l\'événement</string>
+    <string name="valor">Valeur</string>
+    <string name="descripcion">Description</string>
+</resources>

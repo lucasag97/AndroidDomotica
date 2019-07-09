@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TP Domotica</string>
+    <string name="alerta">Alert</string>
+    <string name="already">Already memeber? Login</string>
+    <string name="apellido">Last name</string>
+    <string name="confirm">Confirm</string>
+    <string name="crear_edi">Register building</string>
+    <string name="datos_act">Current values</string>
+    <string name="dire_edi">Building adress</string>
+    <string name="direccion">Adress</string>
+    <string name="dni">DNI</string>
+    <string name="guardar">Save</string>
+    <string name="historico">Historical</string>
+    <string name="idioma">Select the language</string>
+    <string name="ingresar">Login</string>
+    <string name="logout">Logout</string>
+    <string name="noacc">Do not have account? Sign up</string>
+    <string name="nombre">Name</string>
+    <string name="password">Password</string>
+    <string name="pwd_repeat">Repeat password</string>
+    <string name="registrar">Register</string>
+    <string name="registro">Register</string>
+    <string name="remember">Remember me</string>
+    <string name="sens_act">Available sensors</string>
+    <string name="sens_dis">Available sensors</string>
+    <string name="sensor">Sensor</string>
+    <string name="settings">Settings</string>
+    <string name="ubicacion">Location</string>
+    <string name="use_gps">Use GPS</string>
+    <string name="username">Username</string>
+    <string name="valor_actual">Current value</string>
+    <string name="ver_edi">See buildings</string>
+    <string name="ver_edi_pen">See pending building</string>
+    <string name="ver_sens">See sensors</string>
+    <string name="welcome">Welcome</string>
+    <string name="italiano">Italian</string>
+    <string name="ingles">English</string>
+    <string name="frances">French</string>
+    <string name="español">Spanish</string>
+    <string name="continuar">Continue</string>
+    <string name="fecha_suc">Date of the event</string>
+    <string name="valor">Value</string>
+    <string name="descripcion">Description</string>
+</resources>
