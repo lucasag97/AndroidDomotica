@@ -10,6 +10,21 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Iniciar servicio"
+        android:gravity="center_horizontal"
+        android:textSize="30dp"/>
+    <Button
+        android:id="@+id/btn_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Iniciar servicio"
+        android:textSize="20dp"
+        android:layout_gravity="center_horizontal"
+        android:padding="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/ver_edi"
         android:gravity="center_horizontal"
         android:textSize="30dp"/>
@@ -22,5 +37,14 @@
         android:layout_gravity="center_horizontal"
         android:padding="16dp"
         android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/btn_edis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cantidad edificios"
+        android:textSize="20dp"
+        android:layout_gravity="center_horizontal"
+        android:padding="16dp" />
 
 </LinearLayout>

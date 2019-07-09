@@ -18,9 +18,16 @@ import java.util.Locale;
 
 public class FirstTimeActivity extends AppCompatActivity {
 
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
+        editor = pref.edit();
+        editor.putBoolean("firstTime", false);
+        editor.commit();
         loadLocale();
         setContentView(R.layout.activity_first_time);
 
@@ -39,7 +46,7 @@ public class FirstTimeActivity extends AppCompatActivity {
         con.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent login = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(login);
             }
         });
@@ -54,18 +61,26 @@ public class FirstTimeActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0){
                     setLocale("es");
+                    editor.putString("lang", "es");
+                    editor.apply();
                     recreate();
                 }
                 if (which == 1){
                     setLocale("en");
+                    editor.putString("lang", "en");
+                    editor.apply();
                     recreate();
                 }
                 if (which == 2){
                     setLocale("fr");
+                    editor.putString("lang", "fr");
+                    editor.apply();
                     recreate();
                 }
                 if (which == 3){
                     setLocale("it");
+                    editor.putString("lang", "it");
+                    editor.apply();
                     recreate();
                 }
 
@@ -83,14 +98,13 @@ public class FirstTimeActivity extends AppCompatActivity {
         Configuration config = new Configuration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-        SharedPreferences pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
+        //SharedPreferences pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
+        //SharedPreferences.Editor editor = pref.edit();
         editor.putString("lang", lang);
         editor.apply();
     }
 
     public void loadLocale(){
-        SharedPreferences pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
         String language = pref.getString("lang", "");
         setLocale(language);
     }

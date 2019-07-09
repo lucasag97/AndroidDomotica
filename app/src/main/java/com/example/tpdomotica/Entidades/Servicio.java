@@ -36,6 +36,10 @@ public class Servicio extends Service {
     private SharedPreferences pref;
     private String idUser;
     private String CHANNEL_ID;
+    Timer timer1;
+    Timer timer2;
+    private TimerTask doAsynchronousTask1;
+    private TimerTask doAsynchronousTask2;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -47,9 +51,9 @@ public class Servicio extends Service {
         pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
         idUser = pref.getString("id", "999");
         final Handler handler = new Handler();
-        Timer timer1 = new Timer();
-        Timer timer2 = new Timer();
-        TimerTask doAsynchronousTask1 = new TimerTask() {
+        timer1 = new Timer();
+        timer2 = new Timer();
+        doAsynchronousTask1 = new TimerTask() {
             @Override
             public void run() {
                 handler.post(new Runnable() {
@@ -113,7 +117,7 @@ public class Servicio extends Service {
                 });
             }
         };
-        TimerTask doAsynchronousTask2 = new TimerTask() {
+        doAsynchronousTask2 = new TimerTask() {
             @Override
             public void run() {
                 handler.post(new Runnable() {
@@ -218,14 +222,16 @@ public class Servicio extends Service {
                 });
             }
         };
-        timer1.schedule(doAsynchronousTask1, 0, 15000);
-        timer2.schedule(doAsynchronousTask2,0, 35000);
+        timer1.schedule(doAsynchronousTask1, 0, 19000);
+        timer2.schedule(doAsynchronousTask2,0, 18000);
 
         return START_STICKY;
     }
     @Override
     public void onDestroy() {
         super.onDestroy();
+        timer1.cancel();
+        timer2.cancel();
         Toast.makeText(this, "Service destroyed by user.", Toast.LENGTH_LONG).show();
     }
 }

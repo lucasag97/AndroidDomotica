@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
 import com.example.tpdomotica.R;
@@ -21,16 +22,18 @@ import com.example.tpdomotica.Utilidades.Utilidades;
 
 public class MainActivity extends AppCompatActivity{
 
-    Button service, VerEdificios;
+    Button service, VerEdificios, cantEdi;
     SharedPreferences pref;
+    boolean lang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ConexionSQLite conn = new ConexionSQLite(this, "db_domotica", null, 1);
         pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
+
+        lang = pref.getBoolean("firstTime", true);
 
         //Si no esta logueado va a login
         boolean isLogged = pref.getBoolean("logged", false);
@@ -38,23 +41,13 @@ public class MainActivity extends AppCompatActivity{
             Intent login = new Intent(this, LoginActivity.class);
             startActivity(login);
         }
-        else{
-            Utilidades.edis.clear();
-            SQLiteDatabase db = conn.getReadableDatabase();
-            Cursor c = db.rawQuery("SELECT DISTINCT "+Utilidades.EDI_ID+" FROM "+Utilidades.TABLA_EDIFICIO+" WHERE "+Utilidades.EDI_ID_USUARIO+" = "+pref.getString("id", "999"), null);
-            if (c.moveToFirst()){
-                Utilidades.edis.add(c.getInt(0));
-            }
-        }
 
-        /*String lang = pref.getString("lang", "none");
-
-        if(lang.equals("none")){
+        if(lang){
             Intent first = new Intent(this, FirstTimeActivity.class);
             startActivity(first);
-        }*/
+        }
 
-        /*service = (Button) findViewById(R.id.btn_service);
+        service = (Button) findViewById(R.id.btn_service);
         service.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -68,7 +61,8 @@ public class MainActivity extends AppCompatActivity{
                     stopService(new Intent(MainActivity.this,Servicio.class));
                 }
             }
-        });*/
+        });
+
         VerEdificios = (Button) findViewById(R.id.idVerEdificios);
         VerEdificios.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,8 +71,15 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(ver);
             }
         });
-        startService(new Intent(MainActivity.this, Servicio.class));
 
+        cantEdi = findViewById(R.id.btn_edis);
+        cantEdi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String size = Integer.toString(Utilidades.edis.size());
+                Toast.makeText(getApplicationContext(), size, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -98,8 +99,11 @@ public class MainActivity extends AppCompatActivity{
                 cerrar_sesion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putBoolean("logged", false);
+                editor.remove("id");
                 Utilidades.edis.clear();
                 editor.commit();
+                stopService(new Intent(MainActivity.this,Servicio.class));
+                stopService(new Intent(MainActivity.this,Servicio.class));
                 startActivity(cerrar_sesion);
                 return true;
             default:

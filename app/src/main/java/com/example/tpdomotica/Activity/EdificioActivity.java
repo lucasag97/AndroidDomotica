@@ -105,13 +105,10 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                     values.clear();
                 }
 
-                db.close();
-
                 Utilidades.edis.add(idEdi);
 
-                editor = pref.edit();
-                editor.putInt("idEdi",idEdi);
-                editor.commit();
+                db.close();
+
 
                 /*Toast.makeText(getApplicationContext(),"Se habilito el edificio con exito",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);

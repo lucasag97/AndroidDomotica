@@ -96,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 editor.putBoolean("logged", true);
+                editor.putBoolean("firstTime", false);
                 editor.commit();
                 startActivity(intent);
             }
@@ -128,11 +129,16 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void iniciarSesion(String id,String rol){
         //SharedPreferences.Editor editor = pref.edit();
+        Utilidades.edis.clear();
         SQLiteDatabase db1 = db.getReadableDatabase();
         Cursor c = db1.rawQuery("SELECT DISTINCT "+ Utilidades.EDI_ID+" FROM "+Utilidades.TABLA_EDIFICIO+" WHERE "+Utilidades.EDI_ID_USUARIO+" = "+id, null);
         if (c.moveToFirst()){
-            Utilidades.edis.add(c.getInt(0));
+            for (int i=0; i<c.getCount(); i++) {
+                Utilidades.edis.add(c.getInt(0));
+                c.moveToNext();
+            }
         }
+        db1.close();
         editor.putString("id",id);
         editor.putString("rol",rol);
         editor.commit();
