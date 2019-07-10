@@ -33,7 +33,7 @@ import com.example.tpdomotica.Utilidades.Utilidades;
 
 public class EdificioActivity extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
     CheckBox iluminacion,gases,movimiento,temperatura;
-    EditText direccion;
+    EditText direccion, nombre;
     String Direccion_user;
     boolean ilu,gas,movi,temp,dir;
     Double longitud,latitud;
@@ -57,12 +57,14 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 SQLiteDatabase db = conn.getWritableDatabase();
                 ContentValues values= new ContentValues();
                 Direccion_user =  direccion.getText().toString();
+                String nombre1 = nombre.getText().toString();
                 if(!Direccion_user.equals(null) && !Direccion_user.equals("")){
                     values.put(Utilidades.EDI_DIRECCION,direccion.getText().toString());
                     dir = true;
                 }else {
-                    dir =false;
+                    dir = false;
                 }
+                values.put(Utilidades.EDI_NOMBRE, nombre1);
                 values.put(Utilidades.EDI_DIRECCION_LAT, latitud);
                 values.put(Utilidades.EDI_DIRECCION_LONG, longitud);
                 values.put(Utilidades.EDI_ESTADO, 0); //Estado edificio pendiente = 0, aprobado = 1, rechazado = 2
@@ -132,6 +134,8 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
         pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
 
         direccion = (EditText) findViewById(R.id.direccion);
+
+        nombre = findViewById(R.id.edi_nombre);
 
         iluminacion = (CheckBox) findViewById(R.id.edificio_iluminacion);
         iluminacion.setOnClickListener(new View.OnClickListener() {
