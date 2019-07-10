@@ -39,7 +39,7 @@ public class AdaptadorEdificio extends
     public void onBindViewHolder(EdificioViewHolder edificioViewHolder, int i) {
         int cont = i+1;
         final Edificio edificio = ListaEdificio.get(i);
-        edificioViewHolder.Nombre.setText("Edificio "+cont);
+        edificioViewHolder.Nombre.setText(edificio.getNOMBRE());
         edificioViewHolder.Informacion.setText(ListaEdificio.get(i).getDIRECCION());
         cont++;
 

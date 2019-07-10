@@ -142,12 +142,25 @@ public class EdificioFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         SQLiteDatabase db_actual = db.getWritableDatabase();
+
                         String Query = "DELETE FROM edificio WHERE _id = "+listaEdificio.get(position).getID();
                         db_actual.execSQL(Query);
+
+                        String Query1= "DELETE FROM edificio_sensor WHERE id_edificio = "+listaEdificio.get(position).getID();
+                        db_actual.execSQL(Query1);
+
+                        ArrayList<Integer> edis = Utilidades.edis;
+                        int cont = edis.size();
+                        for (int i = 0;i < cont;i++){
+                            if((int)edis.get(i) == listaEdificio.get(position).getID()){
+                                edis.remove(i);
+                            }
+                        }
                         db_actual.close();
                         dialog.dismiss();
-                        //Intent intent = new Intent(getActivity(), ContenedorActivity.class);
-                        //startActivity(intent);
+
+                        Intent intent = new Intent(getActivity(), ContenedorActivity.class);
+                        startActivity(intent);
                     }
                 });
                 alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -170,11 +183,12 @@ public class EdificioFragment extends Fragment {
             for (int i = 0; i<=cont-1;i++){
                 Edificio edificio = new Edificio();
                 edificio.setID(cursor.getInt(0));
-                edificio.setDIRECCION(cursor.getString(1));
-                edificio.setDIRRECION_LAT(cursor.getString(2));
-                edificio.setDIRECCION_LONG(cursor.getString(3));
-                edificio.setESTADO(cursor.getInt(4));
-                edificio.setID_USUARIO(cursor.getInt(5));
+                edificio.setNOMBRE(cursor.getString(1));
+                edificio.setDIRECCION(cursor.getString(2));
+                edificio.setDIRRECION_LAT(cursor.getString(3));
+                edificio.setDIRECCION_LONG(cursor.getString(4));
+                edificio.setESTADO(cursor.getInt(5));
+                edificio.setID_USUARIO(cursor.getInt(6));
 
                 listaEdificio.add(edificio);
                 cursor.moveToNext();

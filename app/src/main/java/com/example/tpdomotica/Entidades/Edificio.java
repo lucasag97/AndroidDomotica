@@ -10,11 +10,19 @@ public class Edificio implements Serializable {
     private String DIRECCION_LONG;
     private int ESTADO;
     private int ID_USUARIO;
+    private String NOMBRE;
 
     public Edificio() {
 
     }
 
+    public String getNOMBRE() {
+        return NOMBRE;
+    }
+
+    public void setNOMBRE(String NOMBRE) {
+        this.NOMBRE = NOMBRE;
+    }
 
     public int getID() {
         return ID;
