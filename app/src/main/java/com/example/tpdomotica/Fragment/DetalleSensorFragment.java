@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +48,8 @@ public class DetalleSensorFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     Activity activity;
     IComunicaFragment interfaceComunicaFragment;
-    TextView Titulo,DatosActuales;
+    TextView Titulo,DatosActuales,listaVacia;
+    ImageView alert;
     RecyclerView recyclerSensores;
     ConexionSQLite db;
 
@@ -91,6 +93,10 @@ public class DetalleSensorFragment extends Fragment {
         SQLiteDatabase db_actual = db.getReadableDatabase();
         Titulo = (TextView) vista.findViewById(R.id.tituloSensor);
         DatosActuales = (TextView) vista.findViewById(R.id.datosActualesSensor);
+
+        listaVacia = (TextView) vista.findViewById(R.id.sms_lista_vacia);
+        alert = (ImageView) vista.findViewById(R.id.idImagenAlerta);
+
         recyclerSensores = (RecyclerView) vista.findViewById(R.id.recyclerIDSensorDetalle);
 
         ArrayList<Historico> historial = new ArrayList<>();
@@ -139,14 +145,21 @@ public class DetalleSensorFragment extends Fragment {
                 historial.add(historico);
                 cursor.moveToNext();
             }
-        }else{
-            Toast.makeText(getActivity(),Integer.toString(sensor.getID()),Toast.LENGTH_SHORT).show();
         }
-
         recyclerSensores.setLayoutManager(new LinearLayoutManager(getContext()));
         AdaptadorHistorial adapter = new AdaptadorHistorial(historial);
         recyclerSensores.setAdapter(adapter);
+        if(adapter.getItemCount() <= 0){
+            listaVacia();
+        }
         return vista;
+    }
+
+    private void listaVacia() {
+        listaVacia.setText("No hay un historial asociado");
+        listaVacia.setVisibility(View.VISIBLE);
+        alert.setVisibility(View.VISIBLE);
+        recyclerSensores.setVisibility(View.GONE);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

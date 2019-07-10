@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tpdomotica.Activity.ContenedorActivity;
@@ -56,7 +56,8 @@ public class EdificioFragment extends Fragment {
 
     ArrayList<Edificio> listaEdificio;
     Button modificarEdificio,eliminarEdificio,ubicacionEdificio;
-    ImageView img;
+    TextView vistaVacia;
+    ImageView img, alerta;
     RecyclerView recyclerEdificio;
     Activity activity;
     IComunicaFragment interfaceComunicaFragment;
@@ -105,78 +106,93 @@ public class EdificioFragment extends Fragment {
 
         listaEdificio = new ArrayList<Edificio>();
 
+        vistaVacia = (TextView) vista.findViewById(R.id.sms_lista_vacia);
+        alerta = (ImageView) vista.findViewById(R.id.idImagenAlerta);
+
         modificarEdificio = (Button) vista.findViewById(R.id.modificarEdificio);
         eliminarEdificio = (Button) vista.findViewById(R.id.eliminarEdificio);
         ubicacionEdificio = (Button) vista.findViewById(R.id.ubicacionEdificio);
         img = (ImageView) vista.findViewById(R.id.idImagen);
 
         recyclerEdificio = vista.findViewById(R.id.recyclerID);
-        recyclerEdificio.setLayoutManager(new LinearLayoutManager(getContext()));
 
         consultarListaEdificio(listaEdificio);
+
         final AdaptadorEdificio adapter = new AdaptadorEdificio(listaEdificio);
         recyclerEdificio.setAdapter(adapter);
-
-        adapter.addOnImgListener(new AdaptadorEdificio.IMyViewHolderClicksImg() {
-            @Override
-            public void onImgClick(View v, int position) {
-                interfaceComunicaFragment.enviarEdificio(listaEdificio.get(position));
+        recyclerEdificio.setLayoutManager(new LinearLayoutManager(getContext()));
+        if(recyclerEdificio.getAdapter() != null){
+            if(recyclerEdificio.getAdapter().getItemCount() == 0){
+                noHayEdificios();
             }
-        });
+        }
+        adapter.addOnImgListener(new AdaptadorEdificio.IMyViewHolderClicksImg() {
+                @Override
+                public void onImgClick(View v, int position) { interfaceComunicaFragment.enviarEdificio(listaEdificio.get(position));
+                }
+            });
 
         adapter.addOnViewsListener(new AdaptadorEdificio.IMyViewHolderClicks() {
-            @Override
-            public void onButtonClick(View v, int position) {
-                interfaceComunicaFragment.modificarEdificio(listaEdificio.get(position));
-            }
-        });
+                @Override
+                public void onButtonClick(View v, int position) {
+                    interfaceComunicaFragment.modificarEdificio(listaEdificio.get(position));
+                }
+            });
 
         adapter.addOnDeleteListener(new AdaptadorEdificio.IMyViewHolderClickEliminar() {
             @Override
             public void onEliminarClick(View v, final int position) {
-
                 AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
                 alert.setTitle(getResources().getString(R.string.eliminar));
                 alert.setMessage(getResources().getString(R.string.sure));
                 alert.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SQLiteDatabase db_actual = db.getWritableDatabase();
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SQLiteDatabase db_actual = db.getWritableDatabase();
 
-                        int cont = Utilidades.edis.size();
-                        int borrar = 0;
-                        for (int i=0; i<cont; i++){
-                            if(Utilidades.edis.get(i) == listaEdificio.get(position).getID()){
-                                borrar = i;
+                            int cont = Utilidades.edis.size();
+                            int borrar = 0;
+                            for (int i=0; i<cont; i++){
+                                if(Utilidades.edis.get(i) == listaEdificio.get(position).getID()){
+                                    borrar = i;
+                                }
                             }
+
+                            Utilidades.edis.remove(borrar);
+
+                            String Query = "DELETE FROM edificio WHERE _id = "+listaEdificio.get(position).getID();
+                            db_actual.execSQL(Query);
+
+                            String Query1= "DELETE FROM edificio_sensor WHERE id_edificio = "+listaEdificio.get(position).getID();
+                            db_actual.execSQL(Query1);
+
+                            db_actual.close();
+                            dialog.dismiss();
+
+                            Intent intent = new Intent(getActivity(), ContenedorActivity.class);
+                            startActivity(intent);
                         }
-
-                        Utilidades.edis.remove(borrar);
-
-                        String Query = "DELETE FROM edificio WHERE _id = "+listaEdificio.get(position).getID();
-                        db_actual.execSQL(Query);
-
-                        String Query1= "DELETE FROM edificio_sensor WHERE id_edificio = "+listaEdificio.get(position).getID();
-                        db_actual.execSQL(Query1);
-
-                        db_actual.close();
-                        dialog.dismiss();
-
-                        Intent intent = new Intent(getActivity(), ContenedorActivity.class);
-                        startActivity(intent);
-                    }
-                });
+                    });
                 alert.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
                 alert.show();
-            }
-        });
+                }
+            });
         return vista;
     }
+
+    private void noHayEdificios() {
+        String mensaje = "No hay edificios asociados";
+        vistaVacia.setText(mensaje);
+        vistaVacia.setVisibility(View.VISIBLE);
+        recyclerEdificio.setVisibility(View.GONE);
+        alerta.setVisibility(View.VISIBLE);
+    }
+
     private void consultarListaEdificio(ArrayList<Edificio> listaEdificio) {
         SQLiteDatabase db_actual = db.getReadableDatabase();
         //select * from edificio where id_usuario = ....
@@ -196,8 +212,6 @@ public class EdificioFragment extends Fragment {
                 listaEdificio.add(edificio);
                 cursor.moveToNext();
             }
-        }else{
-            Toast.makeText(getActivity(),"error",Toast.LENGTH_SHORT).show();
         }
     }
 

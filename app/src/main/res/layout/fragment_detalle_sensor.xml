@@ -34,12 +34,39 @@
         android:textSize="30dp"
         android:gravity="center" />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerIDSensorDetalle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+            <TextView
+                android:id="@+id/sms_lista_vacia"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text=""
+                android:gravity="center"
+                android:layout_marginTop="100dp"
+                android:visibility="invisible"/>
+            <ImageView
+                android:id="@+id/idImagenAlerta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="-20dp"
+                android:src="@mipmap/ic_alert_foreground"
+                android:visibility="invisible"/>
+        </LinearLayout>
+    </FrameLayout>
 
 
 
