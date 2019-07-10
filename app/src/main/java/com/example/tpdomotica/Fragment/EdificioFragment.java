@@ -136,9 +136,9 @@ public class EdificioFragment extends Fragment {
             public void onEliminarClick(View v, final int position) {
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                alert.setTitle("Eliminar");
-                alert.setMessage("¿Esta seguro que quiere borrar este edificio?");
-                alert.setPositiveButton("si", new DialogInterface.OnClickListener() {
+                alert.setTitle(getResources().getString(R.string.eliminar));
+                alert.setMessage(getResources().getString(R.string.sure));
+                alert.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         SQLiteDatabase db_actual = db.getWritableDatabase();
@@ -163,7 +163,7 @@ public class EdificioFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
-                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                alert.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

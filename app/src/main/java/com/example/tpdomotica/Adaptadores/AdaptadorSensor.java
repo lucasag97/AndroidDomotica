@@ -37,27 +37,27 @@ public class AdaptadorSensor extends
 
         switch (tipo){
             case "iluminacion":
-                sensorViewHolder.Informacion.setText("Ambiente bien iluminado");
+                sensorViewHolder.Informacion.setText(sensorViewHolder.Informacion.getContext().getResources().getString(R.string.ilu_bien));
                 sensorViewHolder.icono.setImageResource(R.mipmap.ic_iluminacion_round);
                 break;
             case "gas":
                 if(valor < umbral) {
-                    sensorViewHolder.Informacion.setText("Ambiente libre de gas");
+                    sensorViewHolder.Informacion.setText(sensorViewHolder.Informacion.getContext().getResources().getString(R.string.gas_lib));
                 }else{
-                    sensorViewHolder.Informacion.setText("Se detecto gas en el ambiente");
+                    sensorViewHolder.Informacion.setText(sensorViewHolder.Informacion.getContext().getResources().getString(R.string.gas_det));
                 }
                 sensorViewHolder.icono.setImageResource(R.mipmap.ic_humo_round);
                 break;
             case "movimiento":
                 if(valor < umbral) {
-                    sensorViewHolder.Informacion.setText("No se detecto movimiento");
+                    sensorViewHolder.Informacion.setText(sensorViewHolder.Informacion.getContext().getResources().getString(R.string.no_mov));
                 }else{
-                    sensorViewHolder.Informacion.setText("Se detecto movimiento");
+                    sensorViewHolder.Informacion.setText(sensorViewHolder.Informacion.getContext().getResources().getString(R.string.mov_si));
                 }
                 sensorViewHolder.icono.setImageResource(R.mipmap.ic_movimiento_round);
                 break;
             case "temperatura":
-                sensorViewHolder.Informacion.setText("Valor Actual: "+ListaSensores.get(i).getVALOR_ACTUAL()+"°C");
+                sensorViewHolder.Informacion.setText(sensorViewHolder.Informacion.getContext().getResources().getString(R.string.valor_actual)+": "+ListaSensores.get(i).getVALOR_ACTUAL()+"°C");
                 sensorViewHolder.icono.setImageResource(R.mipmap.ic_temperatura_round);
         }
     }

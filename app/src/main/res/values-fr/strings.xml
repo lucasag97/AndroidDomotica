@@ -48,4 +48,18 @@
     <string name="fecha_suc">Date de l\'événement</string>
     <string name="valor">Valeur</string>
     <string name="descripcion">Description</string>
+    <string name="eliminar">Éliminer</string>
+    <string name="modificar">Modifier</string>
+    <string name="no">Non</string>
+    <string name="yes">Oui</string>
+    <string name="temp_act">"Température actuelle: "</string>
+    <string name="gas_lib">Environnement sanz gas</string>
+    <string name="gas_det">Le gaz a été détecté dans l\'environnement</string>
+    <string name="no_mov">Aucun mouvement détecté</string>
+    <string name="mov_si">Le mouvement a été détecté</string>
+    <string name="ilu_bien">Environnement bien éclairé</string>
+    <string name="sure">Êtes-vous sûr de vouloir supprimer ce bâtiment?</string>
+    <string name="suceso">Date de l\'événement</string>
+    <string name="agradable">Température agréable</string>
+    <string name="alarmante">Température alarmante</string>
 </resources>

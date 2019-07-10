@@ -39,30 +39,30 @@ public class AdaptadorHistorial extends RecyclerView.Adapter<AdaptadorHistorial.
         if(valor < umbral){
             historialViewHolder.img.setImageResource(R.mipmap.ic_afirmativo_round);
         }
-        historialViewHolder.fecha.setText("Fecha del suceso: "+historial.get(i).getHISTORICO_TIMESTAMP());
+        historialViewHolder.fecha.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.suceso)+": "+historial.get(i).getHISTORICO_TIMESTAMP());
         switch(tipo){
             case "iluminacion":
-                historialViewHolder.valor.setText("Ambiente bien iluminado");
+                historialViewHolder.valor.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.ilu_bien));
                 break;
             case "gas":
                 if (valor< umbral) {
-                    historialViewHolder.valor.setText("No se detecto gas");
+                    historialViewHolder.valor.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.gas_lib));
                 }else {
-                    historialViewHolder.valor.setText("Se detecto gas en el ambiente");
+                    historialViewHolder.valor.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.gas_det));
                 }
                 break;
             case "movimiento":
                 if (valor< umbral) {
-                    historialViewHolder.valor.setText("No se detecto movimiento");
+                    historialViewHolder.valor.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.no_mov));
                 }else {
-                    historialViewHolder.valor.setText("Se detecto movimiento");
+                    historialViewHolder.valor.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.mov_si));
                 }
                 break;
             case "temperatura":
                 if (valor< umbral) {
-                    historialViewHolder.valor.setText("Temperatura agradable "+valor+"°C");
+                    historialViewHolder.valor.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.agradable)+" "+valor+"°C");
                 }else {
-                    historialViewHolder.valor.setText("Temperatura alarmante "+valor+"°C");
+                    historialViewHolder.valor.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.alarmante)+" "+valor+"°C");
                 }
                 break;
         }

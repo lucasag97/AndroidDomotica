@@ -54,7 +54,7 @@
             <EditText android:id="@+id/form_dni"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords"
+                android:inputType="phone"
                 android:hint="@string/dni" />
         </android.support.design.widget.TextInputLayout>
 

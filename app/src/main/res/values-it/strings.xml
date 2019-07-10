@@ -42,4 +42,18 @@
     <string name="fecha_suc">Data dell\'evento</string>
     <string name="valor">Valore</string>
     <string name="descripcion">Descrizione</string>
+    <string name="eliminar">Rimuovere</string>
+    <string name="modificar">Aggionare</string>
+    <string name="sure">Sei sicuro di voler cancellare questo edificio?</string>
+    <string name="no">Non</string>
+    <string name="yes">Se</string>
+    <string name="temp_act">"Temperatura attuale: "</string>
+    <string name="gas_lib">Ambiente senza gas</string>
+    <string name="gas_det">Il gas e stato rilevato nell\'ambiente</string>
+    <string name="no_mov">Nessun movimiento rilevato</string>
+    <string name="mov_si">Movimiento e stato rilevato</string>
+    <string name="ilu_bien">Ambiente ben iluminato</string>
+    <string name="suceso">Data dell\'evento</string>
+    <string name="agradable">Temperatura piacevole</string>
+    <string name="alarmante">Temperatura allarmante</string>
 </resources>

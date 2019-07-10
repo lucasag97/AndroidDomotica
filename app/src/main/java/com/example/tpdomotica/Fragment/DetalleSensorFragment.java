@@ -103,24 +103,24 @@ public class DetalleSensorFragment extends Fragment {
         int umbral = sensor.getUMBRAL();
         switch (sensor.getTIPO()){
             case "temperatura":
-                DatosActuales.setText("Temperatura actual: " + sensor.getVALOR_ACTUAL() + "°C");
+                DatosActuales.setText(getResources().getString(R.string.temp_act) + sensor.getVALOR_ACTUAL() + "°C");
                 break;
             case "gas":
                 if(valor < umbral) {
-                    DatosActuales.setText("Ambiente libre de gas");
+                    DatosActuales.setText(getResources().getString(R.string.gas_lib));
                 }else {
-                    DatosActuales.setText("Se detecto gas en el ambiente");
+                    DatosActuales.setText(getResources().getString(R.string.gas_det));
                 }
                 break;
             case "movimiento":
                 if(valor < umbral){
-                    DatosActuales.setText("No se detecto movimiento");
+                    DatosActuales.setText(getResources().getString(R.string.no_mov));
                 }else{
-                    DatosActuales.setText("Se detecto movimiento");
+                    DatosActuales.setText(getResources().getString(R.string.mov_si));
                 }
                 break;
             case "iluminacion":
-                DatosActuales.setText("Ambiente bien iluminado");
+                DatosActuales.setText(getResources().getString(R.string.ilu_bien));
         }
         //select ES.id_sensor,ES.valor,ES.momento from historico_sensor ES  INNER JOIN sensor S ON S._id = ES.id_sensor WHERE (ES.id_edificio = 1) AND (ES.id_sensor =  4) ORDER BY ES.momento DESC LIMIT 5
         Cursor cursor = db_actual.rawQuery("SELECT * FROM historico_sensor HS INNER JOIN sensor S ON S._id = HS.id_sensor WHERE (HS.id_sensor = "+sensor.getID()+" ) AND (HS.id_edificio = "+sensor.getID_EDI()+" ) ORDER BY HS.momento DESC LIMIT 5",null);

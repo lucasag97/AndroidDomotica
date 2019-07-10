@@ -42,4 +42,18 @@
     <string name="fecha_suc">Date of the event</string>
     <string name="valor">Value</string>
     <string name="descripcion">Description</string>
+    <string name="eliminar">Delete</string>
+    <string name="modificar">Update</string>
+    <string name="sure">Are you sure you want to delete this building?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="temp_act">"Actual temperature: "</string>
+    <string name="gas_lib">Gas-free environment</string>
+    <string name="gas_det">Gas was detected in the environment</string>
+    <string name="no_mov">No movement detected</string>
+    <string name="mov_si">Movement was detected</string>
+    <string name="ilu_bien">Well lit environment</string>
+    <string name="suceso">Date of the event</string>
+    <string name="agradable">Nice tempeture</string>
+    <string name="alarmante">Alarming temperature</string>
 </resources>

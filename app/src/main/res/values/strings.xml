@@ -58,4 +58,18 @@
     <string name="fecha_suc">Fecha del suceso</string>
     <string name="valor">Valor</string>
     <string name="descripcion">Descripción</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="modificar">Modificar</string>
+    <string name="sure">¿Está seguro que quiere borrar este edificio?</string>
+    <string name="no">No</string>
+    <string name="yes">Si</string>
+    <string name="temp_act">Temperatura actual:</string>
+    <string name="gas_lib">Ambiente libre de gas</string>
+    <string name="gas_det">Se detectó gas en el ambiente</string>
+    <string name="no_mov">No se detectó movimiento</string>
+    <string name="mov_si">Se detectó movimiento</string>
+    <string name="ilu_bien">Ambiente bien iluminado</string>
+    <string name="suceso">Fecha del suceso</string>
+    <string name="agradable">Temperatura agradable</string>
+    <string name="alarmante">Temperatura alarmante</string>
 </resources>

@@ -35,7 +35,7 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
     CheckBox iluminacion,gases,movimiento,temperatura;
     EditText direccion, nombre;
     String Direccion_user;
-    boolean ilu,gas,movi,temp,dir;
+    boolean ilu,gas,movi,temp, validado = false;
     Double longitud,latitud;
     Button btn_edificio_guardar;
     Switch localizame;
@@ -58,70 +58,69 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 ContentValues values= new ContentValues();
                 Direccion_user =  direccion.getText().toString();
                 String nombre1 = nombre.getText().toString();
-                if(!Direccion_user.equals(null) && !Direccion_user.equals("")){
+                if(!Direccion_user.equals(""))
                     values.put(Utilidades.EDI_DIRECCION,direccion.getText().toString());
-                    dir = true;
-                }else {
-                    dir = false;
-                }
-                values.put(Utilidades.EDI_NOMBRE, nombre1);
+                if (!nombre1.equals(""))
+                    values.put(Utilidades.EDI_NOMBRE, nombre1);
+                if (!Direccion_user.equals("") && !nombre1.equals(""))
+                    validado = true;
                 values.put(Utilidades.EDI_DIRECCION_LAT, latitud);
                 values.put(Utilidades.EDI_DIRECCION_LONG, longitud);
                 values.put(Utilidades.EDI_ESTADO, 0); //Estado edificio pendiente = 0, aprobado = 1, rechazado = 2
                 values.put(Utilidades.EDI_ID_USUARIO, pref.getString("id",""));
-                db.insert(Utilidades.TABLA_EDIFICIO, null, values);
-                //db.close();
-                values.clear();
 
-                SQLiteDatabase read = conn.getReadableDatabase();
-                Cursor cursor = read.rawQuery("SELECT * FROM "+Utilidades.TABLA_EDIFICIO+" ORDER BY "+Utilidades.EDI_ID+" DESC LIMIT 1", null);
-                cursor.moveToFirst();
-                int idEdi = cursor.getInt(0);
-
-                if(ilu == true){
-                    values.put(Utilidades.ID_SENSOR, 1);
-                    values.put(Utilidades.ID_EDIFICIO, idEdi);
-                    values.put(Utilidades.EDI_SENS_VALOR, "0");
-                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
+                if(validado) {
+                    db.insert(Utilidades.TABLA_EDIFICIO, null, values);
                     values.clear();
-                }
-                if (gas == true){
-                    values.put(Utilidades.ID_SENSOR, 2);
-                    values.put(Utilidades.ID_EDIFICIO, idEdi);
-                    values.put(Utilidades.EDI_SENS_VALOR, "0");
-                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
-                    values.clear();
-                }
-                if (movi == true){
-                    values.put(Utilidades.ID_SENSOR, 3);
-                    values.put(Utilidades.ID_EDIFICIO, idEdi);
-                    values.put(Utilidades.EDI_SENS_VALOR, "0");
-                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
-                    values.clear();
-                }
-                if (temp == true){
-                    values.put(Utilidades.ID_SENSOR, 4);
-                    values.put(Utilidades.ID_EDIFICIO, idEdi);
-                    values.put(Utilidades.EDI_SENS_VALOR, "0");
-                    db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
-                    values.clear();
-                }
-
-                Utilidades.edis.add(idEdi);
-
-                db.close();
-
-
-                /*Toast.makeText(getApplicationContext(),"Se habilito el edificio con exito",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);*/
-                if(dir == true) {
                     Toast.makeText(getApplicationContext(), "Se habilito el edificio con exito", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
-                }else{
-                    direccion.setError("La direccion no puede estar vacía");
+
+                    SQLiteDatabase read = conn.getReadableDatabase();
+                    Cursor cursor = read.rawQuery("SELECT * FROM "+Utilidades.TABLA_EDIFICIO+" ORDER BY "+Utilidades.EDI_ID+" DESC LIMIT 1", null);
+                    cursor.moveToFirst();
+                    int idEdi = cursor.getInt(0);
+
+                    if(ilu == true){
+                        values.put(Utilidades.ID_SENSOR, 1);
+                        values.put(Utilidades.ID_EDIFICIO, idEdi);
+                        values.put(Utilidades.EDI_SENS_VALOR, "0");
+                        db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
+                        values.clear();
+                    }
+                    if (gas == true){
+                        values.put(Utilidades.ID_SENSOR, 2);
+                        values.put(Utilidades.ID_EDIFICIO, idEdi);
+                        values.put(Utilidades.EDI_SENS_VALOR, "0");
+                        db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
+                        values.clear();
+                    }
+                    if (movi == true){
+                        values.put(Utilidades.ID_SENSOR, 3);
+                        values.put(Utilidades.ID_EDIFICIO, idEdi);
+                        values.put(Utilidades.EDI_SENS_VALOR, "0");
+                        db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
+                        values.clear();
+                    }
+                    if (temp == true){
+                        values.put(Utilidades.ID_SENSOR, 4);
+                        values.put(Utilidades.ID_EDIFICIO, idEdi);
+                        values.put(Utilidades.EDI_SENS_VALOR, "0");
+                        db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
+                        values.clear();
+                    }
+
+                    Utilidades.edis.add(idEdi);
+                }else {
+                    if (Direccion_user.equals("")) {
+                        direccion.setError("La direccion no puede estar vacía");
+                    }
+                    if (nombre1.equals("")){
+                        nombre.setError(("El nombre no puede estar vacío"));
+                    }
                 }
+
+                db.close();
             }
         }
     };
