@@ -55,8 +55,9 @@ public class EdificioFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     ArrayList<Edificio> listaEdificio;
+    ArrayList<Edificio> listaEdificioHabilitados = new ArrayList<>();
     Button modificarEdificio,eliminarEdificio,ubicacionEdificio;
-    TextView vistaVacia;
+    TextView vistaVacia,tituloDinamico;
     ImageView img, alerta;
     RecyclerView recyclerEdificio;
     Activity activity;
@@ -108,6 +109,7 @@ public class EdificioFragment extends Fragment {
 
         vistaVacia = (TextView) vista.findViewById(R.id.sms_lista_vacia);
         alerta = (ImageView) vista.findViewById(R.id.idImagenAlerta);
+        tituloDinamico = (TextView) vista.findViewById(R.id.tituloDinamico);
 
         modificarEdificio = (Button) vista.findViewById(R.id.modificarEdificio);
         eliminarEdificio = (Button) vista.findViewById(R.id.eliminarEdificio);
@@ -117,12 +119,29 @@ public class EdificioFragment extends Fragment {
         recyclerEdificio = vista.findViewById(R.id.recyclerID);
 
         consultarListaEdificio(listaEdificio);
+        int cont = listaEdificio.size();
+        ArrayList<Edificio> edificios = new ArrayList<>();
+        for (int i = 0;i< cont ; i++){
+            if(listaEdificio.get(i).getESTADO() == 1){
+              edificios.add(listaEdificio.get(i));
+            }
+            if(edificios.size() > 0){
+                listaEdificio = edificios;
+            }
+        }
+
+        if(edificios.size() > 0){
+            hayAprobado();
+        }else{
+            noHayAprobado();
+        }
 
         final AdaptadorEdificio adapter = new AdaptadorEdificio(listaEdificio);
         recyclerEdificio.setAdapter(adapter);
         recyclerEdificio.setLayoutManager(new LinearLayoutManager(getContext()));
         if(recyclerEdificio.getAdapter() != null){
             if(recyclerEdificio.getAdapter().getItemCount() == 0){
+                quitarTitulo();
                 noHayEdificios();
             }
         }
@@ -191,6 +210,19 @@ public class EdificioFragment extends Fragment {
         vistaVacia.setVisibility(View.VISIBLE);
         recyclerEdificio.setVisibility(View.GONE);
         alerta.setVisibility(View.VISIBLE);
+    }
+    private void hayAprobado(){
+        String mensaje = "Edificios Aprobados";
+        tituloDinamico.setText(mensaje);
+        tituloDinamico.setVisibility(View.VISIBLE);
+    }
+    private void noHayAprobado(){
+        String mensaje = "Edificios Pendientes";
+        tituloDinamico.setText(mensaje);
+        tituloDinamico.setVisibility(View.VISIBLE);
+    }
+    private void quitarTitulo(){
+        tituloDinamico.setVisibility(View.GONE);
     }
 
     private void consultarListaEdificio(ArrayList<Edificio> listaEdificio) {

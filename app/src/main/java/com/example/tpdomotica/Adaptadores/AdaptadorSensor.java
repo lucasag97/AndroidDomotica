@@ -38,7 +38,7 @@ public class AdaptadorSensor extends
         switch (tipo){
             case "iluminacion":
                 sensorViewHolder.Informacion.setText(sensorViewHolder.Informacion.getContext().getResources().getString(R.string.ilu_bien));
-                sensorViewHolder.icono.setImageResource(R.mipmap.ic_iluminacion_round);
+                sensorViewHolder.icono.setImageResource(R.mipmap.ic_iluminacion_foreground);
                 break;
             case "gas":
                 if(valor < umbral) {
@@ -46,7 +46,7 @@ public class AdaptadorSensor extends
                 }else{
                     sensorViewHolder.Informacion.setText(sensorViewHolder.Informacion.getContext().getResources().getString(R.string.gas_det));
                 }
-                sensorViewHolder.icono.setImageResource(R.mipmap.ic_humo_round);
+                sensorViewHolder.icono.setImageResource(R.mipmap.ic_humo_foreground);
                 break;
             case "movimiento":
                 if(valor < umbral) {
@@ -54,11 +54,11 @@ public class AdaptadorSensor extends
                 }else{
                     sensorViewHolder.Informacion.setText(sensorViewHolder.Informacion.getContext().getResources().getString(R.string.mov_si));
                 }
-                sensorViewHolder.icono.setImageResource(R.mipmap.ic_movimiento_round);
+                sensorViewHolder.icono.setImageResource(R.mipmap.ic_movimiento_foreground);
                 break;
             case "temperatura":
                 sensorViewHolder.Informacion.setText(sensorViewHolder.Informacion.getContext().getResources().getString(R.string.valor_actual)+": "+ListaSensores.get(i).getVALOR_ACTUAL()+"°C");
-                sensorViewHolder.icono.setImageResource(R.mipmap.ic_temperatura_round);
+                sensorViewHolder.icono.setImageResource(R.mipmap.ic_temperatura_foreground);
         }
     }
 

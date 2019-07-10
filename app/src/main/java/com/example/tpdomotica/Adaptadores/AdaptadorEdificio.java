@@ -37,11 +37,20 @@ public class AdaptadorEdificio extends
 
     @Override
     public void onBindViewHolder(EdificioViewHolder edificioViewHolder, int i) {
-        int cont = i+1;
         final Edificio edificio = ListaEdificio.get(i);
         edificioViewHolder.Nombre.setText(edificio.getNOMBRE());
         edificioViewHolder.Informacion.setText(ListaEdificio.get(i).getDIRECCION());
-        cont++;
+        int state = edificio.getESTADO();
+        if(state == 0){
+            edificioViewHolder.estado.setText("Estado: Pendiente");
+        }
+        if(state == 1){
+            edificioViewHolder.estado.setText("Estado: Aceptado");
+        }
+        if(state == 2){
+            edificioViewHolder.estado.setText("Estado: Rechazado");
+        }
+
 
     }
 
@@ -71,13 +80,14 @@ public class AdaptadorEdificio extends
     }
 
     public class EdificioViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView Nombre,Informacion;
+        TextView Nombre,Informacion,estado;
         Button modificar,eliminar,ubicar;
         ImageView img;
         public EdificioViewHolder(View itemView){
             super(itemView);
             Nombre = (TextView) itemView.findViewById(R.id.idNombre);
             Informacion = (TextView) itemView.findViewById(R.id.idInfo);
+            estado = (TextView) itemView.findViewById(R.id.idEstado);
             img = (ImageView) itemView.findViewById(R.id.idImagen);
             img.setOnClickListener(this);
             modificar = (Button) itemView.findViewById(R.id.modificarEdificio);
@@ -86,7 +96,6 @@ public class AdaptadorEdificio extends
             eliminar.setOnClickListener(this);
             ubicar = (Button) itemView.findViewById(R.id.ubicacionEdificio);
             ubicar.setOnClickListener(this);
-
         }
         @Override
         public void onClick(View v){

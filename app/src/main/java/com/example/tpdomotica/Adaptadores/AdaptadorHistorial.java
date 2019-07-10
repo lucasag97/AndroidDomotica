@@ -37,7 +37,7 @@ public class AdaptadorHistorial extends RecyclerView.Adapter<AdaptadorHistorial.
         String tipo = historial.get(i).getHISTORICO_TIPO();
 
         if(valor < umbral){
-            historialViewHolder.img.setImageResource(R.mipmap.ic_afirmativo_round);
+            historialViewHolder.img.setImageResource(R.mipmap.ic_afirmativo_foreground);
         }
         historialViewHolder.fecha.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.suceso)+": "+historial.get(i).getHISTORICO_TIMESTAMP());
         switch(tipo){
