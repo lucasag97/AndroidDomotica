@@ -93,7 +93,7 @@ public class Servicio extends Service {
 
                                 Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                                         .setSmallIcon(R.mipmap.ic_launcher)
-                                        .setContentTitle("ALERTA")
+                                        .setContentTitle("Alerta en "+ nombre)
                                         .setContentText(mensaje)
                                         //.setLargeIcon(largeIcon)
                                         .setStyle(new NotificationCompat.BigTextStyle()

@@ -24,7 +24,6 @@ public class ContenedorActivity extends AppCompatActivity implements
     DetalleEdificioFragment detalleEdificio;
     DetalleSensorFragment detalleSensor;
     ModificarEdificioFragment modificarEdificio;
-    ImageButton new_edi;
 
 
 
@@ -32,15 +31,6 @@ public class ContenedorActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contenedor);
-
-        new_edi = findViewById(R.id.new_edi);
-        new_edi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), EdificioActivity.class);
-                startActivity(intent);
-            }
-        });
 
         listaEdificios = new EdificioFragment();
 
