@@ -41,6 +41,20 @@ public class MainActivity extends AppCompatActivity{
             Intent login = new Intent(this, LoginActivity.class);
             startActivity(login);
         }
+        else{
+            Utilidades.edis.clear();
+            String id = pref.getString("id", "");
+            ConexionSQLite db = new ConexionSQLite(this, "db_domotica", null, 1);
+            SQLiteDatabase db1 = db.getReadableDatabase();
+            Cursor c = db1.rawQuery("SELECT DISTINCT "+ Utilidades.EDI_ID+" FROM "+Utilidades.TABLA_EDIFICIO+" WHERE "+Utilidades.EDI_ID_USUARIO+" = "+id, null);
+            if (c.moveToFirst()){
+                for (int i=0; i<c.getCount(); i++) {
+                    Utilidades.edis.add(c.getInt(0));
+                    c.moveToNext();
+                }
+            }
+            db1.close();
+        }
 
         if(lang){
             Intent first = new Intent(this, FirstTimeActivity.class);
