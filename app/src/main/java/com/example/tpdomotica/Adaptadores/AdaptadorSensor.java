@@ -30,7 +30,7 @@ public class AdaptadorSensor extends
 
     @Override
     public void onBindViewHolder(SensorViewHolder sensorViewHolder, int i) {
-        sensorViewHolder.Nombre.setText("Sensor "+ListaSensores.get(i).getTIPO());
+        sensorViewHolder.Nombre.setText(sensorViewHolder.Nombre.getContext().getResources().getString(R.string.sensor)+" "+ListaSensores.get(i).getTIPO());
         String tipo = ListaSensores.get(i).getTIPO();
         int valor = ListaSensores.get(i).getVALOR_ACTUAL();
         int umbral = ListaSensores.get(i).getUMBRAL();

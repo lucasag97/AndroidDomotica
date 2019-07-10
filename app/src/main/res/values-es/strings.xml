@@ -67,5 +67,6 @@
     <string name="suceso">Fecha del suceso</string>
     <string name="agradable">Temperatura agradable</string>
     <string name="alarmante">Temperatura alarmante</string>
+    <string name="please_sens">Por favor seleccione al menos un sensor.</string>
 
 </resources>

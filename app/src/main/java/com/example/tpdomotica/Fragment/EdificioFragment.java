@@ -143,19 +143,22 @@ public class EdificioFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         SQLiteDatabase db_actual = db.getWritableDatabase();
 
+                        int cont = Utilidades.edis.size();
+                        int borrar = 0;
+                        for (int i=0; i<cont; i++){
+                            if(Utilidades.edis.get(i) == listaEdificio.get(position).getID()){
+                                borrar = i;
+                            }
+                        }
+
+                        Utilidades.edis.remove(borrar);
+
                         String Query = "DELETE FROM edificio WHERE _id = "+listaEdificio.get(position).getID();
                         db_actual.execSQL(Query);
 
                         String Query1= "DELETE FROM edificio_sensor WHERE id_edificio = "+listaEdificio.get(position).getID();
                         db_actual.execSQL(Query1);
 
-                        ArrayList<Integer> edis = Utilidades.edis;
-                        int cont = edis.size();
-                        for (int i = 0;i < cont;i++){
-                            if((int)edis.get(i) == listaEdificio.get(position).getID()){
-                                edis.remove(i);
-                            }
-                        }
                         db_actual.close();
                         dialog.dismiss();
 

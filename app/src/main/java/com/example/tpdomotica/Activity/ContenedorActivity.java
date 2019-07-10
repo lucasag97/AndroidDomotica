@@ -1,9 +1,12 @@
 package com.example.tpdomotica.Activity;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.example.tpdomotica.Entidades.Sensor;
 import com.example.tpdomotica.Fragment.DetalleEdificioFragment;
@@ -21,6 +24,7 @@ public class ContenedorActivity extends AppCompatActivity implements
     DetalleEdificioFragment detalleEdificio;
     DetalleSensorFragment detalleSensor;
     ModificarEdificioFragment modificarEdificio;
+    ImageButton new_edi;
 
 
 
@@ -28,6 +32,15 @@ public class ContenedorActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contenedor);
+
+        new_edi = findViewById(R.id.new_edi);
+        new_edi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), EdificioActivity.class);
+                startActivity(intent);
+            }
+        });
 
         listaEdificios = new EdificioFragment();
 

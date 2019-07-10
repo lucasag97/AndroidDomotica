@@ -62,4 +62,5 @@
     <string name="suceso">Date de l\'événement</string>
     <string name="agradable">Température agréable</string>
     <string name="alarmante">Température alarmante</string>
+    <string name="please_sens">Veuillez sélectionner au moins un capteur.</string>
 </resources>

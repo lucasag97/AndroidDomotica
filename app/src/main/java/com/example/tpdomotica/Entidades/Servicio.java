@@ -98,7 +98,7 @@ public class Servicio extends Service {
                                         //.setLargeIcon(largeIcon)
                                         .setStyle(new NotificationCompat.BigTextStyle()
                                                 .bigText(mensaje)
-                                                .setBigContentTitle("ALERTA")
+                                                .setBigContentTitle("Alerta en "+ nombre)
                                                 .setSummaryText("Servicio en background"))
                                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                                         .setCategory(NotificationCompat.CATEGORY_MESSAGE)

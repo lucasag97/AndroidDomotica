@@ -2,8 +2,10 @@ package com.example.tpdomotica.Activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -35,7 +37,7 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
     CheckBox iluminacion,gases,movimiento,temperatura;
     EditText direccion, nombre;
     String Direccion_user;
-    boolean ilu,gas,movi,temp, validado = false;
+    boolean ilu,gas,movi,temp, validado;
     Double longitud,latitud;
     Button btn_edificio_guardar;
     Switch localizame;
@@ -64,6 +66,8 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                     values.put(Utilidades.EDI_NOMBRE, nombre1);
                 if (!Direccion_user.equals("") && !nombre1.equals(""))
                     validado = true;
+                if (!ilu && !gas && !movi && !temp)
+                    validado = false;
                 values.put(Utilidades.EDI_DIRECCION_LAT, latitud);
                 values.put(Utilidades.EDI_DIRECCION_LONG, longitud);
                 values.put(Utilidades.EDI_ESTADO, 0); //Estado edificio pendiente = 0, aprobado = 1, rechazado = 2
@@ -118,6 +122,19 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                     if (nombre1.equals("")){
                         nombre.setError(("El nombre no puede estar vacío"));
                     }
+                    if (!ilu && !gas && !movi && !temp){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(EdificioActivity.this);
+                        builder.setMessage(getResources().getString(R.string.please_sens))
+                                .setCancelable(true)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
                 }
 
                 db.close();
@@ -143,8 +160,6 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 boolean isChecked = ((CheckBox)v).isChecked();
                 if(isChecked) {
                     ilu = true;
-                }else{
-                    ilu = false;
                 }
             }
         });
@@ -156,8 +171,6 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 boolean isChecked = ((CheckBox)v).isChecked();
                 if(isChecked){
                     gas = true;
-                }else{
-                    gas = false;
                 }
             }
         });
@@ -169,8 +182,6 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 boolean isChecked = ((CheckBox)v).isChecked();
                 if(isChecked){
                     movi=true;
-                }else {
-                    movi = false;
                 }
             }
         });
@@ -182,8 +193,6 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 boolean isChecked = ((CheckBox)v).isChecked();
                 if(isChecked){
                     temp = true;
-                }else{
-                    temp = false;
                 }
             }
         });
