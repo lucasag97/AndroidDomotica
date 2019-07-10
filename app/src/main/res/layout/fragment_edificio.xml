@@ -43,5 +43,24 @@
             android:visibility="invisible"/>
     </FrameLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:id="@+id/new_edi"
+            android:background="@drawable/oval"
+            android:elevation="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="65dp"
+            android:layout_marginRight="25dp"
+            android:src="@drawable/ic_baseline_add_24px"
+            />
+
+    </RelativeLayout>
+
 
 </LinearLayout>

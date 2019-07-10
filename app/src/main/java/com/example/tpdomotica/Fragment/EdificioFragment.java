@@ -19,11 +19,13 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tpdomotica.Activity.ContenedorActivity;
+import com.example.tpdomotica.Activity.EdificioActivity;
 import com.example.tpdomotica.Adaptadores.AdaptadorEdificio;
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
 import com.example.tpdomotica.Entidades.Edificio;
@@ -60,6 +62,7 @@ public class EdificioFragment extends Fragment {
     TextView vistaVacia,tituloDinamico;
     ImageView img, alerta;
     RecyclerView recyclerEdificio;
+    ImageButton new_edi;
     Activity activity;
     IComunicaFragment interfaceComunicaFragment;
     SharedPreferences pref;
@@ -104,6 +107,15 @@ public class EdificioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View vista = inflater.inflate(R.layout.fragment_edificio, container, false);
+
+        new_edi = vista.findViewById(R.id.new_edi);
+        new_edi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), EdificioActivity.class);
+                startActivity(intent);
+            }
+        });
 
         listaEdificio = new ArrayList<Edificio>();
 

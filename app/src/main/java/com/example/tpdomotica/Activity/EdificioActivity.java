@@ -24,6 +24,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -35,13 +36,15 @@ import com.example.tpdomotica.Utilidades.Utilidades;
 
 public class EdificioActivity extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
     CheckBox iluminacion,gases,movimiento,temperatura;
+    TextView estado_text;
     EditText direccion, nombre;
     String Direccion_user;
     boolean ilu,gas,movi,temp, validado;
     Double longitud,latitud;
-    Button btn_edificio_guardar;
+    Button btn_edificio_guardar, btn_estado;
     Switch localizame;
     SharedPreferences pref;
+    int estado_num;
     private SharedPreferences.Editor editor;
 
 
@@ -70,7 +73,7 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                     validado = false;
                 values.put(Utilidades.EDI_DIRECCION_LAT, latitud);
                 values.put(Utilidades.EDI_DIRECCION_LONG, longitud);
-                values.put(Utilidades.EDI_ESTADO, 0); //Estado edificio pendiente = 0, aprobado = 1, rechazado = 2
+                values.put(Utilidades.EDI_ESTADO, estado_num); //Estado edificio pendiente = 0, aprobado = 1, rechazado = 2
                 values.put(Utilidades.EDI_ID_USUARIO, pref.getString("id",""));
 
                 if(validado) {
@@ -85,28 +88,28 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                     cursor.moveToFirst();
                     int idEdi = cursor.getInt(0);
 
-                    if(ilu == true){
+                    if(ilu){
                         values.put(Utilidades.ID_SENSOR, 1);
                         values.put(Utilidades.ID_EDIFICIO, idEdi);
                         values.put(Utilidades.EDI_SENS_VALOR, "0");
                         db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
                         values.clear();
                     }
-                    if (gas == true){
+                    if (gas){
                         values.put(Utilidades.ID_SENSOR, 2);
                         values.put(Utilidades.ID_EDIFICIO, idEdi);
                         values.put(Utilidades.EDI_SENS_VALOR, "0");
                         db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
                         values.clear();
                     }
-                    if (movi == true){
+                    if (movi){
                         values.put(Utilidades.ID_SENSOR, 3);
                         values.put(Utilidades.ID_EDIFICIO, idEdi);
                         values.put(Utilidades.EDI_SENS_VALOR, "0");
                         db.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
                         values.clear();
                     }
-                    if (temp == true){
+                    if (temp){
                         values.put(Utilidades.ID_SENSOR, 4);
                         values.put(Utilidades.ID_EDIFICIO, idEdi);
                         values.put(Utilidades.EDI_SENS_VALOR, "0");
@@ -234,6 +237,27 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
         });
         btn_edificio_guardar = (Button) findViewById(R.id.btn_edificio_guardar);
         btn_edificio_guardar.setOnClickListener(guardar);
+
+        btn_estado = findViewById(R.id.btn_estado);
+
+        estado_num = 0;
+
+        estado_text = findViewById(R.id.estadotexto);
+
+        btn_estado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(estado_text.getText().toString().equals("El estado es: pendiente")) {
+                    estado_text.setText("El estado es: activo");
+                    estado_num = 1;
+                }
+                else{
+                    estado_text.setText("El estado es: pendiente");
+                    estado_num = 0;
+                }
+            }
+        });
     }
 
 }

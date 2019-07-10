@@ -62,7 +62,7 @@ public class Servicio extends Service {
                         // Toast.makeText(getApplicationContext(), "Se muestra esto cada 15 segundos", Toast.LENGTH_LONG).show();
                         ConexionSQLite conn = new ConexionSQLite(getApplicationContext(), "db_domotica", null, 1);
                         SQLiteDatabase db = conn.getReadableDatabase();
-                        Cursor cursor = db.rawQuery("SELECT E."+Utilidades.EDI_ID+", S."+Utilidades.SENSOR_TIPO+", E."+Utilidades.EDI_NOMBRE+","+Utilidades.EDI_SENS_VALOR+" FROM "+Utilidades.TABLA_EDIFICIO_SENSOR+" ES INNER JOIN "+Utilidades.TABLA_EDIFICIO+" E ON ES."+Utilidades.ID_EDIFICIO+" = E."+Utilidades.EDI_ID+" INNER JOIN "+Utilidades.TABLA_SENSOR+" S ON ES."+Utilidades.ID_SENSOR+" = S."+Utilidades.SENSOR_ID+" WHERE ES."+Utilidades.EDI_SENS_VALOR+" >= S."+Utilidades.SENSOR_UMBRAL+" AND E."+Utilidades.EDI_ID_USUARIO+" = "+idUser, null);
+                        Cursor cursor = db.rawQuery("SELECT E."+Utilidades.EDI_ID+", S."+Utilidades.SENSOR_TIPO+", E."+Utilidades.EDI_NOMBRE+","+Utilidades.EDI_SENS_VALOR+" FROM "+Utilidades.TABLA_EDIFICIO_SENSOR+" ES INNER JOIN "+Utilidades.TABLA_EDIFICIO+" E ON ES."+Utilidades.ID_EDIFICIO+" = E."+Utilidades.EDI_ID+" INNER JOIN "+Utilidades.TABLA_SENSOR+" S ON ES."+Utilidades.ID_SENSOR+" = S."+Utilidades.SENSOR_ID+" WHERE ES."+Utilidades.EDI_SENS_VALOR+" >= S."+Utilidades.SENSOR_UMBRAL+" AND E."+Utilidades.EDI_ID_USUARIO+" = "+idUser+" AND E."+Utilidades.EDI_ESTADO+" = 1", null);
                         boolean c = cursor.moveToFirst();
                         int cont = cursor.getCount();
                         if (c) {
@@ -93,7 +93,7 @@ public class Servicio extends Service {
 
                                 Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                                         .setSmallIcon(R.mipmap.ic_launcher)
-                                        .setContentTitle("ALERTA")
+                                        .setContentTitle("Alerta en "+ nombre)
                                         .setContentText(mensaje)
                                         //.setLargeIcon(largeIcon)
                                         .setStyle(new NotificationCompat.BigTextStyle()
@@ -128,7 +128,7 @@ public class Servicio extends Service {
                         SQLiteDatabase db = conn.getWritableDatabase();
 
                         ArrayList<Integer> sens = new ArrayList<>();
-                        Cursor sensores = db.rawQuery("SELECT S."+Utilidades.SENSOR_ID+" FROM "+Utilidades.TABLA_EDIFICIO_SENSOR+" ES INNER JOIN "+Utilidades.TABLA_SENSOR+" S ON ES."+Utilidades.ID_SENSOR+" = S."+Utilidades.SENSOR_ID+" INNER JOIN "+Utilidades.TABLA_EDIFICIO+" E ON ES."+Utilidades.ID_EDIFICIO+" = E."+Utilidades.EDI_ID+" WHERE E."+Utilidades.EDI_ID_USUARIO+" = "+idUser,null);
+                        Cursor sensores = db.rawQuery("SELECT S."+Utilidades.SENSOR_ID+" FROM "+Utilidades.TABLA_EDIFICIO_SENSOR+" ES INNER JOIN "+Utilidades.TABLA_SENSOR+" S ON ES."+Utilidades.ID_SENSOR+" = S."+Utilidades.SENSOR_ID+" INNER JOIN "+Utilidades.TABLA_EDIFICIO+" E ON ES."+Utilidades.ID_EDIFICIO+" = E."+Utilidades.EDI_ID+" WHERE E."+Utilidades.EDI_ID_USUARIO+" = "+idUser+" AND E."+Utilidades.EDI_ESTADO+" = 1",null);
                         if (sensores.moveToFirst()) {
                             for (int i = 0; i<sensores.getCount(); i++){
                                 sens.add(sensores.getInt(0));
@@ -148,7 +148,7 @@ public class Servicio extends Service {
                             db.update(Utilidades.TABLA_EDIFICIO_SENSOR, cont, "id_sensor=4 and id_edificio="+Utilidades.edis.get(i), null);
                             cont.clear();
 
-                            Cursor temp = db.rawQuery("SELECT * FROM " + Utilidades.TABLA_HISTORICO + " H INNER JOIN "+Utilidades.TABLA_EDIFICIO+" E ON H."+Utilidades.ID_EDIFICIO_H+" = E."+Utilidades.EDI_ID+" WHERE " + Utilidades.ID_EDIFICIO_H + " = " + Utilidades.edis.get(i) + " AND " + Utilidades.ID_SENSOR_H + " = 4 ORDER BY " + Utilidades.HISTORICO_TIMESTAMP + " DESC", null);
+                            Cursor temp = db.rawQuery("SELECT * FROM " + Utilidades.TABLA_HISTORICO + " H INNER JOIN "+Utilidades.TABLA_EDIFICIO+" E ON H."+Utilidades.ID_EDIFICIO_H+" = E."+Utilidades.EDI_ID+" WHERE " + Utilidades.ID_EDIFICIO_H + " = " + Utilidades.edis.get(i) + " AND " + Utilidades.ID_SENSOR_H + " = 4 AND E."+Utilidades.EDI_ESTADO+" = 1 ORDER BY " + Utilidades.HISTORICO_TIMESTAMP + " DESC", null);
 
                             if (sens.contains(4)) {
                                 if (temp.getCount() < 5) {
