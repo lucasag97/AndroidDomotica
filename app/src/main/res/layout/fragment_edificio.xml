@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,21 +18,25 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerID"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp">
 
     </android.support.v7.widget.RecyclerView>
-    <FrameLayout
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="250dp">
+        android:orientation="vertical"
+        android:layout_marginTop="-100dp">
         <TextView
             android:id="@+id/sms_lista_vacia"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_marginTop="-50dp"
+            android:text="as"
+            android:layout_marginTop="-30dp"
             android:visibility="invisible"/>
         <ImageView
             android:id="@+id/idImagenAlerta"
@@ -41,8 +45,7 @@
             android:layout_gravity="center"
             android:src="@mipmap/ic_alert_foreground"
             android:visibility="invisible"/>
-    </FrameLayout>
-
+    </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -61,6 +64,4 @@
             />
 
     </RelativeLayout>
-
-
-</LinearLayout>
+</FrameLayout>

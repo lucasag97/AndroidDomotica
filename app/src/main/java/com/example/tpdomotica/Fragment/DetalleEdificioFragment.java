@@ -95,6 +95,7 @@ public class DetalleEdificioFragment extends Fragment {
         Bundle objetoEdificio = getArguments();
         Edificio edificio = null;
         edificio = (Edificio) objetoEdificio.getSerializable("objeto");
+
         textDescripcion.setText(edificio.getDIRECCION());
         final ArrayList<Sensor>sensores = consultarSensores(edificio);
 
@@ -110,6 +111,8 @@ public class DetalleEdificioFragment extends Fragment {
         });
         return vista;
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

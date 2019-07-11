@@ -33,9 +33,6 @@ public class ContenedorActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_contenedor);
 
         listaEdificios = new EdificioFragment();
-
-
-
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,listaEdificios).commit();
     }
 

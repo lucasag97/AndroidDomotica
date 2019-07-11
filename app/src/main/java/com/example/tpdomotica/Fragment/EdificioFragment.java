@@ -137,9 +137,9 @@ public class EdificioFragment extends Fragment {
             if(listaEdificio.get(i).getESTADO() == 1){
               edificios.add(listaEdificio.get(i));
             }
-            if(edificios.size() > 0){
-                listaEdificio = edificios;
-            }
+        }
+        if (edificios.size() > 0){
+            listaEdificio = edificios;
         }
 
         if(edificios.size() > 0){
@@ -153,7 +153,7 @@ public class EdificioFragment extends Fragment {
         recyclerEdificio.setLayoutManager(new LinearLayoutManager(getContext()));
         if(recyclerEdificio.getAdapter() != null){
             if(recyclerEdificio.getAdapter().getItemCount() == 0){
-                quitarTitulo();
+                //quitarTitulo();
                 noHayEdificios();
             }
         }
