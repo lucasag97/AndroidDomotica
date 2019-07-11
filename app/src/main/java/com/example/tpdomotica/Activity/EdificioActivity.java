@@ -117,7 +117,9 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                         values.clear();
                     }
 
-                    Utilidades.edis.add(idEdi);
+                    if (estado_num == 1) {
+                        Utilidades.edis.add(idEdi);
+                    }
                 }else {
                     if (Direccion_user.equals("")) {
                         direccion.setError("La direccion no puede estar vacía");

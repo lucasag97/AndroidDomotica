@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
         //SharedPreferences.Editor editor = pref.edit();
         Utilidades.edis.clear();
         SQLiteDatabase db1 = db.getReadableDatabase();
-        Cursor c = db1.rawQuery("SELECT DISTINCT "+ Utilidades.EDI_ID+" FROM "+Utilidades.TABLA_EDIFICIO+" WHERE "+Utilidades.EDI_ID_USUARIO+" = "+id, null);
+        Cursor c = db1.rawQuery("SELECT DISTINCT "+ Utilidades.EDI_ID+" FROM "+Utilidades.TABLA_EDIFICIO+" WHERE "+Utilidades.EDI_ID_USUARIO+" = "+id+" AND "+Utilidades.EDI_ESTADO+" = 1", null);
         if (c.moveToFirst()){
             for (int i=0; i<c.getCount(); i++) {
                 Utilidades.edis.add(c.getInt(0));
