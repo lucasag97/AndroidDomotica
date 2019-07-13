@@ -75,4 +75,5 @@ public class ContenedorActivity extends AppCompatActivity implements
     public void recargarEdificio(){
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,listaEdificios).commit();
     }
+
 }

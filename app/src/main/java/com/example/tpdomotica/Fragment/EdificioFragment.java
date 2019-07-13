@@ -14,22 +14,30 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tpdomotica.Activity.ContenedorActivity;
 import com.example.tpdomotica.Activity.EdificioActivity;
+import com.example.tpdomotica.Activity.LoginActivity;
+import com.example.tpdomotica.Activity.MainActivity;
 import com.example.tpdomotica.Adaptadores.AdaptadorEdificio;
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
 import com.example.tpdomotica.Entidades.Edificio;
+import com.example.tpdomotica.Entidades.Servicio;
 import com.example.tpdomotica.Interface.IComunicaFragment;
 import com.example.tpdomotica.R;
 import com.example.tpdomotica.Utilidades.Utilidades;
@@ -45,7 +53,7 @@ import java.util.ArrayList;
  * Use the {@link EdificioFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EdificioFragment extends Fragment {
+public class EdificioFragment extends Fragment implements PopupMenu.OnMenuItemClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -59,9 +67,8 @@ public class EdificioFragment extends Fragment {
 
     ArrayList<Edificio> listaEdificio;
     ArrayList<Edificio> listaEdificioHabilitados = new ArrayList<>();
-    Button modificarEdificio,eliminarEdificio,ubicacionEdificio;
     TextView vistaVacia,tituloDinamico;
-    ImageView img, alerta;
+    ImageView alerta;
     RecyclerView recyclerEdificio;
     ImageButton new_edi;
     Activity activity;
@@ -94,6 +101,7 @@ public class EdificioFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -105,8 +113,9 @@ public class EdificioFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         final View vista = inflater.inflate(R.layout.fragment_edificio, container, false);
 
         Toolbar mToolbar = vista.findViewById(R.id.toolbar);
@@ -136,11 +145,6 @@ public class EdificioFragment extends Fragment {
         alerta = (ImageView) vista.findViewById(R.id.idImagenAlerta);
         tituloDinamico = (TextView) vista.findViewById(R.id.tituloDinamico);
 
-        modificarEdificio = (Button) vista.findViewById(R.id.modificarEdificio);
-        eliminarEdificio = (Button) vista.findViewById(R.id.eliminarEdificio);
-        ubicacionEdificio = (Button) vista.findViewById(R.id.ubicacionEdificio);
-        img = (ImageView) vista.findViewById(R.id.idImagen);
-
         recyclerEdificio = vista.findViewById(R.id.recyclerID);
 
         consultarListaEdificio(listaEdificio);
@@ -168,38 +172,44 @@ public class EdificioFragment extends Fragment {
         recyclerEdificio.setLayoutManager(new LinearLayoutManager(getContext()));
         if(recyclerEdificio.getAdapter() != null){
             if(recyclerEdificio.getAdapter().getItemCount() == 0){
-                //quitarTitulo();
+                quitarTitulo();
                 noHayEdificios();
             }
         }
-        adapter.addOnImgListener(new AdaptadorEdificio.IMyViewHolderClicksImg() {
-                @Override
-                public void onImgClick(View v, int position) { interfaceComunicaFragment.enviarEdificio(listaEdificio.get(position));
-                }
-            });
-
-        adapter.addOnViewsListener(new AdaptadorEdificio.IMyViewHolderClicks() {
-                @Override
-                public void onButtonClick(View v, int position) {
-                    interfaceComunicaFragment.modificarEdificio(listaEdificio.get(position));
-                }
-            });
-
-        adapter.addOnDeleteListener(new AdaptadorEdificio.IMyViewHolderClickEliminar() {
+        adapter.setOnclickListener(new View.OnClickListener() {
             @Override
-            public void onEliminarClick(View v, final int position) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                alert.setTitle(getResources().getString(R.string.eliminar));
-                alert.setMessage(getResources().getString(R.string.sure));
-                alert.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            SQLiteDatabase db_actual = db.getWritableDatabase();
+            public void onClick(View v) {
+                interfaceComunicaFragment.enviarEdificio(listaEdificio.get(recyclerEdificio.getChildAdapterPosition(v)));
+            }
+        });
+        adapter.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                final View view = v;
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                PopupMenu popup = new PopupMenu(getContext(),v);
+                MenuInflater inflater1 = popup.getMenuInflater();
+                inflater1.inflate(R.menu.menu_item_list,popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.modificarEdificio:
+                                interfaceComunicaFragment.modificarEdificio(listaEdificio.get(recyclerEdificio.getChildAdapterPosition(view)));
+                                return true;
+                            case R.id.eliminarEdificio:
+                                AlertDialog.Builder alert = builder;
+                                alert.setTitle(getResources().getString(R.string.eliminar));
+                                alert.setMessage(getResources().getString(R.string.sure));
+                                alert.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                SQLiteDatabase db_actual = db.getWritableDatabase();
 
                             int cont = Utilidades.edis.size();
                             int borrar = 1000;
                             for (int i=0; i<cont; i++){
-                                if(Utilidades.edis.get(i) == listaEdificio.get(position).getID()){
+                                if(Utilidades.edis.get(i) == listaEdificio.get(recyclerEdificio.getChildAdapterPosition(view)).getID()){
                                     borrar = i;
                                 }
                             }
@@ -208,29 +218,38 @@ public class EdificioFragment extends Fragment {
                                 Utilidades.edis.remove(borrar);
                             }
 
-                            String Query = "DELETE FROM edificio WHERE _id = "+listaEdificio.get(position).getID();
-                            db_actual.execSQL(Query);
+                                                String Query = "DELETE FROM edificio WHERE _id = " + listaEdificio.get(recyclerEdificio.getChildAdapterPosition(view)).getID();
+                                                db_actual.execSQL(Query);
 
-                            String Query1= "DELETE FROM edificio_sensor WHERE id_edificio = "+listaEdificio.get(position).getID();
-                            db_actual.execSQL(Query1);
+                                                String Query1 = "DELETE FROM edificio_sensor WHERE id_edificio = " + listaEdificio.get(recyclerEdificio.getChildAdapterPosition(view)).getID();
+                                                db_actual.execSQL(Query1);
 
-                            db_actual.close();
-                            dialog.dismiss();
+                                                db_actual.close();
+                                                dialog.dismiss();
 
-                            Intent intent = new Intent(getActivity(), ContenedorActivity.class);
-                            startActivity(intent);
-                            getActivity().finish();
+                                                Intent intent = new Intent(getActivity(), ContenedorActivity.class);
+                                                getActivity().finish();
+                                                startActivity(intent);
+                                            }
+                                        });
+                                    alert.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    alert.show();
+                                return true;
+                            case R.id.ubicacionEdificio:
+                                return true;
                         }
-                    });
-                alert.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                alert.show();
-                }
-            });
+                        return true;
+                    }
+                });
+                popup.show();
+                return true;
+            }
+        });
         return vista;
     }
 
@@ -305,6 +324,17 @@ public class EdificioFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.modificarEdificio:
+                Toast.makeText(getContext(),"modificar",Toast.LENGTH_LONG).show();
+                return true;
+        }
+        return true;
+    }
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -319,8 +349,25 @@ public class EdificioFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-    public void onCreateOptionMenu(Menu menu, MenuInflater inflater){
-        inflater.inflate(R.menu.menu,menu);
+    @Override
+    public void onCreateContextMenu(ContextMenu menu,View v, ContextMenu.ContextMenuInfo menuInfo) {
+        getActivity().getMenuInflater().inflate(R.menu.menu_item_list,menu);
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.modificarEdificio:
+                Toast.makeText(getActivity(),"Modificar",Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.eliminarEdificio:
+                Toast.makeText(getActivity(),"edliminar",Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.ubicacionEdificio:
+                Toast.makeText(getActivity(),"ubicar",Toast.LENGTH_LONG).show();
+                return true;
+        }
+        return true;
+    }
+
+
 }

@@ -33,9 +33,8 @@
         android:layout_marginBottom="20dp"/>
 
     <TextView
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
         android:text="@string/historico"
         android:textSize="30dp"
         android:gravity="center" />
@@ -54,23 +53,25 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center">
+            <ImageView
+                android:id="@+id/idImagenAlerta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_alert_foreground"
+                android:layout_marginTop="100dp"
+                android:visibility="invisible"/>
             <TextView
                 android:id="@+id/sms_lista_vacia"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:text=""
+                android:textSize="20dp"
                 android:gravity="center"
-                android:layout_marginTop="100dp"
-                android:visibility="invisible"/>
-            <ImageView
-                android:id="@+id/idImagenAlerta"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginTop="-20dp"
-                android:src="@mipmap/ic_alert_foreground"
                 android:visibility="invisible"/>
+
         </LinearLayout>
     </FrameLayout>
 

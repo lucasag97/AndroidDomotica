@@ -17,12 +17,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/idImagen"
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center | top"
                 android:src="@mipmap/ic_edificio_foreground"
@@ -46,47 +46,8 @@
                     android:id="@+id/idInfo"
                     android:layout_width="285dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/descripcion"/>
-                <TextView
-                    android:id="@+id/idEstado"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Estado: "
-                    android:layout_marginBottom="10dp"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <Button
-                        android:id="@+id/modificarEdificio"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:text="@string/modificar"
-                        android:textSize="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@color/lila_claro"/>
-
-                    <Button
-                        android:id="@+id/eliminarEdificio"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:text="@string/eliminar"
-                        android:textSize="10dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@color/lila_claro"/>
-
-                    <Button
-                        android:id="@+id/ubicacionEdificio"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:text="@string/ubicacion"
-                        android:textSize="10dp"
-                        android:layout_marginLeft="5dp"
-                        android:background="@color/lila_claro" />
-                </LinearLayout>
-
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/descripcion" />
             </LinearLayout>
         </LinearLayout>
 
