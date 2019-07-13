@@ -32,6 +32,8 @@ public class ContenedorActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contenedor);
 
+        getSupportActionBar().hide();
+
         listaEdificios = new EdificioFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,listaEdificios).commit();
     }

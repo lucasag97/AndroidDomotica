@@ -63,4 +63,14 @@
     <string name="agradable">Température agréable</string>
     <string name="alarmante">Température alarmante</string>
     <string name="please_sens">Veuillez sélectionner au moins un capteur.</string>
+    <string name="dire_vacia">L\'adresse ne peut pas être vide</string>
+    <string name="nombre_vacio">Le nom ne peut pas être vide</string>
+    <string name="no_empty">Ce champ ne peut pas être vide</string>
+    <string name="pen_toast">Votre immeuble est en attente d\'approbation</string>
+    <string name="edi_activos">Bâtiments actifs</string>
+    <string name="edi_pendientes">Bâtiments remarquables</string>
+    <string name="detalle_edi">Détail du bâtiment</string>
+    <string name="edificios">Bâtiments</string>
+    <string name="detalle_sensor">Détails du capteur</string>
+    <string name="act_edi">Mise à jour du bâtiment</string>
 </resources>

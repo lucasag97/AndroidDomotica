@@ -16,8 +16,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -79,7 +82,7 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 if(validado) {
                     db.insert(Utilidades.TABLA_EDIFICIO, null, values);
                     values.clear();
-                    Toast.makeText(getApplicationContext(), "Se habilito el edificio con exito", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.pen_toast), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
 
@@ -122,10 +125,10 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                     }
                 }else {
                     if (Direccion_user.equals("")) {
-                        direccion.setError("La direccion no puede estar vacía");
+                        direccion.setError(getResources().getString(R.string.no_empty));
                     }
                     if (nombre1.equals("")){
-                        nombre.setError(("El nombre no puede estar vacío"));
+                        nombre.setError((getResources().getString(R.string.no_empty)));
                     }
                     if (!ilu && !gas && !movi && !temp){
                         AlertDialog.Builder builder = new AlertDialog.Builder(EdificioActivity.this);
@@ -151,6 +154,18 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edificio);
+
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle(getString(R.string.crear_edi));
+        mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
 
@@ -250,12 +265,12 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
             @Override
             public void onClick(View v) {
 
-                if(estado_text.getText().toString().equals("El estado es: pendiente")) {
-                    estado_text.setText("El estado es: activo");
+                if(estado_text.getText().toString().equals("El estado es: Pendiente")) {
+                    estado_text.setText("El estado es: Activo");
                     estado_num = 1;
                 }
                 else{
-                    estado_text.setText("El estado es: pendiente");
+                    estado_text.setText("El estado es: Pendiente");
                     estado_num = 0;
                 }
             }

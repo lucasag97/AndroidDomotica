@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -108,6 +109,18 @@ public class EdificioFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View vista = inflater.inflate(R.layout.fragment_edificio, container, false);
 
+        Toolbar mToolbar = vista.findViewById(R.id.toolbar);
+        mToolbar.setTitle(getString(R.string.edificios));
+        mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
+
         new_edi = vista.findViewById(R.id.new_edi);
         new_edi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,8 +156,10 @@ public class EdificioFragment extends Fragment {
         }
 
         if(edificios.size() > 0){
+            mToolbar.setTitle(getString(R.string.edi_activos));
             hayAprobado();
         }else{
+            mToolbar.setTitle(getString(R.string.edi_pendientes));
             noHayAprobado();
         }
 
@@ -182,14 +197,16 @@ public class EdificioFragment extends Fragment {
                             SQLiteDatabase db_actual = db.getWritableDatabase();
 
                             int cont = Utilidades.edis.size();
-                            int borrar = 0;
+                            int borrar = 1000;
                             for (int i=0; i<cont; i++){
                                 if(Utilidades.edis.get(i) == listaEdificio.get(position).getID()){
                                     borrar = i;
                                 }
                             }
 
-                            Utilidades.edis.remove(borrar);
+                            if (borrar != 1000) {
+                                Utilidades.edis.remove(borrar);
+                            }
 
                             String Query = "DELETE FROM edificio WHERE _id = "+listaEdificio.get(position).getID();
                             db_actual.execSQL(Query);
@@ -202,6 +219,7 @@ public class EdificioFragment extends Fragment {
 
                             Intent intent = new Intent(getActivity(), ContenedorActivity.class);
                             startActivity(intent);
+                            getActivity().finish();
                         }
                     });
                 alert.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {

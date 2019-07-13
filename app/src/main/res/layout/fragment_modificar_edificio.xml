@@ -6,6 +6,12 @@
     android:orientation="vertical"
     tools:context=".Fragment.ModificarEdificioFragment">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/lila" />
+
     <TextView
         android:layout_width="380dp"
         android:layout_height="wrap_content"

@@ -68,5 +68,15 @@
     <string name="agradable">Temperatura agradable</string>
     <string name="alarmante">Temperatura alarmante</string>
     <string name="please_sens">Por favor seleccione al menos un sensor.</string>
+    <string name="dire_vacia">La direccion no puede estar vacía</string>
+    <string name="nombre_vacio">El nombre no puede estar vacío</string>
+    <string name="no_empty">Este campo no puede estar vacío</string>
+    <string name="pen_toast">Su edificio está pendiente de aprobación</string>
+    <string name="edi_activos">Edificios activos</string>
+    <string name="edi_pendientes">Edificios pendientes</string>
+    <string name="detalle_edi">Detalle del edificio</string>
+    <string name="edificios">Edificios</string>
+    <string name="detalle_sensor">Detalles del sensor</string>
+    <string name="act_edi">Actualizar edificio</string>
 
 </resources>

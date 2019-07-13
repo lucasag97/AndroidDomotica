@@ -105,10 +105,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         }catch (Exception e){
             if (username.getText().toString().isEmpty()){
-                username.setError("Este campo no puede estar vacio");
+                username.setError(getResources().getString(R.string.no_empty));
             }
             if (password.getText().toString().isEmpty()){
-                password.setError("Este campo no puede estar vacio");
+                password.setError(getResources().getString(R.string.no_empty));
             }
             else {
                 Toast.makeText(getApplicationContext(), "Usuario no registrado", Toast.LENGTH_SHORT).show();

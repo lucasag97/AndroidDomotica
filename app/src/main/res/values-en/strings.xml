@@ -57,4 +57,14 @@
     <string name="agradable">Nice tempeture</string>
     <string name="alarmante">Alarming temperature</string>
     <string name="please_sens">Please select at least one sensor.</string>
+    <string name="dire_vacia">The address cannot be empty</string>
+    <string name="nombre_vacio">The name can not be empty</string>
+    <string name="no_empty">This field can not be blank</string>
+    <string name="pen_toast">Your building is pending approval</string>
+    <string name="edi_activos">Active buildings</string>
+    <string name="edi_pendientes">Pending buildings</string>
+    <string name="detalle_edi">Building detail</string>
+    <string name="edificios">Buildings</string>
+    <string name="detalle_sensor">Sensor detail</string>
+    <string name="act_edi">Update building</string>
 </resources>

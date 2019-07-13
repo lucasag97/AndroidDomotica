@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +89,18 @@ public class DetalleEdificioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_detalle_edificio, container, false);
+
+        Toolbar mToolbar = vista.findViewById(R.id.toolbar1);
+        mToolbar.setTitle(getString(R.string.detalle_edi));
+        mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
 
         textDescripcion = (TextView) vista.findViewById(R.id.EdificioDirreccion);
         recyclerSensores = (RecyclerView) vista.findViewById(R.id.recyclerIDsensoresActuales);

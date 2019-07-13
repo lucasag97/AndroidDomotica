@@ -6,6 +6,12 @@
     android:orientation="vertical"
     tools:context=".Fragment.DetalleSensorFragment">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/lila" />
+
     <TextView
         android:id="@+id/tituloSensor"
         android:layout_width="wrap_content"

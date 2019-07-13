@@ -7,6 +7,11 @@
     tools:context=".Fragment.DetalleEdificioFragment">
 
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar1"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/lila" />
 
 
         <TextView

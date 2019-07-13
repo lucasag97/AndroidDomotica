@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +88,18 @@ public class ModificarEdificioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_modificar_edificio, container, false);
+
+        Toolbar mToolbar = vista.findViewById(R.id.toolbar);
+        mToolbar.setTitle(getString(R.string.act_edi));
+        mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
 
         guardar = (Button) vista.findViewById(R.id.guardar);
 
@@ -236,6 +249,7 @@ public class ModificarEdificioFragment extends Fragment {
                 }
                 Intent intent = new Intent(getActivity(), ContenedorActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
 

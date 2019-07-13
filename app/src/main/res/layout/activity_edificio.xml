@@ -7,14 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".Activity.EdificioActivity">
 
-    <TextView
-        android:id="@+id/textView3"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/crear_edi"
-        android:textSize="40dp"
-        android:gravity="center"
-        android:layout_marginBottom="10dp"/>
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/lila" />
 
     <TextView
         android:layout_width="match_parent"
@@ -112,7 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"
-        android:text="El estado es: pendiente"
+        android:text="El estado es: Pendiente"
         />
 
     <Button
