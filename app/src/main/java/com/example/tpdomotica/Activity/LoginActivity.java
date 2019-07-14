@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
 import com.example.tpdomotica.R;
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button login;
     private TextView registrar;
     private Switch remember;
+    private Toolbar toolbar;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     private Boolean isRemembered;
@@ -54,12 +56,12 @@ public class LoginActivity extends AppCompatActivity {
         editor = pref.edit();
         username = (EditText)findViewById(R.id.login_username);
         password = (EditText)findViewById(R.id.login_pwd);
-        //rellenarCampos(username,password);
         login = (Button)findViewById(R.id.btn_login);
         registrar = (TextView) findViewById(R.id.btn_toregistro);
         remember = (Switch) findViewById(R.id.recuerdame);
         registrar.setOnClickListener(RegistroListener);
         login.setOnClickListener(LoginListener);
+        toolbar = findViewById(R.id.ingresarToolbar);
 
         isRemembered = pref.getBoolean("remember", false);
         if (isRemembered){

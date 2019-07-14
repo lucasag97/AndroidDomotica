@@ -39,9 +39,11 @@
     <string name="valor_actual">Valor actual</string>
     <string name="historico">Histórico</string>
     <string name="alerta">Alerta</string>
+    <string name="SinPendientes">No hay edificios pendientes</string>
 
 
     <string name="confirm">Confirmar</string>
+    <string name="ok">OK</string>
     <string name="settings">Configuración</string>
     <string name="idioma">Seleccione el idioma</string>
 

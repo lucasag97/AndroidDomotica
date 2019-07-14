@@ -68,6 +68,7 @@ public class AdaptadorEdificio extends
         this.listener1 = listener1;
     }
 
+
      @Override
     public void onClick(View view) {
         if(listener != null){

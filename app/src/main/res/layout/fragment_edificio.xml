@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:theme="@style/AppTHemeActionBar"
     tools:context=".Fragment.EdificioFragment">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:theme="@style/AppTHemeActionBar"
         android:background="@color/lila" />
 
     <LinearLayout
@@ -17,15 +19,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/tituloDinamico"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="hola"
-        android:gravity="center"
-        android:textSize="40dp"
-        android:layout_marginTop="10dp"
-        android:visibility="invisible"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerID"

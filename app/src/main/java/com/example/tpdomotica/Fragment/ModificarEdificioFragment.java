@@ -3,6 +3,7 @@ package com.example.tpdomotica.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,6 +19,7 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.example.tpdomotica.Activity.ContenedorActivity;
+import com.example.tpdomotica.Activity.LoginActivity;
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
 import com.example.tpdomotica.Entidades.Edificio;
 import com.example.tpdomotica.Entidades.Sensor;
@@ -98,6 +101,30 @@ public class ModificarEdificioFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 getActivity().onBackPressed();
+            }
+        });
+        mToolbar.inflateMenu(R.menu.menu_refresh);
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.configuracion:
+                        return true;
+                    case R.id.cerrar_sesion:
+                        Intent cerrar_sesion = new Intent(getContext(), LoginActivity.class);
+                        cerrar_sesion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        SharedPreferences pref = getActivity().getSharedPreferences("MisPreferencias",Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putBoolean("logged", false);
+                        editor.remove("id");
+                        Utilidades.edis.clear();
+                        editor.commit();
+                        //stopService(new Intent(getActivity(),Servicio.class));
+                        //stopService(new Intent(getActivity(),Servicio.class));
+                        startActivity(cerrar_sesion);
+                        return true;
+                }
+                return false;
             }
         });
 

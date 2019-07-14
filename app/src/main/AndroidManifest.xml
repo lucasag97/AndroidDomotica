@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_edificio_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".Activity.FirstTimeActivity" />
         <activity android:name=".Activity.ContenedorSensoresActivity" />
         <activity android:name=".Activity.ModificarEdificioActivity" />

@@ -6,6 +6,9 @@
         android:id="@+id/menu_edificio"
         android:title="@string/crear_edi"
         app:showAsAction="never"/>
+    <item android:id="@+id/verPendientes"
+        android:title="@string/edi_pendientes"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/menu_settings"
         android:title="@string/settings"

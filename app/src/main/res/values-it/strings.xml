@@ -67,4 +67,6 @@
     <string name="edificios">Edifici</string>
     <string name="detalle_sensor">Dettagli del sensore</string>
     <string name="act_edi">Aggiorna edificio</string>
+    <string name="SinPendientes">Nessun edificio in sospeso</string>
+    <string name="ok">OK</string>
 </resources>

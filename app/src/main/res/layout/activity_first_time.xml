@@ -7,12 +7,12 @@
     android:orientation="vertical"
     tools:context=".Activity.FirstTimeActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/welcome"
-        android:textSize="24dp" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/firstToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/lila"
+        app:titleTextColor="@color/cardview_light_background"/>
 
     <LinearLayout
     android:orientation="vertical"

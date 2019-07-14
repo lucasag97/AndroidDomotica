@@ -1,29 +1,30 @@
 package com.example.tpdomotica.Activity;
 
-import android.app.ActionBar;
-import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
+
+import com.example.tpdomotica.Entidades.Edificio;
 import com.example.tpdomotica.Entidades.Sensor;
 import com.example.tpdomotica.Fragment.DetalleEdificioFragment;
-import com.example.tpdomotica.Entidades.Edificio;
 import com.example.tpdomotica.Fragment.DetalleSensorFragment;
 import com.example.tpdomotica.Fragment.EdificioFragment;
+import com.example.tpdomotica.Fragment.EdificiosPendientesFragment;
 import com.example.tpdomotica.Fragment.ModificarEdificioFragment;
 import com.example.tpdomotica.Interface.IComunicaFragment;
 import com.example.tpdomotica.R;
 
 public class ContenedorActivity extends AppCompatActivity implements
         EdificioFragment.OnFragmentInteractionListener,
-        DetalleSensorFragment.OnFragmentInteractionListener,DetalleEdificioFragment.OnFragmentInteractionListener, ModificarEdificioFragment.OnFragmentInteractionListener, IComunicaFragment {
+        DetalleSensorFragment.OnFragmentInteractionListener,DetalleEdificioFragment.OnFragmentInteractionListener, ModificarEdificioFragment.OnFragmentInteractionListener
+        ,EdificiosPendientesFragment.OnFragmentInteractionListener,IComunicaFragment {
     EdificioFragment listaEdificios;
     DetalleEdificioFragment detalleEdificio;
     DetalleSensorFragment detalleSensor;
     ModificarEdificioFragment modificarEdificio;
+    EdificiosPendientesFragment edificiosPendientesFragment;
 
 
 
@@ -32,7 +33,6 @@ public class ContenedorActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contenedor);
 
-        getSupportActionBar().hide();
 
         listaEdificios = new EdificioFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,listaEdificios).commit();
@@ -75,5 +75,11 @@ public class ContenedorActivity extends AppCompatActivity implements
     public void recargarEdificio(){
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,listaEdificios).commit();
     }
+    @Override
+    public void irApendientes(){
+        edificiosPendientesFragment = new EdificiosPendientesFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment, edificiosPendientesFragment).addToBackStack(null).commit();
+    }
+
 
 }

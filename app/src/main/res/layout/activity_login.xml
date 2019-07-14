@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/ingresarToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/lila"
+        app:titleTextColor="@color/ic_afirmativo_background"
+        app:title="@string/ingresar"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -76,4 +86,4 @@
             android:textSize="16dip"/>
 
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

@@ -11,16 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/lila" />
-
-    <TextView
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="Modificar Edificio"
-        android:textSize="30dp"
-        android:gravity="center"
-        android:layout_marginBottom="20dp"/>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,8 +19,6 @@
         android:text="Sensores Disponibles"
         android:textSize="20dp"
         android:textStyle="bold" />
-
-
     <CheckBox
         android:id="@+id/edificio_iluminacion"
         android:layout_width="match_parent"

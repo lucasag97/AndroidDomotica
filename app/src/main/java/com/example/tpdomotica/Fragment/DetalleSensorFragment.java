@@ -2,6 +2,8 @@ package com.example.tpdomotica.Fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -10,7 +12,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -18,12 +22,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tpdomotica.Activity.LoginActivity;
 import com.example.tpdomotica.Adaptadores.AdaptadorHistorial;
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
 import com.example.tpdomotica.Entidades.Historico;
 import com.example.tpdomotica.Entidades.Sensor;
 import com.example.tpdomotica.Interface.IComunicaFragment;
 import com.example.tpdomotica.R;
+import com.example.tpdomotica.Utilidades.Utilidades;
 
 import java.util.ArrayList;
 
@@ -47,6 +53,7 @@ public class DetalleSensorFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    SharedPreferences pref;
     Activity activity;
     IComunicaFragment interfaceComunicaFragment;
     TextView Titulo,DatosActuales,listaVacia;
@@ -84,6 +91,7 @@ public class DetalleSensorFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         db = new ConexionSQLite(getActivity(),"db_domotica",null,1);
+        pref =  this.getActivity().getSharedPreferences("MisPreferencias",Context.MODE_PRIVATE);
     }
 
     @Override
@@ -95,6 +103,30 @@ public class DetalleSensorFragment extends Fragment {
         mToolbar.setTitle(getString(R.string.detalle_sensor));
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        mToolbar.inflateMenu(R.menu.menu_refresh);
+
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.configuracion:
+                        return true;
+                    case R.id.cerrar_sesion:
+                        Intent cerrar_sesion = new Intent(getContext(),LoginActivity.class);
+                        cerrar_sesion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putBoolean("logged", false);
+                        editor.remove("id");
+                        Utilidades.edis.clear();
+                        editor.commit();
+                        //stopService(new Intent(getActivity(),Servicio.class));
+                        //stopService(new Intent(getActivity(),Servicio.class));
+                        startActivity(cerrar_sesion);
+                        return true;
+                }
+                return false;
+            }
+        });
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

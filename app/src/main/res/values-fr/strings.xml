@@ -73,4 +73,6 @@
     <string name="edificios">Bâtiments</string>
     <string name="detalle_sensor">Détails du capteur</string>
     <string name="act_edi">Mise à jour du bâtiment</string>
+    <string name="SinPendientes">Aucun bâtiment en attente</string>
+    <string name="ok">OK</string>
 </resources>

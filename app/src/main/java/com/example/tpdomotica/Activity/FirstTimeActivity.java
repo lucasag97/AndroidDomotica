@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ public class FirstTimeActivity extends AppCompatActivity {
 
     SharedPreferences pref;
     SharedPreferences.Editor editor;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +33,10 @@ public class FirstTimeActivity extends AppCompatActivity {
         loadLocale();
         setContentView(R.layout.activity_first_time);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getResources().getString(R.string.welcome));
+
+        toolbar = findViewById(R.id.firstToolbar);
+        toolbar.setTitle(R.string.welcome);
+
 
         Button changeLang = findViewById(R.id.language);
         changeLang.setOnClickListener(new View.OnClickListener() {
