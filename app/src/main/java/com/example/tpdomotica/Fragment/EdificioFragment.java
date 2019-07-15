@@ -205,10 +205,11 @@ public class EdificioFragment extends Fragment implements PopupMenu.OnMenuItemCl
 
         if(edificios.size() > 0){
             mToolbar.setTitle(getString(R.string.edi_activos));
-            //hayAprobado();
+
         }else{
             mToolbar.setTitle(getString(R.string.edi_pendientes));
-            //noHayAprobado();
+            mToolbar.getMenu().findItem(R.id.verPendientes).setVisible(false);
+
         }
 
         final AdaptadorEdificio adapter = new AdaptadorEdificio(listaEdificio);
@@ -308,20 +309,7 @@ public class EdificioFragment extends Fragment implements PopupMenu.OnMenuItemCl
         vistaVacia.setVisibility(View.VISIBLE);
         recyclerEdificio.setVisibility(View.GONE);
         alerta.setVisibility(View.VISIBLE);
-    }/*
-    private void hayAprobado(){
-        String mensaje = "Edificios Aprobados";
-        tituloDinamico.setText(mensaje);
-        tituloDinamico.setVisibility(View.VISIBLE);
     }
-    private void noHayAprobado(){
-        String mensaje = "Edificios Pendientes";
-        tituloDinamico.setText(mensaje);
-        tituloDinamico.setVisibility(View.VISIBLE);
-    }
-    private void quitarTitulo(){
-        tituloDinamico.setVisibility(View.GONE);
-    }*/
     private boolean comprobacionDeAprobados(ArrayList<Edificio> listaEdificios){
         boolean comprobacion = false;
         for (int i = 0; i <listaEdificios.size() ; i ++){
