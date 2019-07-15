@@ -160,8 +160,8 @@ public class EdificioFragment extends Fragment implements PopupMenu.OnMenuItemCl
                         editor.remove("id");
                         Utilidades.edis.clear();
                         editor.commit();
-                        //stopService(new Intent(getActivity(),Servicio.class));
-                        //stopService(new Intent(getActivity(),Servicio.class));
+                        getActivity().stopService(new Intent(getActivity(),Servicio.class));
+                        getActivity().stopService(new Intent(getActivity(), Servicio.class));
                         startActivity(cerrar_sesion);
                         return true;
                 }
@@ -214,7 +214,8 @@ public class EdificioFragment extends Fragment implements PopupMenu.OnMenuItemCl
         if(recyclerEdificio.getAdapter() != null){
             if(recyclerEdificio.getAdapter().getItemCount() == 0){
                 //quitarTitulo();
-                //noHayEdificios();
+                noHayEdificios();
+                mToolbar.setTitle(R.string.edificios);
             }
         }
         if(comprobacionDeAprobados(listaEdificio)){
@@ -263,6 +264,9 @@ public class EdificioFragment extends Fragment implements PopupMenu.OnMenuItemCl
                                 if (borrar != 1000) {
                                 Utilidades.edis.remove(borrar);
                                 }
+                                if (Utilidades.edis.size() == 0){
+                                    getActivity().stopService(new Intent(getActivity(), Servicio.class));
+                                }
                                 String Query = "DELETE FROM edificio WHERE _id = " + listaEdificio.get(recyclerEdificio.getChildAdapterPosition(view)).getID();
                                 db_actual.execSQL(Query);
 
@@ -295,14 +299,13 @@ public class EdificioFragment extends Fragment implements PopupMenu.OnMenuItemCl
         });
         return vista;
     }
-    /*
     private void noHayEdificios() {
-        String mensaje = "No hay edificios asociados";
+        String mensaje = getResources().getString(R.string.no_asoc);
         vistaVacia.setText(mensaje);
         vistaVacia.setVisibility(View.VISIBLE);
         recyclerEdificio.setVisibility(View.GONE);
         alerta.setVisibility(View.VISIBLE);
-    }
+    }/*
     private void hayAprobado(){
         String mensaje = "Edificios Aprobados";
         tituloDinamico.setText(mensaje);

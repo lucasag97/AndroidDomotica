@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +18,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Toast;
 
+import com.example.tpdomotica.Activity.ContenedorActivity;
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
 import com.example.tpdomotica.R;
 import com.example.tpdomotica.Utilidades.Utilidades;
@@ -40,6 +42,11 @@ public class Servicio extends Service {
     Timer timer2;
     private TimerTask doAsynchronousTask1;
     private TimerTask doAsynchronousTask2;
+    private static Servicio instance = null;
+
+    public static boolean isRunning(){
+        return instance != null;
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -47,6 +54,8 @@ public class Servicio extends Service {
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        instance = this;
 
         pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
         idUser = pref.getString("id", "999");
@@ -90,9 +99,13 @@ public class Servicio extends Service {
 
                                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
                                 CHANNEL_ID = "channel1";
+                                Intent resultIntent = new Intent(getApplicationContext(), ContenedorActivity.class);
+                                TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+                                stackBuilder.addNextIntentWithParentStack(resultIntent);
+                                PendingIntent resultPI = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
                                 Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                                        .setSmallIcon(R.mipmap.ic_launcher)
+                                        .setSmallIcon(R.drawable.ic_baseline_warning_24px)
                                         .setContentTitle("Alerta en "+ nombre)
                                         .setContentText(mensaje)
                                         //.setLargeIcon(largeIcon)
@@ -102,8 +115,11 @@ public class Servicio extends Service {
                                                 .setSummaryText("Servicio en background"))
                                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                                         .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                                        .setContentIntent(resultPI)
                                         .setColor(Color.BLUE)
                                         //.setContentIntent(contentIntent)
+                                        .setWhen(System.currentTimeMillis())
+                                        .setShowWhen(true)
                                         .setAutoCancel(true)
                                         .setOnlyAlertOnce(true)
                                         //.addAction(R.mipmap.ic_launcher, "Toast", actionIntent)
@@ -230,9 +246,10 @@ public class Servicio extends Service {
     }
     @Override
     public void onDestroy() {
+        instance = null;
         super.onDestroy();
         timer1.cancel();
         timer2.cancel();
-        Toast.makeText(this, "Service destroyed by user.", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Service destroyed by user.", Toast.LENGTH_LONG).show();
     }
 }

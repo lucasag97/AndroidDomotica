@@ -9,12 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tpdomotica.R;
+import com.example.tpdomotica.Utilidades.Utilidades;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class FirstTimeActivity extends AppCompatActivity {
@@ -60,28 +63,32 @@ public class FirstTimeActivity extends AppCompatActivity {
         final String[] listItems  = {getResources().getString(R.string.español), getResources().getString(R.string.ingles), getResources().getString(R.string.frances), getResources().getString(R.string.italiano)};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(FirstTimeActivity.this);
         mBuilder.setTitle(getResources().getString(R.string.idioma));
-        mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+        mBuilder.setSingleChoiceItems(listItems, Utilidades.item, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0){
+                    Utilidades.item = 0;
                     setLocale("es");
                     editor.putString("lang", "es");
                     editor.apply();
                     recreate();
                 }
                 if (which == 1){
+                    Utilidades.item = 1;
                     setLocale("en");
                     editor.putString("lang", "en");
                     editor.apply();
                     recreate();
                 }
                 if (which == 2){
+                    Utilidades.item = 2;
                     setLocale("fr");
                     editor.putString("lang", "fr");
                     editor.apply();
                     recreate();
                 }
                 if (which == 3){
+                    Utilidades.item = 3;
                     setLocale("it");
                     editor.putString("lang", "it");
                     editor.apply();

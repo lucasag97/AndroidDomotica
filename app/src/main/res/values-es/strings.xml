@@ -80,5 +80,6 @@
     <string name="edificios">Edificios</string>
     <string name="detalle_sensor">Detalles del sensor</string>
     <string name="act_edi">Actualizar edificio</string>
+    <string name="no_asoc">No hay edificios asociados</string>
 
 </resources>

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Utilidades {
 
     public static ArrayList<Integer> edis = new ArrayList();
+    public static int item = 0;
 
     //Tabla Usuario
     public static final String TABLA_USUARIO="usuarios";

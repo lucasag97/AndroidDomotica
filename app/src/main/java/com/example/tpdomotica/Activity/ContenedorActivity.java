@@ -26,8 +26,6 @@ public class ContenedorActivity extends AppCompatActivity implements
     ModificarEdificioFragment modificarEdificio;
     EdificiosPendientesFragment edificiosPendientesFragment;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

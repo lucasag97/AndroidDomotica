@@ -67,6 +67,7 @@
     <string name="edificios">Buildings</string>
     <string name="detalle_sensor">Sensor detail</string>
     <string name="act_edi">Update building</string>
+    <string name="no_asoc">There are no associated buildings</string>
     <string name="SinPendientes">No buildings pending</string>
     <string name="ok">OK</string>
 </resources>

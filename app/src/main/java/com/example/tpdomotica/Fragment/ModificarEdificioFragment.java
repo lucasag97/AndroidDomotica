@@ -1,7 +1,9 @@
 package com.example.tpdomotica.Fragment;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -16,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tpdomotica.Activity.ContenedorActivity;
@@ -53,6 +57,7 @@ public class ModificarEdificioFragment extends Fragment {
     IComunicaFragment interfaceComunicaFragment;
     ConexionSQLite db;
     Button guardar;
+    EditText dire, nombre;
 
 
     public ModificarEdificioFragment() {
@@ -128,6 +133,10 @@ public class ModificarEdificioFragment extends Fragment {
             }
         });
 
+        dire = vista.findViewById(R.id.direccion);
+
+        nombre = vista.findViewById(R.id.edi_nombre);
+
         guardar = (Button) vista.findViewById(R.id.guardar);
 
         iluminacion = (CheckBox) vista.findViewById(R.id.edificio_iluminacion);
@@ -137,8 +146,6 @@ public class ModificarEdificioFragment extends Fragment {
                 boolean isChecked = ((CheckBox)v).isChecked();
                 if(isChecked) {
                     ilu = true;
-                }else{
-                    ilu = false;
                 }
             }
         });
@@ -190,6 +197,12 @@ public class ModificarEdificioFragment extends Fragment {
 
         final SQLiteDatabase db_actual = db.getWritableDatabase();
 
+        Cursor c1 = db_actual.rawQuery("SELECT nombre, direccion FROM edificio WHERE _id = "+edificio.getID(), null);
+        if (c1.moveToFirst()){
+            nombre.setText(c1.getString(0));
+            dire.setText(c1.getString(1));
+        }
+
         Cursor cursor = db_actual.rawQuery("SELECT ES.id_sensor FROM edificio_sensor ES INNER JOIN edificio E ON E._id = ES.id_edificio WHERE ES.id_edificio = "+edificio.getID(),null);
 
         int cont = cursor.getCount();
@@ -197,15 +210,19 @@ public class ModificarEdificioFragment extends Fragment {
             for (int i = 0; i<=cont-1;i++){
                 if(cursor.getInt(0) == 1){
                     iluminacion.setChecked(true);
+                    ilu = true;
                 }
                 if(cursor.getInt(0) == 2){
                     gases.setChecked(true);
+                    gas = true;
                 }
                 if(cursor.getInt(0) == 3){
                     movimiento.setChecked(true);
+                    movi = true;
                 }
                 if (cursor.getInt(0) == 4){
                     temperatura.setChecked(true);
+                    temp = true;
                 }
                 cursor.moveToNext();
             }
@@ -218,65 +235,104 @@ public class ModificarEdificioFragment extends Fragment {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ilu == true){
-                    if(verificarCampoExistente(Utilidades.TABLA_EDIFICIO_SENSOR,Utilidades.TABLA_SENSOR,finalEdificio.getID(),1) == false){
-                        values.put(Utilidades.ID_SENSOR, 1);
-                        values.put(Utilidades.ID_EDIFICIO, finalEdificio.getID());
-                        values.put(Utilidades.EDI_SENS_VALOR, "0");
-                        db_actual.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
-                        values.clear();
-                    }
-                }else{
-                    ConexionSQLite db_consulta = new ConexionSQLite(getContext(),"db_domotica",null,1);
-                    SQLiteDatabase actual = db_consulta.getWritableDatabase();
-                    String Query = "select * from edificio_sensor ES INNER JOIN sensor S ON S._id = ES.id_sensor WHERE (ES.id_edificio = 1) AND (ES.id_sensor = "+finalEdificio.getID()+")";
-                    Cursor cur = actual.rawQuery(Query,null);
-                    if (cur.getCount() > 0){
-                       actual.execSQL("DELETE FROM edificio_sensor WHERE (id_sensor = 1) AND (id_edificio = "+finalEdificio.getID()+")");
+                boolean validado = false;
+                ContentValues cont = new ContentValues();
+                String dire_text =  dire.getText().toString();
+                String nombre1 = nombre.getText().toString();
+                if(!dire_text.equals(""))
+                    cont.put(Utilidades.EDI_DIRECCION,dire.getText().toString());
+                if (!nombre1.equals(""))
+                    cont.put(Utilidades.EDI_NOMBRE, nombre1);
+                if (!dire_text.equals("") && !nombre1.equals(""))
+                    validado = true;
+                if (!ilu && !gas && !movi && !temp)
+                    validado = false;
+
+                if (validado) {
+                    db_actual.update(Utilidades.TABLA_EDIFICIO, cont, "_id="+finalEdificio.getID(), null);
+                    cont.clear();
+
+                    if (ilu == true) {
+                        if (verificarCampoExistente(Utilidades.TABLA_EDIFICIO_SENSOR, Utilidades.TABLA_SENSOR, finalEdificio.getID(), 1) == false) {
+                            values.put(Utilidades.ID_SENSOR, 1);
+                            values.put(Utilidades.ID_EDIFICIO, finalEdificio.getID());
+                            values.put(Utilidades.EDI_SENS_VALOR, "0");
+                            db_actual.insert(Utilidades.TABLA_EDIFICIO_SENSOR, null, values);
+                            values.clear();
+                        }
+                    } else {
+                        ConexionSQLite db_consulta = new ConexionSQLite(getContext(), "db_domotica", null, 1);
+                        SQLiteDatabase actual = db_consulta.getWritableDatabase();
+                        String Query = "select * from edificio_sensor ES INNER JOIN sensor S ON S._id = ES.id_sensor WHERE (ES.id_edificio = 1) AND (ES.id_sensor = " + finalEdificio.getID() + ")";
+                        Cursor cur = actual.rawQuery(Query, null);
+                        if (cur.getCount() > 0) {
+                            actual.execSQL("DELETE FROM edificio_sensor WHERE (id_sensor = 1) AND (id_edificio = " + finalEdificio.getID() + ")");
+                        }
+
                     }
 
-                }
+                    if (gas == true) {
+                        if (verificarCampoExistente(Utilidades.TABLA_EDIFICIO_SENSOR, Utilidades.TABLA_SENSOR, finalEdificio.getID(), 2) == false) {
+                            values.put(Utilidades.ID_SENSOR, 2);
+                            values.put(Utilidades.ID_EDIFICIO, finalEdificio.getID());
+                            values.put(Utilidades.EDI_SENS_VALOR, "0");
+                            db_actual.insert(Utilidades.TABLA_EDIFICIO_SENSOR, null, values);
+                            values.clear();
+                        }
+                    } else {
+                        String Query = "DELETE FROM " + Utilidades.TABLA_EDIFICIO_SENSOR + " WHERE (" + Utilidades.ID_SENSOR + " = " + 2 + ") AND (" + Utilidades.ID_EDIFICIO + " = " + finalEdificio.getID() + ")";
+                        db_actual.execSQL(Query);
+                    }
+                    if (movi == true) {
+                        if (verificarCampoExistente(Utilidades.TABLA_EDIFICIO_SENSOR, Utilidades.TABLA_SENSOR, finalEdificio.getID(), 3) == false) {
+                            values.put(Utilidades.ID_SENSOR, 3);
+                            values.put(Utilidades.ID_EDIFICIO, finalEdificio.getID());
+                            values.put(Utilidades.EDI_SENS_VALOR, "0");
+                            db_actual.insert(Utilidades.TABLA_EDIFICIO_SENSOR, null, values);
+                            values.clear();
+                        }
+                    } else {
+                        String Query = "DELETE FROM " + Utilidades.TABLA_EDIFICIO_SENSOR + " WHERE (" + Utilidades.ID_SENSOR + " = " + 3 + ") AND (" + Utilidades.ID_EDIFICIO + " = " + finalEdificio.getID() + ")";
+                        db_actual.execSQL(Query);
+                    }
 
-                if(gas == true){
-                    if(verificarCampoExistente(Utilidades.TABLA_EDIFICIO_SENSOR,Utilidades.TABLA_SENSOR,finalEdificio.getID(),2) == false){
-                        values.put(Utilidades.ID_SENSOR,2);
-                        values.put(Utilidades.ID_EDIFICIO,finalEdificio.getID());
-                        values.put(Utilidades.EDI_SENS_VALOR,"0");
-                        db_actual.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
-                        values.clear();
+                    if (temp == true) {
+                        if (verificarCampoExistente(Utilidades.TABLA_EDIFICIO_SENSOR, Utilidades.TABLA_SENSOR, finalEdificio.getID(), 4) == false) {
+                            values.put(Utilidades.ID_SENSOR, 4);
+                            values.put(Utilidades.ID_EDIFICIO, finalEdificio.getID());
+                            values.put(Utilidades.EDI_SENS_VALOR, "0");
+                            db_actual.insert(Utilidades.TABLA_EDIFICIO_SENSOR, null, values);
+                            values.clear();
+                        }
+                    } else {
+                        String Query = "DELETE FROM " + Utilidades.TABLA_EDIFICIO_SENSOR + " WHERE (" + Utilidades.ID_SENSOR + " = " + 4 + ") AND (" + Utilidades.ID_EDIFICIO + " = " + finalEdificio.getID() + ")";
+                        db_actual.execSQL(Query);
                     }
-                }else{
-                    String Query = "DELETE FROM "+Utilidades.TABLA_EDIFICIO_SENSOR+" WHERE ("+Utilidades.ID_SENSOR+" = "+2+") AND ("+Utilidades.ID_EDIFICIO+" = "+finalEdificio.getID()+")";
-                    db_actual.execSQL(Query);
+                    Intent intent = new Intent(getActivity(), ContenedorActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
-                if(movi == true){
-                    if(verificarCampoExistente(Utilidades.TABLA_EDIFICIO_SENSOR,Utilidades.TABLA_SENSOR,finalEdificio.getID(),3) == false){
-                        values.put(Utilidades.ID_SENSOR,3);
-                        values.put(Utilidades.ID_EDIFICIO,finalEdificio.getID());
-                        values.put(Utilidades.EDI_SENS_VALOR,"0");
-                        db_actual.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
-                        values.clear();
+                else{
+                    if (dire_text.equals("")) {
+                        dire.setError(getResources().getString(R.string.no_empty));
                     }
-                }else{
-                    String Query = "DELETE FROM "+Utilidades.TABLA_EDIFICIO_SENSOR+" WHERE ("+Utilidades.ID_SENSOR+" = "+3+") AND ("+Utilidades.ID_EDIFICIO+" = "+finalEdificio.getID()+")";
-                    db_actual.execSQL(Query);
-                }
-
-                if(temp == true){
-                    if(verificarCampoExistente(Utilidades.TABLA_EDIFICIO_SENSOR,Utilidades.TABLA_SENSOR,finalEdificio.getID(),4) == false){
-                        values.put(Utilidades.ID_SENSOR,4);
-                        values.put(Utilidades.ID_EDIFICIO,finalEdificio.getID());
-                        values.put(Utilidades.EDI_SENS_VALOR,"0");
-                        db_actual.insert(Utilidades.TABLA_EDIFICIO_SENSOR,null,values);
-                        values.clear();
+                    if (nombre1.equals("")){
+                        nombre.setError((getResources().getString(R.string.no_empty)));
                     }
-                }else{
-                    String Query = "DELETE FROM " + Utilidades.TABLA_EDIFICIO_SENSOR + " WHERE (" + Utilidades.ID_SENSOR + " = " + 4 + ") AND (" + Utilidades.ID_EDIFICIO + " = " + finalEdificio.getID() + ")";
-                    db_actual.execSQL(Query);
+                    if (!ilu && !gas && !movi && !temp){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage(getResources().getString(R.string.please_sens))
+                                .setCancelable(true)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
                 }
-                Intent intent = new Intent(getActivity(), ContenedorActivity.class);
-                startActivity(intent);
-                getActivity().finish();
             }
         });
 
@@ -310,14 +366,6 @@ public class ModificarEdificioFragment extends Fragment {
             db_actual.close();
             return false;
         }
-        return true;
-    }
-    public boolean verificarCampoEliminar(String campo1,String campo2,int id_edificio,int id_sensor){
-        ConexionSQLite db = new ConexionSQLite(getActivity(),"db_domotica",null,1);
-        SQLiteDatabase db_actual = db.getReadableDatabase();
-        String Query = "SElECT ES.id_sensor FROM "+campo1+" ES INNER JOIN "+campo2+" S ON S._id = ES.id_sensor WHERE (ES.id_sensor = "+id_sensor+") AND (ES.id_edificio = "+id_edificio+")";
-        Cursor cursor = db_actual.rawQuery(Query,null);
-
         return true;
     }
 

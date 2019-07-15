@@ -15,6 +15,7 @@ import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
+import com.example.tpdomotica.Entidades.Servicio;
 import com.example.tpdomotica.R;
 import com.example.tpdomotica.Entidades.Usuario;
 import com.example.tpdomotica.Utilidades.Utilidades;
@@ -95,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
             if(contraseña_usuario.equals(contraseña_ingresada)){
                 recuerdaUsuario(cursor.getString(4),cursor.getString(5));
                 iniciarSesion(cursor.getString(0),cursor.getString(6));
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, ContenedorActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 editor.putBoolean("logged", true);
                 editor.putBoolean("firstTime", false);
@@ -139,6 +140,9 @@ public class LoginActivity extends AppCompatActivity {
                 Utilidades.edis.add(c.getInt(0));
                 c.moveToNext();
             }
+        }
+        if (Utilidades.edis.size() >= 1){
+            startService(new Intent(this, Servicio.class));
         }
         db1.close();
         editor.putString("id",id);

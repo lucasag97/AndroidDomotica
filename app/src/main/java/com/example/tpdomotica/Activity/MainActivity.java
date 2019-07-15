@@ -2,6 +2,7 @@ package com.example.tpdomotica.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -20,11 +21,13 @@ import com.example.tpdomotica.R;
 import com.example.tpdomotica.Entidades.Servicio;
 import com.example.tpdomotica.Utilidades.Utilidades;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity{
 
     Button service, VerEdificios, cantEdi;
     SharedPreferences pref;
-    boolean lang;
+    boolean ft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +36,17 @@ public class MainActivity extends AppCompatActivity{
 
         pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
 
-        lang = pref.getBoolean("firstTime", true);
+        ft = pref.getBoolean("firstTime", true);
+
+        String lang = pref.getString("lang", "");
+
+        loadLocale(lang);
 
         //Si no esta logueado va a login
         boolean isLogged = pref.getBoolean("logged", false);
         if (!isLogged){
             Intent login = new Intent(this, LoginActivity.class);
+            finish();
             startActivity(login);
         }
         else{
@@ -53,11 +61,18 @@ public class MainActivity extends AppCompatActivity{
                     c.moveToNext();
                 }
             }
+            if (Utilidades.edis.size() >= 1 && !Servicio.isRunning()) {
+                startService(new Intent(MainActivity.this, Servicio.class));
+            }
             db1.close();
+            Intent intent = new Intent(this, ContenedorActivity.class);
+            finish();
+            startActivity(intent);
         }
 
-        if(lang){
+        if(ft){
             Intent first = new Intent(this, FirstTimeActivity.class);
+            finish();
             startActivity(first);
         }
 
@@ -123,5 +138,12 @@ public class MainActivity extends AppCompatActivity{
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    private void loadLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 }

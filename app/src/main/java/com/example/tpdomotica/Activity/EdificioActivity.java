@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
+import com.example.tpdomotica.Entidades.Servicio;
 import com.example.tpdomotica.R;
 import com.example.tpdomotica.Utilidades.Utilidades;
 
@@ -84,6 +85,7 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                     values.clear();
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.pen_toast), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    finish();
                     startActivity(intent);
 
                     SQLiteDatabase read = conn.getReadableDatabase();
@@ -122,6 +124,9 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
 
                     if (estado_num == 1) {
                         Utilidades.edis.add(idEdi);
+                    }
+                    if (Utilidades.edis.size() == 1){
+                        startService(new Intent(getApplicationContext(), Servicio.class));
                     }
                 }else {
                     if (Direccion_user.equals("")) {

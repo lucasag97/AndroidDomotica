@@ -36,6 +36,7 @@ import com.example.tpdomotica.Activity.LoginActivity;
 import com.example.tpdomotica.Adaptadores.AdaptadorEdificio;
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
 import com.example.tpdomotica.Entidades.Edificio;
+import com.example.tpdomotica.Entidades.Servicio;
 import com.example.tpdomotica.Interface.IComunicaFragment;
 import com.example.tpdomotica.R;
 import com.example.tpdomotica.Utilidades.Utilidades;
@@ -132,8 +133,7 @@ public class EdificiosPendientesFragment extends Fragment {
                         editor.remove("id");
                         Utilidades.edis.clear();
                         editor.commit();
-                        //stopService(new Intent(getActivity(),Servicio.class));
-                        //stopService(new Intent(getActivity(),Servicio.class));
+                        getActivity().stopService(new Intent(getActivity(), Servicio.class));
                         startActivity(cerrar_sesion);
                         return true;
                 }
