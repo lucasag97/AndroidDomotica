@@ -75,4 +75,7 @@
     <string name="existe">The user already exists in the database</string>
     <string name="wrong_pass">Incorrect password</string>
     <string name="no_user">Unregistered user</string>
+    <string name="caluroso">Warm temperature</string>
+    <string name="fresco">Very cold temperature</string>
+    <string name="refresh">Actualizar</string>
 </resources>

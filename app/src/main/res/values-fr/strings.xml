@@ -81,4 +81,7 @@
     <string name="existe">L\'utilisateur existe déjà dans la base de données</string>
     <string name="wrong_pass">Mot de passe incorrect</string>
     <string name="no_user">Utilisateur non enregistré</string>
+    <string name="caluroso">Température chaude</string>
+    <string name="fresco">Température très froide</string>
+    <string name="refresh">Mise à jour</string>
 </resources>

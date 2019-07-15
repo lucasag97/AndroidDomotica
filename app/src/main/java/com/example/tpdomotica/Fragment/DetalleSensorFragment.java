@@ -8,8 +8,11 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -44,7 +47,7 @@ import java.util.ArrayList;
  * Use the {@link DetalleSensorFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DetalleSensorFragment extends Fragment {
+public class DetalleSensorFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -62,6 +65,7 @@ public class DetalleSensorFragment extends Fragment {
     ImageView alert;
     RecyclerView recyclerSensores;
     ConexionSQLite db;
+    SwipeRefreshLayout swipeLayout;
 
     public DetalleSensorFragment() {
         // Required empty public constructor
@@ -101,12 +105,15 @@ public class DetalleSensorFragment extends Fragment {
                              Bundle savedInstanceState) {
         View vista =  inflater.inflate(R.layout.fragment_detalle_sensor,container,false);
 
+        swipeLayout = (SwipeRefreshLayout) vista.findViewById(R.id.fragmentSensorDetalle);
+        swipeLayout.setOnRefreshListener(this);
+
+
         Toolbar mToolbar = vista.findViewById(R.id.toolbar);
         mToolbar.setTitle(getString(R.string.detalle_sensor));
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         mToolbar.inflateMenu(R.menu.menu_refresh);
-
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -137,6 +144,7 @@ public class DetalleSensorFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
+
 
         SQLiteDatabase db_actual = db.getReadableDatabase();
         Titulo = (TextView) vista.findViewById(R.id.tituloSensor);
@@ -236,6 +244,14 @@ public class DetalleSensorFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onRefresh() {
+        final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+        getActivity().getSupportFragmentManager().executePendingTransactions();
+        swipeLayout.setRefreshing(false);
     }
 
     /**

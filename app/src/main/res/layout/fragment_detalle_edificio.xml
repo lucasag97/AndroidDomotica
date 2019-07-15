@@ -1,50 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:id="@+id/detalleEdificioFragment"
     tools:context=".Fragment.DetalleEdificioFragment">
 
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/lila" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar1"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/lila" />
 
 
-        <TextView
-            android:layout_width="380dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/dire_edi"
-            android:textSize="30dp"
-            android:textStyle="bold" />
+                <TextView
+                    android:layout_width="380dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/dire_edi"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/EdificioDirreccion"
-            android:layout_width="380dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="20dp"
-            android:text="sadasdasd" />
+                <TextView
+                    android:id="@+id/EdificioDirreccion"
+                    android:layout_width="380dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="sadasdasd" />
 
-        <TextView
-            android:layout_width="380dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/sens_dis"
-            android:textSize="30dp"
-            android:textStyle="bold" />
+                <TextView
+                    android:layout_width="380dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/sens_dis"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerIDsensoresActuales"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerIDsensoresActuales"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp">
 
-        </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+                </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -59,10 +59,18 @@ public class AdaptadorHistorial extends RecyclerView.Adapter<AdaptadorHistorial.
                 }
                 break;
             case "temperatura":
-                if (valor< umbral) {
+                if (valor <= 28 && valor >=7) {
                     historialViewHolder.valor.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.agradable)+" "+valor+"°C");
                 }else {
-                    historialViewHolder.valor.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.alarmante)+" "+valor+"°C");
+                    if(valor < 35){
+                        historialViewHolder.valor.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.caluroso)+" "+valor+"°C");
+                    }
+                    if(valor < 7){
+                        historialViewHolder.valor.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.fresco)+" "+valor+"°C");
+                    }
+                    if(valor > umbral){
+                        historialViewHolder.valor.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.alarmante)+" "+valor+"°C");
+                    }
                 }
                 break;
         }

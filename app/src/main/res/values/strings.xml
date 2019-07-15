@@ -94,4 +94,7 @@
     <string name="existe">El usuario ya existe en la base de datos</string>
     <string name="wrong_pass">Contraseña incorrecta</string>
     <string name="no_user">Usuario no registrado</string>
+    <string name="caluroso">caluroso</string>
+    <string name="fresco">Temperatura muy fria</string>
+    <string name="refresh">Actualizar</string>
 </resources>

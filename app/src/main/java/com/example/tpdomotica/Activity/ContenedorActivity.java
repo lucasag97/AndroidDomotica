@@ -33,7 +33,7 @@ public class ContenedorActivity extends AppCompatActivity implements
 
 
         listaEdificios = new EdificioFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,listaEdificios).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,listaEdificios,"EdificioFragment").commit();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ContenedorActivity extends AppCompatActivity implements
         detalleEdificio.setArguments(bundleEnvio);
 
         //cargamos el fragment en el activity
-        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,detalleEdificio).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,detalleEdificio,"EdificioFragment").addToBackStack(null).commit();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class ContenedorActivity extends AppCompatActivity implements
         bundleEnvio.putSerializable("sensor",sensor);
         detalleSensor.setArguments(bundleEnvio);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,detalleSensor).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,detalleSensor,"DetalleEdificioSensor").addToBackStack(null).commit();
     }
     @Override
     public void modificarEdificio(Edificio edificio){
@@ -67,7 +67,7 @@ public class ContenedorActivity extends AppCompatActivity implements
         bundleEnvio.putSerializable("edificio",edificio);
         modificarEdificio.setArguments(bundleEnvio);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,modificarEdificio).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment,modificarEdificio,"ModificarEdificioFragment").addToBackStack(null).commit();
     }
     @Override
     public void recargarEdificio(){
@@ -76,7 +76,7 @@ public class ContenedorActivity extends AppCompatActivity implements
     @Override
     public void irApendientes(){
         edificiosPendientesFragment = new EdificiosPendientesFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment, edificiosPendientesFragment).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorFragment, edificiosPendientesFragment,"EdificiosPendientesFragment").addToBackStack(null).commit();
     }
 
 

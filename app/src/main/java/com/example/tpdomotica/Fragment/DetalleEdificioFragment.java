@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -41,7 +43,7 @@ import java.util.ArrayList;
  * Use the {@link DetalleEdificioFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DetalleEdificioFragment extends Fragment {
+public class DetalleEdificioFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -60,6 +62,7 @@ public class DetalleEdificioFragment extends Fragment {
     ArrayList<Sensor> sensores = null;
     TextView textDescripcion;
     RecyclerView recyclerSensores;
+    SwipeRefreshLayout swipeLayout;
 
     public DetalleEdificioFragment() {
         // Required empty public constructor
@@ -97,6 +100,9 @@ public class DetalleEdificioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_detalle_edificio, container, false);
+
+        swipeLayout = (SwipeRefreshLayout) vista.findViewById(R.id.detalleEdificioFragment);
+        swipeLayout.setOnRefreshListener(this);
 
         Toolbar mToolbar = vista.findViewById(R.id.toolbar1);
         mToolbar.setTitle(getString(R.string.detalle_edi));
@@ -209,6 +215,13 @@ public class DetalleEdificioFragment extends Fragment {
             Toast.makeText(getActivity(),"error",Toast.LENGTH_SHORT).show();
         }
         return sensores;
+    }
+
+    @Override
+    public void onRefresh() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+        swipeLayout.setRefreshing(false);
     }
 
     /**
