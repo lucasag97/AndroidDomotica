@@ -70,4 +70,9 @@
     <string name="no_asoc">There are no associated buildings</string>
     <string name="SinPendientes">No buildings pending</string>
     <string name="ok">OK</string>
+    <string name="regis">Registration made correctly</string>
+    <string name="no_match">Passwords do not match</string>
+    <string name="existe">The user already exists in the database</string>
+    <string name="wrong_pass">Incorrect password</string>
+    <string name="no_user">Unregistered user</string>
 </resources>

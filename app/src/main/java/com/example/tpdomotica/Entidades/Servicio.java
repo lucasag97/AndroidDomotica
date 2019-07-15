@@ -116,7 +116,7 @@ public class Servicio extends Service {
                                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                                         .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                                         .setContentIntent(resultPI)
-                                        .setColor(Color.BLUE)
+                                        .setColor(Color.BLACK)
                                         //.setContentIntent(contentIntent)
                                         .setWhen(System.currentTimeMillis())
                                         .setShowWhen(true)

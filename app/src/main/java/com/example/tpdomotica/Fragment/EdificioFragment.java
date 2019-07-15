@@ -2,6 +2,7 @@ package com.example.tpdomotica.Fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -159,9 +160,10 @@ public class EdificioFragment extends Fragment implements PopupMenu.OnMenuItemCl
                         editor.putBoolean("logged", false);
                         editor.remove("id");
                         Utilidades.edis.clear();
-                        editor.commit();
+                        editor.apply();
                         getActivity().stopService(new Intent(getActivity(),Servicio.class));
-                        getActivity().stopService(new Intent(getActivity(), Servicio.class));
+                        NotificationManager notificationManager = (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                        notificationManager.cancelAll();
                         startActivity(cerrar_sesion);
                         return true;
                 }
@@ -173,6 +175,7 @@ public class EdificioFragment extends Fragment implements PopupMenu.OnMenuItemCl
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), EdificioActivity.class);
+                getActivity().finish();
                 startActivity(intent);
             }
         });

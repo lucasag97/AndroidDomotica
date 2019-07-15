@@ -70,4 +70,9 @@
     <string name="no_asoc">Non ci sono edifici associati</string>
     <string name="SinPendientes">Nessun edificio in sospeso</string>
     <string name="ok">OK</string>
+    <string name="regis">Registrazione effettuata correttamente</string>
+    <string name="no_match">Le password non corrispondono</string>
+    <string name="existe">L\'utente esiste già nel database</string>
+    <string name="wrong_pass">Password errata</string>
+    <string name="no_user">Utente non registrato</string>
 </resources>

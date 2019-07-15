@@ -1,11 +1,15 @@
 package com.example.tpdomotica.Activity;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +23,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     EditText nombre, apellido, username, dni, password, password2;
     TextView toLogin;
+    Button signup;
     boolean condicion = true;
+    boolean existe = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.form_pwd);
         password2 = (EditText)findViewById(R.id.pwd_repeat);
         toLogin = (TextView) findViewById(R.id.link_login);
+        signup = findViewById(R.id.btn_signup);
 
         toLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,22 +48,13 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
 
-    public void onClick(View view){
-
-        registrarUsuario();
-    }
-
-    public void error(){
-        Toast.makeText(getApplicationContext(),"Hubo un error al ingresar los datos", Toast.LENGTH_LONG).show();
-        nombre.setText("");
-        apellido.setText("");
-        dni.setText("");
-        username.setText("");
-        password.setText("");
-        password2.setText("");
-        condicion = true;
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registrarUsuario();
+            }
+        });
     }
 
     public void registrarUsuario() {
@@ -74,7 +72,18 @@ public class RegisterActivity extends AppCompatActivity {
         }else { condicion = false; }
         if (!username.getText().toString().equals("")) {
             values.put(Utilidades.USER_USERNAME, username.getText().toString());
-        }else { condicion = false; }
+        }
+        else { condicion = false; }
+        existe = false;
+        Cursor c = db.rawQuery("SELECT "+Utilidades.USER_USERNAME+" FROM " +Utilidades.TABLA_USUARIO, null);
+        if (c.moveToFirst()){
+            for (int i=0; i<c.getCount(); i++){
+                if (c.getString(0).equals(username.getText().toString())) {
+                    existe = true;
+                    c.moveToNext();
+                }
+            }
+        }
 
         values.put(Utilidades.USER_ROL, "user");
 
@@ -84,13 +93,37 @@ public class RegisterActivity extends AppCompatActivity {
             }else { condicion = false; }
         }else { condicion = false; }
 
-        if(condicion == true){
+        if(condicion == true && !existe){
             db.insert(Utilidades.TABLA_USUARIO,Utilidades.USER_USERNAME, values);
-            Toast.makeText(getApplicationContext(), "Usuario generado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.regis), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(intent);
         }else {
-            error();
+            if (nombre.getText().toString().equals(""))
+                nombre.setError(getResources().getString(R.string.no_empty));
+            if (password.getText().toString().equals(""))
+                password.setError(getResources().getString(R.string.no_empty));
+            if (apellido.getText().toString().equals(""))
+                apellido.setError(getResources().getString(R.string.no_empty));
+            if (dni.getText().toString().equals(""))
+                dni.setError(getResources().getString(R.string.no_empty));
+            if (username.getText().toString().equals(""))
+                username.setError(getResources().getString(R.string.no_empty));
+            if (!password.getText().toString().equals(password2.getText().toString()))
+                password2.setError(getResources().getString(R.string.no_match));
+            if (existe){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(getResources().getString(R.string.existe))
+                        .setCancelable(true)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
         }
         db.close();
     }

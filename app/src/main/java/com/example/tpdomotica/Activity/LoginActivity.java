@@ -1,5 +1,7 @@
 package com.example.tpdomotica.Activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -104,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
             else{
-                password.setError("Contraseña incorrecta");
+                password.setError(getResources().getString(R.string.wrong_pass));
             }
         }catch (Exception e){
             if (username.getText().toString().isEmpty()){
@@ -114,7 +116,17 @@ public class LoginActivity extends AppCompatActivity {
                 password.setError(getResources().getString(R.string.no_empty));
             }
             else {
-                Toast.makeText(getApplicationContext(), "Usuario no registrado", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(getResources().getString(R.string.no_user))
+                        .setCancelable(true)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         }
     }

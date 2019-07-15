@@ -2,6 +2,7 @@ package com.example.tpdomotica.Fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -132,8 +133,10 @@ public class EdificiosPendientesFragment extends Fragment {
                         editor.putBoolean("logged", false);
                         editor.remove("id");
                         Utilidades.edis.clear();
-                        editor.commit();
+                        editor.apply();
                         getActivity().stopService(new Intent(getActivity(), Servicio.class));
+                        NotificationManager notificationManager = (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                        notificationManager.cancelAll();
                         startActivity(cerrar_sesion);
                         return true;
                 }
