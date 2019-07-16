@@ -79,4 +79,5 @@
     <string name="fresco">Temperatura molto fredda</string>
     <string name="refresh">Aggiornare</string>
     <string name="summary_lang">Scegli la lingua dell\'applicazione</string>
+    <string name="gps_permiso">Le autorizzazioni necessarie non sono state definite</string>
 </resources>

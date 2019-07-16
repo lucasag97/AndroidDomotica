@@ -92,35 +92,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fotografia"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:layout_marginBottom="20dp"/>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:id="@+id/btn_foto"
-                android:layout_width="70dp"
-                android:layout_height="50dp"
-                android:padding="5dp"
-                android:text="Foto"
-                android:layout_gravity="start"
-                android:background="@color/lila_claro"
-                android:visibility="visible"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/capturedImage"
-                android:layout_gravity="center"
-                android:layout_above="@+id/btn_foto"/>
-        </FrameLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
             android:text="@string/ubicacion"

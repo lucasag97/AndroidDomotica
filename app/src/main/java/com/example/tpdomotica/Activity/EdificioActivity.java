@@ -57,36 +57,24 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class EdificioActivity extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
-    private int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 123;
     CheckBox iluminacion, gases, movimiento, temperatura;
     TextView estado_text;
     EditText direccion, nombre;
-    String Direccion_user, photo;
+    String Direccion_user;
     boolean ilu, gas, movi, temp, validado;
     Double longitud, latitud;
-    Button btn_edificio_guardar, btn_estado, btnCapture;
-    ImageView imgCapture;
-    private static final int Image_Capture_Code = 1;
+    Button btn_edificio_guardar, btn_estado;
     Switch localizame;
     SharedPreferences pref;
     int estado_num;
     private SharedPreferences.Editor editor;
-
-    private String path = "";
-    private final String CARPETA_RAIZ = "misEdificios/";
-    private final String RUTA_IMAGEN = CARPETA_RAIZ + "misFotos";
-    File fileImagen;
-    Bitmap bitmap;
-
-    private static final int COD = 20;
-
 
     View.OnClickListener guardar = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             ActivityCompat.requestPermissions(EdificioActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getApplicationContext(), "No se han definido los permisos necesarios", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.gps_permiso), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), EdificioActivity.class);
                 startActivity(intent);
             } else {
@@ -201,26 +189,6 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
             }
         });
 
-        btnCapture = (Button) findViewById(R.id.btn_foto);
-        imgCapture = (ImageView) findViewById(R.id.capturedImage);
-
-        btnCapture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int permissionCheck_1 = ContextCompat.checkSelfPermission(EdificioActivity.this, CAMERA);
-                int permissionCheck_2 = ContextCompat.checkSelfPermission(EdificioActivity.this,WRITE_EXTERNAL_STORAGE);
-                if(permissionCheck_1 == PackageManager.PERMISSION_GRANTED && permissionCheck_2 == PackageManager.PERMISSION_GRANTED){
-
-                }else{
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,CAMERA},100);
-                    }
-                }
-                abrirCamara();
-                btnCapture.setVisibility(View.INVISIBLE);
-            }
-        });
-
         pref = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
 
         direccion = (EditText) findViewById(R.id.direccion);
@@ -328,114 +296,5 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 }
             }
         });
-    }
-
-    private void abrirCamara() {
-        File miFile = new File(Environment.getExternalStorageDirectory(),RUTA_IMAGEN);
-        boolean isCreada = miFile.exists();
-
-        if(isCreada == false){
-            isCreada = miFile.mkdirs();
-        }
-        if(isCreada == true){
-            Long consecutivo = System.currentTimeMillis()/1000;
-            String nombre = consecutivo.toString()+".jpg";
-            path = Environment.getExternalStorageDirectory()+File.separator+CARPETA_RAIZ+File.separator+nombre;
-            fileImagen = new File(path);
-
-            if((ContextCompat.checkSelfPermission(EdificioActivity.this,CAMERA) == PackageManager.PERMISSION_GRANTED)&&(ContextCompat.checkSelfPermission(EdificioActivity.this,WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)){
-
-            }else{
-                try {
-                    Thread.sleep(5*1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-            if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.N){
-                String authorities = getApplicationContext().getPackageName()+".provider";
-                Uri imageUri = FileProvider.getUriForFile(getApplicationContext(),authorities,fileImagen);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
-            }else {
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(fileImagen));
-                    }
-            startActivityForResult(intent,COD);
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        /*if (requestCode == Image_Capture_Code) {
-            if (resultCode == RESULT_OK) {
-                Bitmap bp = (Bitmap) data.getExtras().get("data");
-                photo = getEncodedString(bp);
-                imgCapture.setImageBitmap(bp);
-                MediaScannerConnection.scanFile(this, new String[]{path}, null, new MediaScannerConnection.MediaScannerConnectionClient() {
-                    @Override
-                    public void onMediaScannerConnected() {
-
-                    }
-
-                    @Override
-                    public void onScanCompleted(String path, Uri uri) {
-                        Log.i("ruta de almacenamiento", "path: " + path);
-                    }
-                });
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-            }
-        }*/
-        super.onActivityResult(requestCode,resultCode,data);
-        switch (requestCode){
-            case COD:
-                MediaScannerConnection.scanFile(this, new String[]{path}, null, new MediaScannerConnection.OnScanCompletedListener() {
-                    @Override
-                    public void onScanCompleted(String path, Uri uri) {
-                        Log.i("Path",""+path);
-                    }
-                });
-                bitmap = BitmapFactory.decodeFile(path);
-                imgCapture.setImageBitmap(bitmap);
-                break;
-        }
-    }
-
-    private String getEncodedString(Bitmap bitmap) {
-
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
-        byte[] imageArr = os.toByteArray();
-
-        return Base64.encodeToString(imageArr, Base64.URL_SAFE);
-    }
-
-    private void setDataToDataBase() {
-        ConexionSQLite conn = new ConexionSQLite(getApplicationContext(), "db_domotica", null, 1);
-        SQLiteDatabase db = conn.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(Utilidades.FOTO_URL, photo);
-
-        long id = db.insert(Utilidades.TABLA_FOTO, null, cv);
-        if (id < 0) {
-            Toast.makeText(this, "Something went wrong. Please try again later...", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, "Add successful", Toast.LENGTH_LONG).show();
-        }
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 100) {
-            if (grantResults.length == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                    grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-
-            }
-        }
     }
 }
