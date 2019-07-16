@@ -62,7 +62,7 @@ public class AdaptadorHistorial extends RecyclerView.Adapter<AdaptadorHistorial.
                 if (valor <= 28 && valor >=7) {
                     historialViewHolder.valor.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.agradable)+" "+valor+"°C");
                 }else {
-                    if(valor < 35){
+                    if(valor < 50){
                         historialViewHolder.valor.setText(historialViewHolder.valor.getContext().getResources().getString(R.string.caluroso)+" "+valor+"°C");
                     }
                     if(valor < 7){

@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -321,6 +322,13 @@ public class EdificioFragment extends Fragment implements PopupMenu.OnMenuItemCl
             }
         }
         return comprobacion;
+    }
+
+    private boolean validarPermisos(){
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+            return true;
+        }
+        return true;
     }
 
     private void consultarListaEdificio(ArrayList<Edificio> listaEdificio) {
