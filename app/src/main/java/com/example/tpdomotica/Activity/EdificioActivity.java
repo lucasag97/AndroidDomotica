@@ -11,25 +11,30 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,10 +47,12 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
     CheckBox iluminacion,gases,movimiento,temperatura;
     TextView estado_text;
     EditText direccion, nombre;
-    String Direccion_user;
+    String Direccion_user, photo;
     boolean ilu,gas,movi,temp, validado;
     Double longitud,latitud;
-    Button btn_edificio_guardar, btn_estado;
+    Button btn_edificio_guardar, btn_estado, btnCapture;
+    ImageView imgCapture;
+    private static final int Image_Capture_Code = 1;
     Switch localizame;
     SharedPreferences pref;
     int estado_num;
@@ -172,6 +179,17 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
             }
         });
 
+        btnCapture =(Button)findViewById(R.id.btn_foto);
+        imgCapture = (ImageView) findViewById(R.id.capturedImage);
+
+        btnCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cInt,Image_Capture_Code);
+            }
+        });
+
         pref = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
 
         direccion = (EditText) findViewById(R.id.direccion);
@@ -280,6 +298,41 @@ public class EdificioActivity extends Activity implements ActivityCompat.OnReque
                 }
             }
         });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Image_Capture_Code) {
+            if (resultCode == RESULT_OK) {
+                Bitmap bp = (Bitmap) data.getExtras().get("data");
+                photo = getEncodedString(bp);
+                imgCapture.setImageBitmap(bp);
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private String getEncodedString(Bitmap bitmap){
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100, os);
+        byte[] imageArr = os.toByteArray();
+
+        return Base64.encodeToString(imageArr, Base64.URL_SAFE);
+    }
+
+    private void setDataToDataBase() {
+        ConexionSQLite conn = new ConexionSQLite(getApplicationContext(), "db_domotica", null, 1);
+        SQLiteDatabase db = conn.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(Utilidades.FOTO_URL, photo);
+
+        long id = db.insert(Utilidades.TABLA_FOTO, null, cv);
+        if (id < 0) {
+            Toast.makeText(this, "Something went wrong. Please try again later...", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Add successful", Toast.LENGTH_LONG).show();
+        }
     }
 
 }

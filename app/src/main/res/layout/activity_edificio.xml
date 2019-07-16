@@ -81,6 +81,19 @@
             android:inputType="textCapWords"
             android:hint="@string/direccion" />
     </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_foto"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Tomar foto"
+        android:background="@color/lila_claro"/>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/capturedImage"
+            android:layout_above="@+id/btn_foto"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

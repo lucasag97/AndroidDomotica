@@ -21,6 +21,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         db.execSQL(Utilidades.CREAR_TABLA_SENSOR);
         db.execSQL(Utilidades.CREAR_TABLA_EDIFICIO_SENSOR);
         db.execSQL(Utilidades.CREAR_TABLA_HISTORICO);
+        db.execSQL(Utilidades.CREAR_TABLA_FOTO);
 
         //Valores por defecto
 
@@ -64,10 +65,6 @@ public class ConexionSQLite extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onCreate(db);
-    }
-
-    public void editarEdificio(Edificio edificio){
-
     }
 
 }

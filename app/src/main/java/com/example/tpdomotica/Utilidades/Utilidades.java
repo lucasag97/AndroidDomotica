@@ -53,4 +53,11 @@ public class Utilidades {
     public static final String HISTORICO_TIMESTAMP = "momento";
     public static final String CREAR_TABLA_HISTORICO = "CREATE TABLE "+TABLA_HISTORICO+" ("+HISTORICO_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+ID_SENSOR_H+" INTEGER, "+ID_EDIFICIO_H+" INTEGER, "+HISTORICO_VALOR+" INTEGER, "+HISTORICO_TIMESTAMP+" DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY ("+ID_EDIFICIO_H+") REFERENCES "+TABLA_EDIFICIO+"("+EDI_ID+"), FOREIGN KEY ("+ID_SENSOR_H+") REFERENCES "+TABLA_SENSOR+"("+SENSOR_ID+"))";
 
+    //Tabla foto
+    public static final String TABLA_FOTO = "foto";
+    public static final String FOTO_ID = "_id";
+    public static final String FOTO_URL = "img_url";
+    public static final String CREAR_TABLA_FOTO = "CREATE TABLE " + TABLA_FOTO + "(" + FOTO_ID +
+            " INTEGER PRIMARY KEY AUTOINCREMENT," + FOTO_URL + " TEXT" + ")";
+
 }
