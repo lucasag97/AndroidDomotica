@@ -78,4 +78,5 @@
     <string name="caluroso">Warm temperature</string>
     <string name="fresco">Very cold temperature</string>
     <string name="refresh">Actualizar</string>
+    <string name="summary_lang">Choose the language of the application</string>
 </resources>

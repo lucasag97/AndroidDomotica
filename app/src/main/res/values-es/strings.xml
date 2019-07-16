@@ -89,5 +89,6 @@
     <string name="caluroso">caluroso</string>
     <string name="fresco">Temperatura muy fria</string>
     <string name="refresh">To update</string>
+    <string name="summary_lang">Elija el idioma de la aplicación</string>
 
 </resources>

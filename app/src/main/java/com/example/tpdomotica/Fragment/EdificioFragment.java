@@ -37,6 +37,7 @@ import com.example.tpdomotica.Activity.ContenedorActivity;
 import com.example.tpdomotica.Activity.EdificioActivity;
 import com.example.tpdomotica.Activity.LoginActivity;
 import com.example.tpdomotica.Activity.MainActivity;
+import com.example.tpdomotica.Activity.SettingsActivity;
 import com.example.tpdomotica.Adaptadores.AdaptadorEdificio;
 import com.example.tpdomotica.BaseDatos.ConexionSQLite;
 import com.example.tpdomotica.Entidades.Edificio;
@@ -152,6 +153,9 @@ public class EdificioFragment extends Fragment implements PopupMenu.OnMenuItemCl
                         startActivity(intent);
                         return true;
                     case R.id.menu_settings:
+                        Intent i = new Intent(getContext(), SettingsActivity.class);
+                        getActivity().finish();
+                        startActivity(i);
                         return true;
                     case R.id.menu_logout:
                         Intent cerrar_sesion = new Intent(getContext(),LoginActivity.class);
@@ -175,7 +179,6 @@ public class EdificioFragment extends Fragment implements PopupMenu.OnMenuItemCl
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), EdificioActivity.class);
-                getActivity().finish();
                 startActivity(intent);
             }
         });

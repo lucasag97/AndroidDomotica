@@ -88,7 +88,6 @@
     <string name="no_asoc">No hay edificios asociados</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="regis">Registro realizado correctamente</string>
     <string name="no_match">Las contraseñas no coinciden</string>
     <string name="existe">El usuario ya existe en la base de datos</string>
@@ -97,4 +96,5 @@
     <string name="caluroso">caluroso</string>
     <string name="fresco">Temperatura muy fria</string>
     <string name="refresh">Actualizar</string>
+    <string name="summary_lang">Elija el idioma de la aplicación</string>
 </resources>

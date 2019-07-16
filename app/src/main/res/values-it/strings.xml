@@ -78,4 +78,5 @@
     <string name="caluroso">Temperatura calda</string>
     <string name="fresco">Temperatura molto fredda</string>
     <string name="refresh">Aggiornare</string>
+    <string name="summary_lang">Scegli la lingua dell\'applicazione</string>
 </resources>

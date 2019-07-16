@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_edificio_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".Activity.SettingsActivity"></activity>
         <activity android:name=".Activity.FirstTimeActivity" />
         <activity android:name=".Activity.ContenedorSensoresActivity" />
         <activity android:name=".Activity.ModificarEdificioActivity" />
